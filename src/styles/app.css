@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    img {
+        @apply rounded-xl border-2 border-slate-200 dark:border-slate-800 opacity-90;
+    }
+}
