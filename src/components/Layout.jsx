@@ -3,8 +3,6 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import clsx from 'clsx'
 
-import { Hero } from '@/components/Hero'
-import { DbExLogo } from '@/components/Logo'
 import { MobileNavigation } from '@/components/MobileNavigation'
 import { Navigation } from '@/components/Navigation'
 import { Prose } from '@/components/Prose'
@@ -130,8 +128,6 @@ const navigation = [
 	}
 ]
 
-
-
 function GitHubIcon(props) {
   return (
     <svg aria-hidden="true" viewBox="0 0 16 16" {...props}>
@@ -165,11 +161,6 @@ function Header({ navigation }) {
     >
       <div className="mr-6 flex lg:hidden">
         <MobileNavigation navigation={navigation} />
-      </div>
-      <div className="relative flex flex-grow basis-0 items-center">
-        <Link href="/" aria-label="Home page">
-		<DbExLogo className="h-16 w-16 border-0 -my-2 hover:scale-110"/>
-        </Link>
       </div>
       {/* <div className="-my-5 mr-6 sm:mr-8 md:mr-0">
         <Search />
@@ -229,7 +220,6 @@ function useTableOfContents(tableOfContents) {
 
 export function Layout({ children, title, tableOfContents }) {
   let router = useRouter()
-  let isHomePage = router.pathname === '/'
   let allLinks = navigation.flatMap((section) => section.links)
   let linkIndex = allLinks.findIndex((link) => link.href === router.pathname)
   let previousPage = allLinks[linkIndex - 1]
@@ -253,12 +243,10 @@ export function Layout({ children, title, tableOfContents }) {
     <>
       <Header navigation={navigation} />
 
-      {isHomePage && <Hero />}
-
       <div className="relative mx-auto flex max-w-8xl justify-center sm:px-2 lg:px-8 xl:px-12">
         <div className="hidden lg:relative lg:block lg:flex-none">
           <div className="absolute inset-y-0 right-0 w-[50vw] bg-slate-50 dark:hidden" />
-          <div className="sticky top-[4.5rem] -ml-0.5 h-[calc(100vh-4.5rem)] overflow-y-auto py-16 pl-0.5 scrollbar">
+          <div className="sticky top-[4.5rem] -ml-0.5 h-[calc(100vh-4.5rem)] overflow-y-auto pb-16 pt-4 pl-0.5 scrollbar">
             <div className="absolute top-16 bottom-0 right-0 hidden h-12 w-px bg-gradient-to-t from-slate-800 dark:block" />
             <div className="absolute top-28 bottom-0 right-0 hidden w-px bg-slate-800 dark:block" />
             <Navigation

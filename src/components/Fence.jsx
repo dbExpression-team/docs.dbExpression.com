@@ -1,6 +1,7 @@
 import { Fragment } from 'react'
 import Highlight, { defaultProps } from 'prism-react-renderer'
 import Prism from "prism-react-renderer/prism";
+import clsx from 'clsx';
 
 (typeof global !== "undefined" ? global : window).Prism = Prism;
 
@@ -16,7 +17,7 @@ export function Fence({ children, language }) {
       theme={undefined}
     >
       {({ className, style, tokens, getTokenProps }) => (
-        <pre className="scrollbar-thin scrollbar-thumb-slate-300 scrollbar-track-slate-100 dark:scrollbar-thumb-slate-700 dark:scrollbar-track-slate-300 overlow-y-scroll {className}" style={style}>
+        <pre className={clsx("scrollbar-thin scrollbar-thumb-slate-300 scrollbar-track-slate-100 dark:scrollbar-thumb-slate-700 dark:scrollbar-track-slate-300 overlow-y-scroll", className)} style={style}>
           <code>
             {tokens.map((line, lineIndex) => (
               <Fragment key={lineIndex}>

@@ -56,6 +56,7 @@ export default function Document() {
     <Html className="antialiased [font-feature-settings:'ss01']" lang="en">
       <Head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+        <link rel="icon" type="image/png" sizes="16x16" href="/logos/light/favicon-16x16.png" />
       </Head>
       <body className="bg-white dark:bg-slate-900">
         <Main />

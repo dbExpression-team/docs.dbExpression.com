@@ -7,3 +7,41 @@
         @apply rounded-xl border-2 border-slate-200 dark:border-slate-800 opacity-90;
     }
 }
+
+@layer utilities {
+    .language-csharp .token.function {
+        @apply text-green-300
+    }
+
+    .language-csharp .token.punctuation {
+        @apply text-slate-300
+    }
+
+    .language-csharp .token.operator {
+        @apply text-slate-300
+    }
+
+    .language-csharp .token.keyword {
+        @apply text-sky-500
+    }
+
+    .language-csharp .token.plain {
+        @apply text-sky-200
+    }
+
+    .language-csharp .token.string {
+        @apply text-slate-300
+    }
+
+    .language-sql .token.plain {
+        @apply text-green-300
+    }
+
+    .language-sql .token.keyword {
+        @apply text-sky-500
+    }
+
+    .language-sql .token.string {
+        @apply text-sky-200
+    }
+}
