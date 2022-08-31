@@ -74,7 +74,7 @@ export default function App({ Component, pageProps }) {
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
         
-          gtag('config', '${process.env.GOOGLE_ANALYTICS_ID}');
+          gtag('config', ${process.env.GOOGLE_ANALYTICS_ID});
         `}
       </Script>
       <Layout title={title} tableOfContents={tableOfContents} >
