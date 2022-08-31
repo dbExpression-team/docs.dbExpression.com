@@ -71,7 +71,7 @@ export default function App({ Component, pageProps }) {
       <Script id="ga-script-local" strategy='afterInteractive'>
         {`
           window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
+          function gtag(){window.dataLayer.push(arguments);}
           gtag('js', new Date());
         
           gtag('config', 'G-BND29F2QPK');
