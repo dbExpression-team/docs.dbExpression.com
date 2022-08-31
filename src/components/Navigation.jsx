@@ -1,6 +1,5 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { DbExLogo } from '@/components/Logo'
 import clsx from 'clsx'
 
 export function Navigation({ navigation, className }) {
@@ -8,7 +7,6 @@ export function Navigation({ navigation, className }) {
 
   return (
     <nav className={clsx('text-base lg:text-sm', className)}>
-      <DbExLogo className="border-0 pb-12 hover:scale-110" />
       <ul role="list" className="space-y-9">
         {navigation.map((section) => (
           <li key={section.title}>

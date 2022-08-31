@@ -1,9 +1,6 @@
 import Head from 'next/head'
 import { slugifyWithCounter } from '@sindresorhus/slugify'
-
 import { Layout } from '@/components/Layout'
-import { Footer }  from "@/components/Footer";
-
 import 'focus-visible'
 import '@/styles/tailwind.css'
 import '@/styles/app.css'
@@ -72,7 +69,6 @@ export default function App({ Component, pageProps }) {
       <Layout title={title} tableOfContents={tableOfContents} >
         <Component {...pageProps} />
       </Layout>
-      <Footer />
     </>
   )
 }

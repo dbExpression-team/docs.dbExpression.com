@@ -1,5 +1,5 @@
 ---
-title: Microsoft SQL Server simplified.
+title: Microsoft SQL Server. Simplified.
 description: Introduction to the why and what of dbExpression
 ---
 

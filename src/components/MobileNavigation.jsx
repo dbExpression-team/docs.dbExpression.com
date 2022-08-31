@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { Dialog } from '@headlessui/react'
-import { DbExLogo } from '@/components/Logo'
 import { Navigation } from '@/components/Navigation'
 
 function MenuIcon(props) {
