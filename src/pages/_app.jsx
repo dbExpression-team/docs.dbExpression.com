@@ -67,14 +67,14 @@ export default function App({ Component, pageProps }) {
         <title>{pageTitle}</title>
         {description && <meta name="description" content={description} />}
       </Head>
-      <Script id="ga-script" strategy='afterInteractive' src="https://www.googletagmanager.com/gtag/js?id=G-BND29F2QPK" />
+      <Script key="ga-script" strategy='afterInteractive' src={`https://www.googletagmanager.com/gtag/js?id=${process.env.GOOGLE_ANALYTICS_ID}`} />
       <Script id="ga-script-local" strategy='afterInteractive'>
         {`
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
         
-          gtag('config', 'G-BND29F2QPK');
+          gtag('config', '${process.env.GOOGLE_ANALYTICS_ID}');
         `}
       </Script>
       <Layout title={title} tableOfContents={tableOfContents} >
