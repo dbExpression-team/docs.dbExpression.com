@@ -222,7 +222,7 @@ SELECT @@ROWCOUNT;',N'@P1 float,@P2 int',@P1=1.1000000000000001,@P2=3
 ```
 {% /collapsable %}
 
-See [Advanced Queries (Arithmetic)](/AdvancedQueryTopics/Arithmetic) section for more detail on using server side arithmetic.
+See [Advanced Queries (Arithmetic)](/advanced-query-topics/arithmetic) section for more detail on using server side arithmetic.
   
 ## Delete
 dbExpression allows you to compose and execute deletes against your target database without first retrieving affected records.  The following expression issues a delete to the *Purchase* table where *Purchase.Id* equals ```9```.

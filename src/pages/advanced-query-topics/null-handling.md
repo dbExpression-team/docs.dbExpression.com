@@ -3,7 +3,7 @@ title: Null Handling
 description: How to use null in query expressions.
 ---
 
-With dbExpression use the helper method ```dbex.Null``` [(see dbex)](/Utilities/dbex#dbex-null) instead of ```null```.  dbExpression requires clarity on types, therefore the use of ```null``` should be replaced with ```dbex.Null``` when it is expected to produce a SQL statement with a server side ```NULL```.  This is because to the CLR, ```null``` can be just about anything, from any object to any nullable primitive.  For example, the following QueryExpression will not compile as the right side of the equality can be just about anything, and dbExpression constrains what is accepted to ensure valid SQL statements.
+With dbExpression use the helper method ```dbex.Null``` (see [dbex](/utilities/dbex#dbex-null)) instead of ```null```.  dbExpression requires clarity on types, therefore the use of ```null``` should be replaced with ```dbex.Null``` when it is expected to produce a SQL statement with a server side ```NULL```.  This is because to the CLR, ```null``` can be just about anything, from any object to any nullable primitive.  For example, the following QueryExpression will not compile as the right side of the equality can be just about anything, and dbExpression constrains what is accepted to ensure valid SQL statements.
 
 ```csharp
 db.SelectOne<Person>()

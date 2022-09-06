@@ -88,7 +88,7 @@ Change the ```rootNamespace``` property to a value of *SimpleConsole* and set th
 }
 ```
 
-Default values will be used to generate the scaffolding code.  Defaults can be overridden in the configuration file, see the [Scaffold Configuration](/AdvancedScaffolding/Scaffolding-Configuration) topic to learn how to change default values and for other scaffolding topics.  Note the *optional* additional property named ```nullable``` (defaults to "disable") which indicates the scaffolded code should support the ```nullable``` language feature.
+Default values will be used to generate the scaffolding code.  Defaults can be overridden in the configuration file, see the [Scaffold Configuration](/advanced-scaffolding/scaffolding-configuration) topic to learn how to change default values and for other scaffolding topics.  Note the *optional* additional property named ```nullable``` (defaults to "disable") which indicates the scaffolded code should support the ```nullable``` language feature.
 
 ### Generate the Scaffold Code
 Once you have the *dbex.config.json* file, run the dbExpression CLI ```gen``` command to generate the scaffolding.  By default, the generated scaffold code is placed within a directory named 'DbEx' directly within your current working directory.
@@ -161,7 +161,7 @@ Typically for dbExpression startup configuration, you'll need these using statem
 And to use use a static database accessor (we're using it for this walk-thru):
 * ```HatTrick.DbEx.Sql``` - namespace containing the ```UseStaticRuntimeFor<T>()``` extension method, which opts-in to using ```dbExpression``` statically.
 
-See the [Runtime Configuration](/AdvancedRuntimeConfiguration/Runtime-Configuration) section for instructions and usage examples of all runtime configuration options.
+See the [Runtime Configuration](/runtime-configuration/runtime-configuration) section for instructions and usage examples of all runtime configuration options.
 
 ## Execute a Query
 To execute a QueryExpression, simply add the ```Execute``` or ```ExecuteAsync``` method to the QueryExpression:

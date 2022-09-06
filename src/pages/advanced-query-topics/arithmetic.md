@@ -66,4 +66,4 @@ FROM
 ```
 {% /collapsable %}
 
-Arithmetic expressions are also useful for filtering data retrieved from the database, see [Filter Expressions](/Filters/Filter-Expressions#filter-expressions-in-where-clauses) for using arithmetic expressions in Where (and other) clauses.
+Arithmetic expressions are also useful for filtering data retrieved from the database, see [Filter Expressions](/filters/filter-expressions#filter-expressions-in-where-clauses) for using arithmetic expressions in Where (and other) clauses.

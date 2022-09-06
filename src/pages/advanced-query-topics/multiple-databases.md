@@ -10,7 +10,7 @@ Using multiple databases with dbExpression in a single code file is completely f
 * Apply overrides to scaffolding to generate different database accessor names, database names, and/or schema names for one (or more) of the databases.  *This approach is global in nature*, it is highly recommended this decision is made prior to authoring a lot of QueryExpressions using ```db```.  If you are using dbExpression to migrate data from one database to another where the schema (and/or database names) are identical, this is the viable solution.
 
 ## Using Alias Directive
-For example, given two databases that have been scaffolded with ```rootNamespace``` values 'ACME.Customer' and 'ACME.Sales' (see [Scaffold Configuration](/AdvancedScaffolding/Scaffolding-Configuration)).  When scaffolded using the dbExpression CLI tool, both of these will contain a ```db``` class (```ACME.Customer.DataService.db``` and ```ACME.Sales.DataService.db```).  To use both of these in a single file and remove ambiguity to the compiler, add a *using alias directive* to the top of the file for each database accessor:
+For example, given two databases that have been scaffolded with ```rootNamespace``` values 'ACME.Customer' and 'ACME.Sales' (see [Scaffold Configuration](/advanced-scaffolding/scaffolding-configuration)).  When scaffolded using the dbExpression CLI tool, both of these will contain a ```db``` class (```ACME.Customer.DataService.db``` and ```ACME.Sales.DataService.db```).  To use both of these in a single file and remove ambiguity to the compiler, add a *using alias directive* to the top of the file for each database accessor:
 
 ```csharp
 ...

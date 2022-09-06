@@ -46,4 +46,4 @@ ORDER BY
 ```
 {% /collapsable %}
 
-The having clause is discussed in greater detail in [Filter Expressions](/Filters/Filter-Expressions#filter-expressions-in-having-clauses).
+The having clause is discussed in greater detail in [Filter Expressions](/filters/filter-expressions#filter-expressions-in-having-clauses).

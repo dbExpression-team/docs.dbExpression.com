@@ -13,7 +13,7 @@ dbExpression generally logs as follows for the different log levels:
 
 > It is highly recommended to turn dbExpression logging "off" in production and use it solely while developing your application.
 
-Through the [runtime configuration](/AdvancedRuntimeConfiguration/Runtime-Configuration) of a database with dbExpression, logging settings can be set indicating whether to emit parameter values to logs.  By default, this value is false and no parameter values will be emitted to logs.  Parameter logging is an opt-in feature.
+Through the [runtime configuration](/runtime-configuration/runtime-configuration) of a database with dbExpression, logging settings can be set indicating whether to emit parameter values to logs.  By default, this value is false and no parameter values will be emitted to logs.  Parameter logging is an opt-in feature.
 
 > By default, dbExpression will **not** log parameter values to logs.
 

@@ -3,7 +3,7 @@ title: Enums
 description: How to use enums in query expressions.
 ---
 
-Enums are fully supported in dbExpression with the appropriate scaffold and runtime configuration (see [Runtime Configuration (Enums)](/AdvancedRuntimeConfiguration/Enums)).
+Enums are fully supported in dbExpression with the appropriate scaffold and runtime configuration (see [Runtime Configuration (Enums)](/runtime-configuration/enums)).
 
 Using enums in QueryExpressions is like using any other data type.  In the sample [console application](https://github.com/HatTrickLabs/dbExpression/blob/master/samples/mssql/NetCoreConsoleApp/Data/_TypeCode.cs),  we have a few enums defined, let's look at one of these, ```AddressType```:
 ```csharp
@@ -152,7 +152,7 @@ public enum PaymentMethodType : int
 ```
   
 This enum has been configured (in scaffolding configuration) similar to configuring the ```AddressType``` enum.  We have also indicated that we desire to persist the enum using it's string 
-value as detailed in [Runtime Configuration (Enums)](/AdvancedRuntimeConfiguration/Enums).  The *PaymentMethodType* column in the *Purchase* table has a database 
+value as detailed in [Runtime Configuration (Enums)](/runtime-configuration/enums).  The *PaymentMethodType* column in the *Purchase* table has a database 
 type of *VARCHAR(20)*.  Using this in QueryExpressions is *exactly* the same as those persisted using their numeric value.  For example:
 
 ```csharp

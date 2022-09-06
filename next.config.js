@@ -10,7 +10,7 @@ const nextConfig = {
     images: {
       allowFutureImage: true,
     },
-  },
+  }
 }
 
 //module.exports = withMarkdoc()(nextConfig)

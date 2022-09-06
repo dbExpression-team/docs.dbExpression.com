@@ -41,5 +41,5 @@ WHERE
 ;',N'@P1 varchar(20),@P2 varchar(20),@P3 varchar(20)',@P1='CreditCard',@P2='ACH',@P3='PayPal'
 ```
 
-Note the above sql statement uses the string values of the enum values.  This is due to the settings provided in startup configuration that indicated the type ```PaymentMethodType``` should be persisted as it's string value (see [Enums](Enums) for more detail).
+Note the above sql statement uses the string values of the enum values.  This is due to the settings provided in startup configuration that indicated the type ```PaymentMethodType``` should be persisted as it's string value (see [Enums](enums) for more detail).
 {% /collapsable %}

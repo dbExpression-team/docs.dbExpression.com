@@ -53,4 +53,4 @@ FROM
 ```
 {% /collapsable %}
 
-Subqueries are discussed in more detail in [Subquery Aliasing](/Aliasing/Subquery).
+Subqueries are discussed in more detail in [Subquery Aliasing](/aliasing/subquery).

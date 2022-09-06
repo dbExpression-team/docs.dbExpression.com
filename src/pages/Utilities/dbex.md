@@ -66,7 +66,7 @@ DateTime birthDate = db.SelectOne(dbex.Coerce(dbo.Person.BirthDate))
 
 ## dbex.Alias
 
-dbExpression supports aliasing for columns, tables, and subqueries.  the ```dbex.Alias``` method is commonly used in conjunction with subqueries.  The use of ```dbex.Alias``` is discussed in more detail in the [Aliasing](Aliasing) section.
+dbExpression supports aliasing for columns, tables, and subqueries.  the ```dbex.Alias``` method is commonly used in conjunction with subqueries.  The use of ```dbex.Alias``` is discussed in more detail in the [Aliasing](/aliasing/column) section.
 
 ## dbex.GetDefaultMappingFor
 
@@ -240,7 +240,7 @@ IList<dynamic> person_purchases = db.SelectMany(
 //HatTrick.DbEx.Sql.DbExpressionException : An element with the same key 'Id' already exists in the ExpandoObject.
 ```
 
-This can be corrected by using an alias (see [Aliasing](Aliasing#column-aliasing)) on the field accessor ```dbo.Purchase.Id```:
+This can be corrected by using an alias (see [Aliasing](aliasing/column)) on the field accessor ```dbo.Purchase.Id```:
 ```csharp
 IList<dynamic> person_purchases = db.SelectMany(
         dbex.SelectAllFor(dbo.Person),

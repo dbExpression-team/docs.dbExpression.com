@@ -23,111 +23,112 @@ const navigation = [
 	{ 
 		'title': 'Getting Started', 
 		'links': [
-			{ 'title':'Up and Running in 10 Minutes', 'href': '/Introduction/Getting-Started' },
-			{ 'title':'Sync and Async Execution', 'href': '/Introduction/Sync-and-Async' },
-			{ 'title':'ASP.NET', 'href': '/Introduction/ASPNET' },
-			{ 'title':'Dependency Injection', 'href': '/Introduction/Dependency-Injection' }
+			{ 'title':'Up and Running in 10 Minutes', 'href': '/introduction/getting-started' },
+			{ 'title':'Sync and Async Execution', 'href': '/introduction/sync-and-async' },
+			{ 'title':'ASP.NET', 'href': '/introduction/aspnet' },
+			{ 'title':'Dependency Injection', 'href': '/introduction/dependency-injection' },
+      { 'title':'Supported Versions', 'href': '/mssql/versions' }
 		]
 	},
 	{
 		'title': 'Basic Queries', 
 		'links': [
-			{ 'title':'Select, Update, Insert, Delete', 'href': '/BasicQueryTopics/Basic-Query-Expressions' },
-			{ 'title':'Joins', 'href': '/BasicQueryTopics/Joins' },
-			{ 'title':'Order By', 'href': '/BasicQueryTopics/Order-By' },
-			{ 'title':'Group By', 'href': '/BasicQueryTopics/Group-By' },
-			{ 'title':'Having', 'href': '/BasicQueryTopics/Having' },
-			{ 'title':'In', 'href': '/BasicQueryTopics/In' },
-			{ 'title':'Top', 'href': '/BasicQueryTopics/Top' },
-			{ 'title':'Offset and Limit (Pagination)', 'href': '/BasicQueryTopics/Offset-and-Limit' },
-			{ 'title':'Union and Union All', 'href': '/BasicQueryTopics/Union-and-Union-All' }
+			{ 'title':'Select, Update, Insert, Delete', 'href': '/basic-query-topics/basic-query-expressions' },
+			{ 'title':'Joins', 'href': '/basic-query-topics/joins' },
+			{ 'title':'Order By', 'href': '/basic-query-topics/order-by' },
+			{ 'title':'Group By', 'href': '/basic-query-topics/group-by' },
+			{ 'title':'Having', 'href': '/basic-query-topics/having' },
+			{ 'title':'In', 'href': '/basic-query-topics/in' },
+			{ 'title':'Top', 'href': '/basic-query-topics/top' },
+			{ 'title':'Offset and Limit (Pagination)', 'href': '/basic-query-topics/offset-and-limit' },
+			{ 'title':'Union and Union All', 'href': '/basic-query-topics/union-and-union-all' }
 		]
 	},
 	{
 		'title': 'Advanced Queries', 
 		'links': [
-			{ 'title':'Arithmetic', 'href': '/AdvancedQueryTopics/Arithmetic' },
-			{ 'title':'String Concatenation', 'href': '/AdvancedQueryTopics/String-Concatenation' },
-			{ 'title':'Database Functions', 'href': '/AdvancedQueryTopics/Functions' },
-			{ 'title':'Aggregate Database Functions', 'href': '/AdvancedQueryTopics/Aggregate-Functions' },
-			{ 'title':'Subqueries', 'href': '/AdvancedQueryTopics/Subqueries' },
-			{ 'title':'Views', 'href': '/AdvancedQueryTopics/Views' },
-			{ 'title':'Null Handling', 'href': '/AdvancedQueryTopics/Null-Handling' },
-			{ 'title':'Enums', 'href': '/AdvancedQueryTopics/Enums' },
-			{ 'title':'Multiple Schemas', 'href': '/AdvancedQueryTopics/Multiple-Schemas' },
-			{ 'title':'Multiple Databases', 'href': '/AdvancedQueryTopics/Multiple-Databases' }
+			{ 'title':'Arithmetic', 'href': '/advanced-query-topics/arithmetic' },
+			{ 'title':'String Concatenation', 'href': '/advanced-query-topics/string-concatenation' },
+			{ 'title':'Database Functions', 'href': '/advanced-query-topics/functions' },
+			{ 'title':'Aggregate Database Functions', 'href': '/advanced-query-topics/aggregate-functions' },
+			{ 'title':'Subqueries', 'href': '/advanced-query-topics/subqueries' },
+			{ 'title':'Views', 'href': '/advanced-query-topics/views' },
+			{ 'title':'Null Handling', 'href': '/advanced-query-topics/null-handling' },
+			{ 'title':'Enums', 'href': '/advanced-query-topics/enums' },
+			{ 'title':'Multiple Schemas', 'href': '/advanced-query-topics/multiple-schemas' },
+			{ 'title':'Multiple Databases', 'href': '/advanced-query-topics/multiple-databases' }
 		]
 	},
 	{
 		'title': 'Aliasing', 
 		'links': [
-			{ 'title':'Column Aliasing', 'href': '/Aliasing/Column' },
-			{ 'title':'Table Aliasing', 'href': '/Aliasing/Table' },
-			{ 'title':'Subquery Aliasing', 'href': '/Aliasing/Subquery' },
-			{ 'title':'Element Composition Aliasing', 'href': '/Aliasing/Composition' }
+			{ 'title':'Column Aliasing', 'href': '/aliasing/column' },
+			{ 'title':'Table Aliasing', 'href': '/aliasing/table' },
+			{ 'title':'Subquery Aliasing', 'href': '/aliasing/subquery' },
+			{ 'title':'Element Composition Aliasing', 'href': '/aliasing/composition' }
 		]
 	},
 	{
 		'title': 'Filter Expressions', 
 		'links': [
-			{ 'title':'Types of Filter Expressions', 'href': '/Filters/Supported-Expressions' },
-			{ 'title':'Comparison Expressions', 'href': '/Filters/Comparison-Expressions' },
-			{ 'title':'Logical Expressions', 'href': '/Filters/Logical-Expressions' },
-			{ 'title':'Filter Expressions', 'href': '/Filters/Filter-Expressions' }
+			{ 'title':'Types of Filter Expressions', 'href': '/filters/supported-expressions' },
+			{ 'title':'Comparison Expressions', 'href': '/filters/comparison-expressions' },
+			{ 'title':'Logical Expressions', 'href': '/filters/logical-expressions' },
+			{ 'title':'Filter Expressions', 'href': '/filters/filter-expressions' }
 		]
 	},
 	{
 		'title': 'Stored Procedures', 
 		'links': [
-			{ 'title':'Query Expressions', 'href': '/StoredProcedures/Stored-Procedures' },
-			{ 'title':'Execution', 'href': '/StoredProcedures/Executing' }
+			{ 'title':'Query Expressions', 'href': '/stored-procedures/stored-procedures' },
+			{ 'title':'Execution', 'href': '/stored-procedures/executing' }
 		]
 	},
 	{
 		'title': 'Connections and Transactions', 
 		'links': [
-			{ 'title':'Connections', 'href': '/Connections/Connections' },
-			{ 'title':'Transactions', 'href': '/Connections/Transactions' }
+			{ 'title':'Connections', 'href': '/connections/connections' },
+			{ 'title':'Transactions', 'href': '/connections/transactions' }
 		]
 	},
 	{
 		'title': 'Utilities', 
 		'links': [
-			{ 'title':'dbex', 'href': '/Utilities/dbex' },
-			{ 'title':'Logging', 'href': '/Utilities/Logging' }
+			{ 'title':'dbex', 'href': '/utilities/dbex' },
+			{ 'title':'Logging', 'href': '/utilities/logging' }
 		]
 	},
 	{
 		'title': 'Scaffold Configuration', 
 		'links': [
-			{ 'title':'Scaffolding Configuration', 'href': '/AdvancedScaffolding/Scaffolding-Configuration' },
-			{ 'title':'Applying Overrides', 'href': '/AdvancedScaffolding/Applying-Overrides' },
-			{ 'title':'Enums', 'href': '/AdvancedScaffolding/Enums' }
+			{ 'title':'Scaffolding Configuration', 'href': '/advanced-scaffolding/scaffolding-configuration' },
+			{ 'title':'Applying Overrides', 'href': '/advanced-scaffolding/applying-overrides' },
+			{ 'title':'Enums', 'href': '/advanced-scaffolding/enums' }
 		]
 	},
 	{
 		'title': 'Runtime Configuration', 
 		'links': [
-			{ 'title':'Runtime Configuration', 'href': '/AdvancedRuntimeConfiguration/Runtime-Configuration' },
-			{ 'title':'Factories and Services', 'href': '/AdvancedRuntimeConfiguration/Factories' },
-			{ 'title':'Assembly', 'href': '/AdvancedRuntimeConfiguration/Assembly' },
-			{ 'title':'Execution', 'href': '/AdvancedRuntimeConfiguration/Execution' },
-			{ 'title':'Events', 'href': '/AdvancedRuntimeConfiguration/Events' },
-			{ 'title':'Enums', 'href': '/AdvancedRuntimeConfiguration/Enums' },
-			{ 'title':'Dependency Injection', 'href': '/AdvancedRuntimeConfiguration/Dependency-Injection' },
-			{ 'title':'Static use of dbExpression', 'href': '/AdvancedRuntimeConfiguration/Static-Database' }
+			{ 'title':'Runtime Configuration', 'href': '/runtime-configuration/runtime-configuration' },
+			{ 'title':'Factories and Services', 'href': '/runtime-configuration/factories' },
+			{ 'title':'Assembly', 'href': '/runtime-configuration/assembly' },
+			{ 'title':'Execution', 'href': '/runtime-configuration/execution' },
+			{ 'title':'Events', 'href': '/runtime-configuration/events' },
+			{ 'title':'Enums', 'href': '/runtime-configuration/enums' },
+			{ 'title':'Dependency Injection', 'href': '/runtime-configuration/dependency-injection' },
+			{ 'title':'Static use of dbExpression', 'href': '/runtime-configuration/static-database' }
 		]
 	},
 	{
 		'title': 'Query Execution Pipelines', 
 		'links': [
-			{ 'title':'Query Execution', 'href': '/QueryExecutionPipelines/Query-Execution-Pipelines' },
-			{ 'title':'Pipeline Events', 'href': '/QueryExecutionPipelines/Events' },
-			{ 'title':'Select Pipeline', 'href': '/QueryExecutionPipelines/Select-Execution-Pipeline' },
-			{ 'title':'Insert Pipeline', 'href': '/QueryExecutionPipelines/Insert-Execution-Pipeline' },
-			{ 'title':'Update Pipeline', 'href': '/QueryExecutionPipelines/Update-Execution-Pipeline' },
-			{ 'title':'Delete Pipeline', 'href': '/QueryExecutionPipelines/Delete-Execution-Pipeline' },
-			{ 'title':'Stored Procedure Pipeline', 'href': '/QueryExecutionPipelines/Stored-Procedure-Execution-Pipeline' }
+			{ 'title':'Query Execution', 'href': '/query-execution-pipelines/query-execution-pipelines' },
+			{ 'title':'Pipeline Events', 'href': '/query-execution-pipelines/events' },
+			{ 'title':'Select Pipeline', 'href': '/query-execution-pipelines/select-execution-pipeline' },
+			{ 'title':'Insert Pipeline', 'href': '/query-execution-pipelines/insert-execution-pipeline' },
+			{ 'title':'Update Pipeline', 'href': '/query-execution-pipelines/update-execution-pipeline' },
+			{ 'title':'Delete Pipeline', 'href': '/query-execution-pipelines/delete-execution-pipeline' },
+			{ 'title':'Stored Procedure Pipeline', 'href': '/query-execution-pipelines/stored-procedure-execution-pipeline' }
 		]
 	}
 ]

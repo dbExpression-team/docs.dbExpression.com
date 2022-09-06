@@ -113,7 +113,7 @@ IList<dynamic> results = db.SelectMany(
         .GroupBy(dbex.Alias("Pivot", "State"))
         .OrderBy(dbex.Alias("Pivot", "State"));
 ```
-Note the use of tuples to define the alias in the outer select clause's *Sum* function.  This requires an additional namespace in a using statement ```HatTrick.DbEx.Sql.Builder.Alias```, see [Aliasing](/Aliasing/Column) for more details.
+Note the use of tuples to define the alias in the outer select clause's *Sum* function.  This requires an additional namespace in a using statement ```HatTrick.DbEx.Sql.Builder.Alias```, see [Aliasing](/aliasing/column) for more details.
 
 {% collapsable title="SQL statement" %}
 ```sql
