@@ -240,7 +240,7 @@ IList<dynamic> person_purchases = db.SelectMany(
 //HatTrick.DbEx.Sql.DbExpressionException : An element with the same key 'Id' already exists in the ExpandoObject.
 ```
 
-This can be corrected by using an alias (see [Aliasing](aliasing/column)) on the field accessor ```dbo.Purchase.Id```:
+This can be corrected by using an alias (see [Aliasing](/aliasing/column)) on the field accessor ```dbo.Purchase.Id```:
 ```csharp
 IList<dynamic> person_purchases = db.SelectMany(
         dbex.SelectAllFor(dbo.Person),
