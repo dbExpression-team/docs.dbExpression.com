@@ -79,7 +79,10 @@ Change the ```rootNamespace``` property to a value of *SimpleConsole* and set th
 {
     "rootNamespace": "SimpleConsole",
     "source": {
-        "type": "MsSql",
+        "platform": {
+            "key" : "MsSql",
+            "version": "2019"
+        },
         "connectionString": {
             "value": "Data Source=(LocalDB)\\MSSQLLocalDB;Initial Catalog=SimpleConsoleDb;Integrated Security=true"
         }
@@ -141,7 +144,7 @@ var config = new ConfigurationBuilder()
 
 var services = new ServiceCollection();
 services.AddDbExpression(
-    dbex => dbex.AddMsSql2019Database<SimpleConsoleDb>(
+    dbex => dbex.AddDatabase<SimpleConsoleDb>(
         database => database.ConnectionString.Use(config.GetConnectionString("Default"))
     )
 );
@@ -186,7 +189,7 @@ var config = new ConfigurationBuilder()
 
 var services = new ServiceCollection();
 services.AddDbExpression(
-    dbex => dbex.AddMsSql2019Database<SimpleConsoleDb>(
+    dbex => dbex.AddDatabase<SimpleConsoleDb>(
         database => database.ConnectionString.Use(config.GetConnectionString("Default"))
     )
 );

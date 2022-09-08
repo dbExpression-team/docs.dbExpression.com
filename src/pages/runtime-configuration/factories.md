@@ -46,7 +46,7 @@ To configure this factory:
 ```csharp
 ...
         services.AddDbExpression(
-            dbex => dbex.AddMsSql2019Database<SimpleConsoleDb>(
+            dbex => dbex.AddDatabase<SimpleConsoleDb>(
                 database => {
                     ...
                     database.SqlStatements.Assembly.StatementAppender.Use<MemoryStreamAppender>(); // <- dbExpression will use MemoryStreamAppenders to build SQL statements
@@ -70,7 +70,7 @@ For example, if initialization of an entity *prior* to mapping values from the d
 ```csharp
 ...
         services.AddDbExpression(
-            dbex => dbex.AddMsSql2019Database<SimpleConsoleDb>(
+            dbex => dbex.AddDatabase<SimpleConsoleDb>(
                 database => {
                     ...
                     database.Entities.Creation.ForEntityTypes(
@@ -87,7 +87,7 @@ Most configuration options provide access to the service provider.  The example 
 ```csharp
 ...
         services.AddDbExpression(
-            dbex => dbex.AddMsSql2019Database<SimpleConsoleDb>(
+            dbex => dbex.AddDatabase<SimpleConsoleDb>(
                 database => {
                     ...
                     database.Entities.Creation.ForEntityTypes(

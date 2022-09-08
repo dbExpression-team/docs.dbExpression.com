@@ -14,7 +14,7 @@ public void ConfigureServices(IServiceCollection services)
 {
     ...
     services.AddDbExpression(
-        dbex => dbex.AddMsSql2019Database<MyDatabase>(database => database.ConnectionString.Use(config.GetConnectionString("MyDatabase")))
+        dbex => dbex.AddMDatabase<MyDatabase>(database => database.ConnectionString.Use(config.GetConnectionString("MyDatabase")))
     );
     ...
 }
@@ -66,13 +66,13 @@ using MyOtherDatabase.DataService;
 ...
 
 services.AddDbExpression(
-    dbex => dbex.AddMsSql2019Database<MyDatabase>(database => 
+    dbex => dbex.AddDatabase<MyDatabase>(database => 
         {
             database.ConnectionString.Use(config.GetConnectionString("MyDatabase"));
             database.Conversions.ForTypes(x => x.ForValueType<bool>().Use<MyBooleanValueConverter>());
         }
     ),
-    dbex => dbex.AddMsSql2014Database<MyOtherDatabase>(database => database.ConnectionString.Use(config.GetConnectionString("MyOtherDatabase")))
+    dbex => dbex.AddDatabase<MyOtherDatabase>(database => database.ConnectionString.Use(config.GetConnectionString("MyOtherDatabase")))
 );
 
 ...
@@ -112,13 +112,13 @@ This factory can then be registered for use with ```MyDatabase```:
     services.AddSingleton<IQueryExpressionFactory,AuthenticatedQueryExpressionFactory>();
     
     services.AddDbExpression(
-        dbex => dbex.AddMsSql2019Database<MyDatabase>(database => 
+        dbex => dbex.AddDatabase<MyDatabase>(database => 
             {
                 database.ConnectionString.Use(config.GetConnectionString("MyDatabase"));
                 database.QueryExpressions.Use<AuthenticatedQueryExpressionFactory>();
             }
         ),
-        dbex => dbex.AddMsSql2014Database<MyOtherDatabase>(database => database.ConnectionString.Use(config.GetConnectionString("MyOtherDatabase")))
+        dbex => dbex.AddDatabase<MyOtherDatabase>(database => database.ConnectionString.Use(config.GetConnectionString("MyOtherDatabase")))
     );
 ...
 ```
@@ -131,13 +131,13 @@ To use the factory with both the ```MyDatabase``` and ```MyOtherDatabase``` data
     services.AddSingleton<IQueryExpressionFactory,AuthenticatedQueryExpressionFactory>();
 
     services.AddDbExpression(
-        dbex => dbex.AddMsSql2019Database<MyDatabase>(database =>
+        dbex => dbex.AddDatabase<MyDatabase>(database =>
             {
                 database.ConnectionString.Use(config.GetConnectionString("MyDatabase"));
                 database.QueryExpressions.Use<AuthenticatedQueryExpressionFactory>();
             }
         ),
-        dbex => dbex.AddMsSql2019Database<MyOtherDatabase>(database =>
+        dbex => dbex.AddDatabase<MyOtherDatabase>(database =>
             {
                 database.ConnectionString.Use(config.GetConnectionString("MyOtherDatabase"));
                 database.QueryExpressions.Use<AuthenticatedQueryExpressionFactory>();

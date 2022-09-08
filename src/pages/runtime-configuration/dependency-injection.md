@@ -13,7 +13,7 @@ For example, the ```MyDatabase``` database is configured for use with dbExpressi
 ```csharp
 
 services.AddDbExpression(
-    dbex => dbex.AddMsSql2019Database<MyDatabase>(database => database.ConnectionString.Use(config.GetConnectionString("MyDatabase")))
+    dbex => dbex.AddDatabase<MyDatabase>(database => database.ConnectionString.Use(config.GetConnectionString("MyDatabase")))
 );
 
 ...

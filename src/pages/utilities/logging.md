@@ -30,8 +30,8 @@ services.AddLogging(builder =>
 ...
 
 services.AddDbExpression(
-    dbex => dbex.AddMsSql2019Database<MyDatabase>(database => database.ConnectionString.Use(config.GetConnectionString("MyDatabase"))),
-    dbex => dbex.AddMsSql2014Database<MyOtherDatabase>(database =>
+    dbex => dbex.AddMDatabase<MyDatabase>(database => database.ConnectionString.Use(config.GetConnectionString("MyDatabase"))),
+    dbex => dbex.AddDatabase<MyOtherDatabase>(database =>
         {
             database.ConnectionString.Use(config.GetConnectionString("MyOtherDatabase"));
             database.Logging.ConfigureLoggingSettings(l => l.LogParameterValues = true); // <- safe to log parameter values
