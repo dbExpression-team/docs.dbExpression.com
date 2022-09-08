@@ -79,7 +79,10 @@ Change the ```rootNamespace``` property to a value of *SimpleConsole* and set th
 {
     "rootNamespace": "SimpleConsole",
     "source": {
-        "type": "MsSql",
+        "platform": {
+            "key" : "MsSql",
+            "version": "2019"
+        },
         "connectionString": {
             "value": "Data Source=(LocalDB)\\MSSQLLocalDB;Initial Catalog=SimpleConsoleDb;Integrated Security=true"
         }
@@ -119,9 +122,9 @@ A few more and we're ready to configure your application and write some queries:
 * **Execution Pipeline** - Manages the process of assembling a QueryExpression into a SQL statement, executing against the target database, and optionally managing/mapping any returned rowset data.
 
 ## Configure your application
-dbExpression requires minimal application startup configuration to operate.  Configuration of a database for use in your application starts with a Microsoft SQL Server version specific method and only requires a connection string so it can connect to your target database to execute SQL statements.
+dbExpression requires minimal application startup configuration to operate.  Configuration of a database for use in your application only requires a connection string so it can connect to your target database to execute SQL statements.
 
-> While dbExpression can operate "out of the box" using default implementations of factories/services, it still requires runtime configuration to function. At a minimum, it needs a connection string and the runtime version of Microsoft SQL Server.
+> The only *required* runtime configuration is the connection string of your database.
 
 Replace the code in your ```Program.cs``` file in the *SimpleConsole* application with the following:
 ```csharp
@@ -141,14 +144,14 @@ var config = new ConfigurationBuilder()
 
 var services = new ServiceCollection();
 services.AddDbExpression(
-    dbex => dbex.AddMsSql2019Database<SimpleConsoleDb>(
+    dbex => dbex.AddDatabase<SimpleConsoleDb>(
         database => database.ConnectionString.Use(config.GetConnectionString("Default"))
     )
 );
 var provider = services.BuildServiceProvider();
 provider.UseStaticRuntimeFor<SimpleConsoleDb>();
 ```
-With this, startup creates a ```ServiceCollection``` to register required ```dbExpression``` services for the  *SimpleConsoleDb* database.  dbExpression is configured to execute SQL statements against Microsoft SQL Server version 2019 and will use the connection string named 'Default' from the *appsettings.json* file.
+With this, startup creates a ```ServiceCollection``` to register required ```dbExpression``` services for the  *SimpleConsoleDb* database.  dbExpression is configured to execute SQL statements against Microsoft SQL Server version 2019 (the values from *source.platform* in the dbex.config.json file) and will use the connection string named 'Default' from the *appsettings.json* file.
 
 Typically for dbExpression startup configuration, you'll need these using statements:
 * ```Microsoft.Extensions.Configuration``` - to read configuration files.
@@ -186,7 +189,7 @@ var config = new ConfigurationBuilder()
 
 var services = new ServiceCollection();
 services.AddDbExpression(
-    dbex => dbex.AddMsSql2019Database<SimpleConsoleDb>(
+    dbex => dbex.AddDatabase<SimpleConsoleDb>(
         database => database.ConnectionString.Use(config.GetConnectionString("Default"))
     )
 );
@@ -226,7 +229,7 @@ Console.Read();
 
 First, execution of the ```db.Insert``` will add "Charlie Brown" to the *Person* table in the *SimpleConsoleDb* database.
   Second, execution of the ```db.SelectOne<Person>``` will fetch a record from the database using the ```Id``` that was set 
-on the ```Person``` entity after the insert.  The fetched record will hopefully be "Charlie Brown's" data that was just inserted.  
+on the ```Person``` entity after the insert.  The fetched record should be "Charlie Brown's" data that was just inserted.  
 The ```db.SelectOne<Person>``` will also map the single row return from the database to an instance of a ```Person``` entity,
 the variable ```charlieBrown```.
 

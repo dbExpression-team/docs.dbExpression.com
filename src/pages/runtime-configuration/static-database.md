@@ -5,7 +5,7 @@ title: Static use of dbExpression
 > By default, a database configured with dbExpression does not work statically - additional runtime configuration is *required* to use the database statically
 
 By default, dbExpression uses dependency injection to resolve an instance of a database.  To use dbExpression statically, additional configuration is required.  Using the ```MyDatabase``` example from above, let's configure it to work statically.  
-For ASP.NET, use the ```UseStaticRuntimeFor<T>()``` extension method on ```IApplicationBuilder```, and for other project types, use the ```UseStaticRuntimeFor<T>()``` extension method on ```IServiceProvider```.  
+For ASP.NET, use the ```UseStaticRuntimeFor<T>()``` extension method on ```IApplicationBuilder``` (available in the [HatTrick.DbEx.MsSql.Extensions.DependencyInjection](https://www.nuget.org/packages/HatTrick.DbEx.MsSql.Extensions.DependencyInjection) NuGet package), and for other project types, use the ```UseStaticRuntimeFor<T>()``` extension method on ```IServiceProvider```.  
 An example in a ```Startup.cs``` class for an ASP.NET project;
 
 ```csharp
@@ -14,7 +14,7 @@ public void ConfigureServices(IServiceCollection services)
 {
     ...
     services.AddDbExpression(
-        dbex => dbex.AddMsSql2019Database<MyDatabase>(database => database.ConnectionString.Use(config.GetConnectionString("MyDatabase")))
+        dbex => dbex.AddMDatabase<MyDatabase>(database => database.ConnectionString.Use(config.GetConnectionString("MyDatabase")))
     );
     ...
 }
@@ -34,9 +34,15 @@ Now ```MyDatabase``` can be used statically in  ```CustomerService``` (or anywhe
 
 public class CustomerService
 {
+    public CustomerService() 
+    { 
+        //no constructor args
+    }
+
     public async Task<IList<Customer>> GetCustomersAsync(int offset, int limit)
     {
-        return await db.SelectMany<Customer>() // <- db is used statically, note the removal of the constructor
+        // db is used statically, note the constructor
+        return await db.SelectMany<Customer>()
             .From(dbo.Customer)
             .OrderBy(
                 dbo.Customer.LastName, 
@@ -66,13 +72,13 @@ using MyOtherDatabase.DataService;
 ...
 
 services.AddDbExpression(
-    dbex => dbex.AddMsSql2019Database<MyDatabase>(database => 
+    dbex => dbex.AddDatabase<MyDatabase>(database => 
         {
             database.ConnectionString.Use(config.GetConnectionString("MyDatabase"));
             database.Conversions.ForTypes(x => x.ForValueType<bool>().Use<MyBooleanValueConverter>());
         }
     ),
-    dbex => dbex.AddMsSql2014Database<MyOtherDatabase>(database => database.ConnectionString.Use(config.GetConnectionString("MyOtherDatabase")))
+    dbex => dbex.AddDatabase<MyOtherDatabase>(database => database.ConnectionString.Use(config.GetConnectionString("MyOtherDatabase")))
 );
 
 ...
@@ -112,13 +118,13 @@ This factory can then be registered for use with ```MyDatabase```:
     services.AddSingleton<IQueryExpressionFactory,AuthenticatedQueryExpressionFactory>();
     
     services.AddDbExpression(
-        dbex => dbex.AddMsSql2019Database<MyDatabase>(database => 
+        dbex => dbex.AddDatabase<MyDatabase>(database => 
             {
                 database.ConnectionString.Use(config.GetConnectionString("MyDatabase"));
                 database.QueryExpressions.Use<AuthenticatedQueryExpressionFactory>();
             }
         ),
-        dbex => dbex.AddMsSql2014Database<MyOtherDatabase>(database => database.ConnectionString.Use(config.GetConnectionString("MyOtherDatabase")))
+        dbex => dbex.AddDatabase<MyOtherDatabase>(database => database.ConnectionString.Use(config.GetConnectionString("MyOtherDatabase")))
     );
 ...
 ```
@@ -131,13 +137,13 @@ To use the factory with both the ```MyDatabase``` and ```MyOtherDatabase``` data
     services.AddSingleton<IQueryExpressionFactory,AuthenticatedQueryExpressionFactory>();
 
     services.AddDbExpression(
-        dbex => dbex.AddMsSql2019Database<MyDatabase>(database =>
+        dbex => dbex.AddDatabase<MyDatabase>(database =>
             {
                 database.ConnectionString.Use(config.GetConnectionString("MyDatabase"));
                 database.QueryExpressions.Use<AuthenticatedQueryExpressionFactory>();
             }
         ),
-        dbex => dbex.AddMsSql2019Database<MyOtherDatabase>(database =>
+        dbex => dbex.AddDatabase<MyOtherDatabase>(database =>
             {
                 database.ConnectionString.Use(config.GetConnectionString("MyOtherDatabase"));
                 database.QueryExpressions.Use<AuthenticatedQueryExpressionFactory>();

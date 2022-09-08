@@ -9,7 +9,7 @@ To persist Enum values as strings, additional runtime configuration is required.
 dbExpression.Configure(
     dbex => {
 
-        dbex.AddMsSql2019Database<SimpleConsoleDb>(
+        dbex.AddDatabase<SimpleConsoleDb>(
             database => {
                 ...
                 database.Conversions.ForTypes(c => c
@@ -36,7 +36,7 @@ You have full control of the conversion of Enums as they are written to and read
 dbExpression.Configure(
     dbex => {
 
-        dbex.AddMsSql2019Database<SimpleConsoleDb>(
+        dbex.AddDatabase<SimpleConsoleDb>(
             database => {
                 ...
                 database.Conversions.ForTypes(c => c
