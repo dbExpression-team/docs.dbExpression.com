@@ -60,7 +60,7 @@ This provides connection and version information for the database.
 The *key* setting with a value of "MsSql" indicates that the target database is a Microsoft SQL Server database.
 
 ### source.platform.version
-The *version* setting indicates the version of Microsoft SQL Server (see [Supported Versions](/mssql/versions)).  The scaffolded code will include version specific configuration and settings, so it is important to use the correct value for *version*.
+The *version* setting indicates the version of Microsoft SQL Server (see [Supported Versions](/mssql/versions)).  The scaffolded code will include version specific services, so it is important to use the correct value for *version*.
 
 ### source.connectionString
 The connection string for the target database.  The scaffolding process connects to this database to retrieve metadata about tables, columns, stored procedures, etc.

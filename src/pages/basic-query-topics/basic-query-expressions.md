@@ -6,6 +6,9 @@ description: Fluently build strongly-typed QueryExpressions for execution agains
 using dbExpression, you can easily and fluently construct strongly-typed queries to perform *SELECT*, *UPDATE*, *DELETE*, and *INSERT* operations.
 
 ## Select
+
+We'll cover the basics of *SELECT* queries here, but the [Select Pipeline](/query-execution-pipelines/select-execution-pipeline) section discusses advanced options for *SELECT* sql statement execution.
+
 ### Select One or Many Entities
 Entities in dbExpression refer to the data package classes (POCOs) that are generated via the scaffolding process.  Data package classes are generated for all tables and views in the target database (by default).  The ```SelectOne``` query type returns a single entity (type defined by the provided generic parameter ```<T>```).  The ```SelectMany``` query type expects multiple results and returns an ```IList<T>```.  
 

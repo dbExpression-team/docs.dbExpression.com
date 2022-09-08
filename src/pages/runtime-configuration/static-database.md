@@ -5,7 +5,7 @@ title: Static use of dbExpression
 > By default, a database configured with dbExpression does not work statically - additional runtime configuration is *required* to use the database statically
 
 By default, dbExpression uses dependency injection to resolve an instance of a database.  To use dbExpression statically, additional configuration is required.  Using the ```MyDatabase``` example from above, let's configure it to work statically.  
-For ASP.NET, use the ```UseStaticRuntimeFor<T>()``` extension method on ```IApplicationBuilder```, and for other project types, use the ```UseStaticRuntimeFor<T>()``` extension method on ```IServiceProvider```.  
+For ASP.NET, use the ```UseStaticRuntimeFor<T>()``` extension method on ```IApplicationBuilder``` (available in the [HatTrick.DbEx.MsSql.Extensions.DependencyInjection](https://www.nuget.org/packages/HatTrick.DbEx.MsSql.Extensions.DependencyInjection) NuGet package), and for other project types, use the ```UseStaticRuntimeFor<T>()``` extension method on ```IServiceProvider```.  
 An example in a ```Startup.cs``` class for an ASP.NET project;
 
 ```csharp
@@ -34,9 +34,15 @@ Now ```MyDatabase``` can be used statically in  ```CustomerService``` (or anywhe
 
 public class CustomerService
 {
+    public CustomerService() 
+    { 
+        //no constructor args
+    }
+
     public async Task<IList<Customer>> GetCustomersAsync(int offset, int limit)
     {
-        return await db.SelectMany<Customer>() // <- db is used statically, note the removal of the constructor
+        // db is used statically, note the constructor
+        return await db.SelectMany<Customer>()
             .From(dbo.Customer)
             .OrderBy(
                 dbo.Customer.LastName, 

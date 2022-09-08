@@ -8,6 +8,13 @@ of dbExpression is extensibility.  So while you may never need to override/confi
 > Customization of default factories is typically far less effort than providing your own implementation.
 
 ## Factories
+Factories, services, and the options to replace and/or configure these services fall into the following general categories:
+* **Assembly** - from the start of fluently building a query expression to the assembly of that query expression into a sql statement.
+* **Execution** - after assembly, the process of connecting to the database, building a command and setting (any) parameters and executing the sql statement against the target database.
+* **Entities** - when reading data from the target database and the desired return is an entity or a list of entities.
+* **Conversion** - converters are used to convert data as it is sent to and retrieved from the database.
+* **SqlStatements** - connection management and execution of the composed sql statements against the target database.
+* **Events** - events that occur during the execution of a sql statement, allowing an integration point to implement cross-cutting concerns.
 
 The following is a list of the factories used by dbExpression:
 * **SQL Statement Builder Factory** (```ISqlStatementBuilderFactory```) - creates instances of ```ISqlStatementBuilder```, which creates a SQL statement from a QueryExpression.
@@ -24,6 +31,8 @@ Other services that aren't provided via a factory, but are resolved from the ser
 * **Appender** (```IAppender```) - used to write elements of a QueryExpression.  The default implementation of ```IAppender``` returns a ```StringBuilder``` backed implementation.
 * **Parameter Builder** (```ISqlParameterBuilder```) - responsible for creating platform-specific SQL parameters.
 * **SQL Statement Executor** (```ISqlStatementExecutor```) - executes SQL statements against a target database.
+
+## Configuration Options
 
 To replace a factory implementation, simply provide your implementation while providing runtime configuration.  For example, we'll provide our own implementation of an ```IAppender```:
 ```csharp
@@ -56,13 +65,6 @@ To configure this factory:
         );
 ...
 ```
-
-## Configuration Options
-
-Factories, services, and the options to replace and/or configure these services fall into the following general categories:
-* **Assembly** - from the start of fluently building a query expression to the assembly of that query expression into a sql statement.
-* **Execution** - after assembly, the process of connecting to the database, building a command and setting (any) parameters and executing the sql statement against the target database.
-* **Events** - events that occur during the execution of a sql statement, allowing an integration point to implement cross-cutting concerns.
 
 While factories can be completely replaced with your own implementations, most of the default factories can be customized. Typically customization of a default implementation is far less effort than providing your own implementation.  
 For example, if initialization of an entity *prior* to mapping values from the database is required, simply specify that with the runtime configuration of the default entity factory:  

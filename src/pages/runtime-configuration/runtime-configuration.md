@@ -5,7 +5,7 @@ title: Runtime Configuration
 dbExpression can operate "out of the box" using default implementations of factories/services.  The only *required* runtime configuration is a connection string.  But, you
 can use runtime configuration to tailor dbExpression to your application's needs.  dbExpression configuration is performed in the startup of your application, typically in ```Startup.cs``` or ```Program.cs```.
 
-> By default, dbExpression uses Microsoft SQL Server version specific services to work with older and newer versions of Microsoft SQL Server.
+> By default, dbExpression uses Microsoft SQL Server version specific services to work with supported versions of Microsoft SQL Server.
 
 An example of the most basic startup configuration in a console application:
 ```csharp
