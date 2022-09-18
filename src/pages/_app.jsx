@@ -66,6 +66,8 @@ export default function App({ Component, pageProps }) {
       <Head>
         <title>{pageTitle}</title>
         {description && <meta name="description" content={description} />}
+        <meta property="og:image" content="/dbexpression-og-image.png" />
+        <meta property="twitter:image" content="/dbexpression-twitter-image.png" />
       </Head>
       <Script key="ga-script" strategy='afterInteractive' src="https://www.googletagmanager.com/gtag/js?id=G-BND29F2QPK" />
       <Script id="ga-script-local" strategy='afterInteractive'>

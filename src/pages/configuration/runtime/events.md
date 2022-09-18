@@ -30,7 +30,7 @@ During execution of a sql statement, dbExpression can raise events that allow an
 * ```OnAfterSqlStatementExecution(Action<AfterExecutionPipelineExecutionContext> action)``` - execute the provided delegate *after* a SQL statement is executed for any SQL operation (SELECT, UPDATE, INSERT, DELETE).
 * ```OnAfterSqlStatementExecution(Action<AfterExecutionPipelineExecutionContext> action, Predicate<AfterExecutionPipelineExecutionContext> predicate)``` - execute the provided delegate *after* a SQL statement is executed for any SQL operation (SELECT, UPDATE, INSERT, DELETE) when the predicate condition evaluates to true.
 
-Events, and their relation to execution pipelines are discussed further in [Query Execution Pipelines](/query-execution-pipelines/query-execution-pipelines).  *All events include asynchronous versions as well, those have been omitted from above for brevity.*
+Events, and their relation to execution pipelines are discussed further in [Query Execution](/execution/pipelines).  *All events include asynchronous versions as well, those have been omitted from above for brevity.*
 
 > You can subscribe to multiple event types, and even the same event multiple times.
 

@@ -1,5 +1,5 @@
 ---
-title: Scaffolding Configuration
+title: Scaffolding
 ---
 
 dbExpression scaffolding is a code generation process with the dbExpression dotnet CLI tool.  The scaffolding process generates a thin layer of code that provides the foundation, or 'scaffolding', required to compose and execute QueryExpressions for a specific version of Microsoft SQL Server.  Provided a simple json config file, the ```dbex gen``` command of the CLI tool does the following:

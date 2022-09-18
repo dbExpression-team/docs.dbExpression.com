@@ -7,7 +7,7 @@ using dbExpression, you can easily and fluently construct strongly-typed queries
 
 ## Select
 
-We'll cover the basics of *SELECT* queries here, but the [Select Pipeline](/query-execution-pipelines/select-execution-pipeline) section discusses advanced options for *SELECT* sql statement execution.
+We'll cover the basics of *SELECT* queries here, but the [Select Execution Pipeline](/execution/select-execution-pipeline) section discusses advanced options for *SELECT* sql statement execution.
 
 ### Select One or Many Entities
 Entities in dbExpression refer to the data package classes (POCOs) that are generated via the scaffolding process.  Data package classes are generated for all tables and views in the target database (by default).  The ```SelectOne``` query type returns a single entity (type defined by the provided generic parameter ```<T>```).  The ```SelectMany``` query type expects multiple results and returns an ```IList<T>```.  
@@ -225,7 +225,7 @@ SELECT @@ROWCOUNT;',N'@P1 float,@P2 int',@P1=1.1000000000000001,@P2=3
 ```
 {% /collapsable %}
 
-See [Advanced Queries (Arithmetic)](/advanced-query-topics/arithmetic) section for more detail on using server side arithmetic.
+See [Advanced Queries (Arithmetic)](/advanced/arithmetic) section for more detail on using server side arithmetic.
   
 ## Delete
 dbExpression allows you to compose and execute deletes against your target database without first retrieving affected records.  The following expression issues a delete to the *Purchase* table where *Purchase.Id* equals ```9```.

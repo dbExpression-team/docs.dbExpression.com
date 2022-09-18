@@ -3,7 +3,7 @@ title: Aggregate Database Functions
 description: How to use aggregate database functions while fluently building query expressions.
 ---
 
-dbExpression currently supports the following aggregate functions:
+dbExpression supports the following aggregate database functions:
 * Sum
 * Avg
 * Min

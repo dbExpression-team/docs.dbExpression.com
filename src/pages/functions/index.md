@@ -3,7 +3,7 @@ title: Database Functions
 description: How to use basic database functions while fluently building query expressions.
 ---
 
-dbExpression currently supports the following database functions in QueryExpressions:
+dbExpression supports the following database functions:
 * Concat
 * Coalesce
 * Trim

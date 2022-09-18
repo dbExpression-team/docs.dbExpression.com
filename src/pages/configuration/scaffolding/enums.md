@@ -45,5 +45,5 @@ This configuration indicates that for the column *dbo.Address.AddressType* the s
 
 *This is all you need to do if the Enum is stored as it's numeric value.*
 
-If you store the value of your Enum as a string, see [Runtime Configuration (Enums)](/runtime-configuration/enums) for details on the required runtime configuration.
+If you store the value of your Enum as a string, see [Runtime Configuration (Enums)](/configuration/runtime/enums) for details on the required runtime configuration.
                 

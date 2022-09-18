@@ -1,6 +1,6 @@
 ---
-title: Microsoft SQL Server. Simplified.
-description: Introduction to the why and what of dbExpression
+pageTitle: Microsoft SQL Server. Simplified.
+description: dbExpression - compiled sql for Microsoft SQL Server. 
 ---
 
 dbExpression closes the gap between application code and raw SQL, bringing Microsoft SQL Server functionality into .NET.  dbExpression isn't centered around object relational mapping (ORM) concepts, but instead focuses on allowing you to write powerful type-checked SQL queries comparable to queries written directly in TSQL.

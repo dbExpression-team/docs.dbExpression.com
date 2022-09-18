@@ -1,5 +1,5 @@
 ---
-title: Runtime Configuration
+title: Configuration
 ---
 
 dbExpression can operate "out of the box" using default implementations of factories/services.  The only *required* runtime configuration is a connection string.  But, you

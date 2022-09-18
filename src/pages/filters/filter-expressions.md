@@ -282,7 +282,7 @@ HAVING
 {% /collapsable %}
 
 ## Filter expressions using arithmetic
-Filter expressions can also be composed using arithmetic expressions in Where clauses, Join clauses, and Having clauses (see [Advanced Queries (Arithmetic)](/advanced-query-topics/arithmetic) to learn more about using arithmetic expressions in queries).
+Filter expressions can also be composed using arithmetic expressions in Where clauses, Join clauses, and Having clauses (see [Advanced Queries (Arithmetic)](/advanced/arithmetic) to learn more about using arithmetic expressions in queries).
 
 Arithmetic expression in a Where clause:
 ```csharp

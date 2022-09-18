@@ -15,14 +15,9 @@ import { Footer }  from "@/components/Footer";
 
 const navigation = [
 	{ 
-		'title': 'dbExpression',
-		'links': [
-			{ 'title':'Why dbExpression?', 'href': '/' }
-		]
-	},
-	{ 
 		'title': 'Getting Started', 
 		'links': [
+      { 'title':'Why dbExpression?', 'href': '/' },
 			{ 'title':'Up and Running in 10 Minutes', 'href': '/introduction/getting-started' },
 			{ 'title':'Sync and Async Execution', 'href': '/introduction/sync-and-async' },
 			{ 'title':'ASP.NET', 'href': '/introduction/aspnet' },
@@ -33,30 +28,30 @@ const navigation = [
 	{
 		'title': 'Basic Queries', 
 		'links': [
-			{ 'title':'Select, Update, Insert, Delete', 'href': '/basic-query-topics/basic-query-expressions' },
-			{ 'title':'Joins', 'href': '/basic-query-topics/joins' },
-			{ 'title':'Order By', 'href': '/basic-query-topics/order-by' },
-			{ 'title':'Group By', 'href': '/basic-query-topics/group-by' },
-			{ 'title':'Having', 'href': '/basic-query-topics/having' },
-			{ 'title':'In', 'href': '/basic-query-topics/in' },
-			{ 'title':'Top', 'href': '/basic-query-topics/top' },
-			{ 'title':'Offset and Limit (Pagination)', 'href': '/basic-query-topics/offset-and-limit' },
-			{ 'title':'Union and Union All', 'href': '/basic-query-topics/union-and-union-all' }
+			{ 'title':'Select, Update, Insert, Delete', 'href': '/basics/queries' },
+			{ 'title':'Joins', 'href': '/basics/joins' },
+			{ 'title':'Order By', 'href': '/basics/order-by' },
+			{ 'title':'Group By', 'href': '/basics/group-by' },
+			{ 'title':'Having', 'href': '/basics/having' },
+			{ 'title':'In', 'href': '/basics/in' },
+			{ 'title':'Top', 'href': '/basics/top' },
+			{ 'title':'Offset and Limit (Pagination)', 'href': '/basics/offset-and-limit' },
+			{ 'title':'Union and Union All', 'href': '/basics/union-and-union-all' }
 		]
 	},
 	{
 		'title': 'Advanced Queries', 
 		'links': [
-			{ 'title':'Arithmetic', 'href': '/advanced-query-topics/arithmetic' },
-			{ 'title':'String Concatenation', 'href': '/advanced-query-topics/string-concatenation' },
-			{ 'title':'Database Functions', 'href': '/advanced-query-topics/functions' },
-			{ 'title':'Aggregate Database Functions', 'href': '/advanced-query-topics/aggregate-functions' },
-			{ 'title':'Subqueries', 'href': '/advanced-query-topics/subqueries' },
-			{ 'title':'Views', 'href': '/advanced-query-topics/views' },
-			{ 'title':'Null Handling', 'href': '/advanced-query-topics/null-handling' },
-			{ 'title':'Enums', 'href': '/advanced-query-topics/enums' },
-			{ 'title':'Multiple Schemas', 'href': '/advanced-query-topics/multiple-schemas' },
-			{ 'title':'Multiple Databases', 'href': '/advanced-query-topics/multiple-databases' }
+			{ 'title':'Arithmetic', 'href': '/advanced/arithmetic' },
+			{ 'title':'Database Functions', 'href': '/functions' },
+			{ 'title':'Aggregate Database Functions', 'href': '/functions/aggregate' },
+			{ 'title':'String Concatenation', 'href': '/functions/string/string-concatenation' },
+			{ 'title':'Subqueries', 'href': '/advanced/subqueries' },
+			{ 'title':'Views', 'href': '/advanced/views' },
+			{ 'title':'Null Handling', 'href': '/advanced/null-handling' },
+			{ 'title':'Enums', 'href': '/advanced/enums' },
+			{ 'title':'Multiple Schemas', 'href': '/advanced/multiple-schemas' },
+			{ 'title':'Multiple Databases', 'href': '/advanced/multiple-databases' }
 		]
 	},
 	{
@@ -71,7 +66,7 @@ const navigation = [
 	{
 		'title': 'Filter Expressions', 
 		'links': [
-			{ 'title':'Types of Filter Expressions', 'href': '/filters/supported-expressions' },
+			{ 'title':'Types of Filter Expressions', 'href': '/filters' },
 			{ 'title':'Comparison Expressions', 'href': '/filters/comparison-expressions' },
 			{ 'title':'Logical Expressions', 'href': '/filters/logical-expressions' },
 			{ 'title':'Filter Expressions', 'href': '/filters/filter-expressions' }
@@ -80,15 +75,8 @@ const navigation = [
 	{
 		'title': 'Stored Procedures', 
 		'links': [
-			{ 'title':'Query Expressions', 'href': '/stored-procedures/stored-procedures' },
+			{ 'title':'Assembly', 'href': '/stored-procedures' },
 			{ 'title':'Execution', 'href': '/stored-procedures/executing' }
-		]
-	},
-	{
-		'title': 'Connections and Transactions', 
-		'links': [
-			{ 'title':'Connections', 'href': '/connections/connections' },
-			{ 'title':'Transactions', 'href': '/connections/transactions' }
 		]
 	},
 	{
@@ -101,34 +89,36 @@ const navigation = [
 	{
 		'title': 'Scaffold Configuration', 
 		'links': [
-			{ 'title':'Scaffolding Configuration', 'href': '/advanced-scaffolding/scaffolding-configuration' },
-			{ 'title':'Applying Overrides', 'href': '/advanced-scaffolding/applying-overrides' },
-			{ 'title':'Enums', 'href': '/advanced-scaffolding/enums' }
+			{ 'title':'Scaffolding', 'href': '/configuration/scaffolding' },
+			{ 'title':'Applying Overrides', 'href': '/configuration/scaffolding/applying-overrides' },
+			{ 'title':'Enums', 'href': '/configuration/scaffolding/enums' }
 		]
 	},
 	{
 		'title': 'Runtime Configuration', 
 		'links': [
-			{ 'title':'Runtime Configuration', 'href': '/runtime-configuration/runtime-configuration' },
-			{ 'title':'Factories and Services', 'href': '/runtime-configuration/factories' },
-			{ 'title':'Assembly', 'href': '/runtime-configuration/assembly' },
-			{ 'title':'Execution', 'href': '/runtime-configuration/execution' },
-			{ 'title':'Events', 'href': '/runtime-configuration/events' },
-			{ 'title':'Enums', 'href': '/runtime-configuration/enums' },
-			{ 'title':'Dependency Injection', 'href': '/runtime-configuration/dependency-injection' },
-			{ 'title':'Static use of dbExpression', 'href': '/runtime-configuration/static-database' }
+			{ 'title':'Configuration', 'href': '/configuration/runtime' },
+			{ 'title':'Factories and Services', 'href': '/configuration/runtime/factories' },
+			{ 'title':'Assembly', 'href': '/configuration/runtime/assembly' },
+			{ 'title':'Query Execution', 'href': '/configuration/runtime/execution' },
+			{ 'title':'Pipeline Events', 'href': '/configuration/runtime/events' },
+			{ 'title':'Enums', 'href': '/configuration/runtime/enums' },
+			{ 'title':'Dependency Injection', 'href': '/configuration/runtime/dependency-injection' },
+			{ 'title':'Static use of dbExpression', 'href': '/configuration/runtime/static-database' }
 		]
 	},
 	{
-		'title': 'Query Execution Pipelines', 
+		'title': 'Query Execution', 
 		'links': [
-			{ 'title':'Query Execution', 'href': '/query-execution-pipelines/query-execution-pipelines' },
-			{ 'title':'Pipeline Events', 'href': '/query-execution-pipelines/events' },
-			{ 'title':'Select Pipeline', 'href': '/query-execution-pipelines/select-execution-pipeline' },
-			{ 'title':'Insert Pipeline', 'href': '/query-execution-pipelines/insert-execution-pipeline' },
-			{ 'title':'Update Pipeline', 'href': '/query-execution-pipelines/update-execution-pipeline' },
-			{ 'title':'Delete Pipeline', 'href': '/query-execution-pipelines/delete-execution-pipeline' },
-			{ 'title':'Stored Procedure Pipeline', 'href': '/query-execution-pipelines/stored-procedure-execution-pipeline' }
+			{ 'title':'Connections', 'href': '/execution/connections' },
+			{ 'title':'Transactions', 'href': '/execution/transactions' },
+			{ 'title':'Pipelines', 'href': '/execution/pipelines' },
+      { 'title':'Pipeline Events', 'href': '/execution/events' },
+			{ 'title':'Select Pipeline', 'href': '/execution/select-execution-pipeline' },
+			{ 'title':'Insert Pipeline', 'href': '/execution/insert-execution-pipeline' },
+			{ 'title':'Update Pipeline', 'href': '/execution/update-execution-pipeline' },
+			{ 'title':'Delete Pipeline', 'href': '/execution/delete-execution-pipeline' },
+			{ 'title':'Stored Procedure Pipeline', 'href': '/execution/stored-procedure-execution-pipeline' }
 		]
 	}
 ]

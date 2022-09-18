@@ -12,7 +12,7 @@ Configure options for executing SQL statements.
 * ```Use(Func<IServiceProvider,ISqlStatementExecutor> factory)```: use the service provider to resolve an instance of an ```ISqlStatementExecutor```
 
 #### SqlStatements.Execution.Pipeline
-Configure options for managing the workflow of assembling and executing SQL statements.  *It is very rare, or very advanced use cases, that you would need to override the default execution pipelines*.  The section on [Query Execution Pipelines](/query-execution-pipelines/query-execution-pipelines) details how QueryExpressions are assembled and executed.
+Configure options for managing the workflow of assembling and executing SQL statements.  *It is very rare, or very advanced use cases, that you would need to override the default execution pipelines*.  The section on [Query Execution](/execution/pipelines) details how QueryExpressions are assembled and executed.
 * ```ForPipelineType.Use<T>()```: use the type ```T```, which implements ```IQueryExecutionPipeline```
 * ```ForPipelineType.Use<T>(Func<T> factory)```: use the provided delegate to provide an instance of an ```T```, which is a ```IQueryExecutionPipeline``` for a specific query type (SELECT, INSERT, UPDATE, DELETE, and Stored Procedure)
 * ```ForPipelineType.Use<T>(Func<IServiceProvider,T> factory)```: use the service provider to resolve an instance of an ```T```, which is a ```IQueryExecutionPipeline``` for a specific query type (SELECT, INSERT, UPDATE, DELETE, and Stored Procedure)

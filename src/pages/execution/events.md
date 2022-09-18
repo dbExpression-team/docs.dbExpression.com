@@ -14,4 +14,4 @@ Each of these distinct execution pipelines raise different event types.  However
 * ```OnBeforeSqlStatementExecution``` - This event is fired *just before* a SQL command is executed against the target database.
 * ```OnAfterSqlStatementExecution``` - This event is fired *just after* a SQL command is executed against the target database.  At this stage, any output parameters are available.
 
-Subscribing to events is discussed in more detail in the [Runtime Configuration (Events)](/runtime-configuration/events) section.
+Subscribing to events is discussed in more detail in the [Runtime Configuration (Events)](/configuration/runtime/events) section.
