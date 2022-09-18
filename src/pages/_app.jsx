@@ -70,14 +70,14 @@ export default function App({ Component, pageProps }) {
         <meta property="og:image" content="/dbexpression-og-image.png" />
         <meta property="twitter:image" content="/dbexpression-twitter-image.png" />
       </Head>
-      <Script key="ga-script" strategy='afterInteractive' src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}`} />
+      <Script key="ga-script" strategy='afterInteractive' src="https://www.googletagmanager.com/gtag/js?id=G-BND29F2QPK" />
       <Script id="ga-script-local" strategy='afterInteractive'>
         {`
           window.dataLayer = window.dataLayer || [];
           function gtag(){window.dataLayer.push(arguments);}
           gtag('js', new Date());
         
-          gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}');
+          gtag('config', 'G-BND29F2QPK');
         `}
       </Script>
       <Layout title={title} tableOfContents={tableOfContents} >
