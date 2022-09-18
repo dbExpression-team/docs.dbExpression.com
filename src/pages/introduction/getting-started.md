@@ -1,4 +1,5 @@
 ---
+pageTitle: Up and running with dbExpression in 10 minutes
 title: Up and running with dbExpression in 10 minutes
 description: Installation and walk-thru on using dbExpression.
 ---

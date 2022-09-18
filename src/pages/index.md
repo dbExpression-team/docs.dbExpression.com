@@ -1,5 +1,6 @@
 ---
-pageTitle: Microsoft SQL Server. Simplified.
+pageTitle: Getting Started
+title: Microsoft SQL Server. Simplified.
 description: dbExpression - compiled sql for Microsoft SQL Server. 
 ---
 

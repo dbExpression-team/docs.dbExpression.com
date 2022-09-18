@@ -10,6 +10,20 @@ const nextConfig = {
     images: {
       allowFutureImage: true,
     },
+  },
+  async redirects() {
+    return [
+      {
+        source: '/MsSql/Versions',
+        destination: '/mssql/versions',
+        permanent: true
+      },
+      {
+        source: '/rtd/:slug*',
+        destination: '/:slug*',
+        permanent: false
+      }
+    ]
   }
 }
 

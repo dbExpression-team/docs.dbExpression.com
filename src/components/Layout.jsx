@@ -45,7 +45,7 @@ const navigation = [
 			{ 'title':'Arithmetic', 'href': '/advanced/arithmetic' },
 			{ 'title':'Database Functions', 'href': '/functions' },
 			{ 'title':'Aggregate Database Functions', 'href': '/functions/aggregate' },
-			{ 'title':'String Concatenation', 'href': '/functions/string/string-concatenation' },
+			{ 'title':'String Concatenation', 'href': '/functions/string-concatenation' },
 			{ 'title':'Subqueries', 'href': '/advanced/subqueries' },
 			{ 'title':'Views', 'href': '/advanced/views' },
 			{ 'title':'Null Handling', 'href': '/advanced/null-handling' },
