@@ -11,6 +11,7 @@ to access method signatures of database functions that accept tuples.
 
 The following example uses a tuple with the ```IsNull``` function:
 
+{% code-example %}
 ```csharp
 IList<dynamic> address_stats = db.SelectMany(
         dbo.Person.FirstName,
@@ -33,8 +34,6 @@ IList<dynamic> address_stats = db.SelectMany(
     ).As("Address").On(dbo.Person.Id == ("Address", "PersonId"))
     .Execute();
 ```
-
-{% collapsable title="SQL statement" %}
 ```sql
 exec sp_executesql N'SELECT
 	[dbo].[Person].[FirstName],
@@ -57,7 +56,7 @@ FROM
 	) AS [Address] ON [dbo].[Person].[Id] = [Address].[PersonId];',N'@P1 bigint,@P2 char(1)',@P1=0,@P2='*'
 
 ```
-{% /collapsable %}
+{% /code-example %}
 
 The use of aliasing with the ```IsNull``` function above could have been specified using the ```dbex.Alias``` helper method:
 ```csharp

@@ -4,6 +4,7 @@ description: How to use views in query expressions.
 ---
 
 QueryExpressions can also be composed with database views.  Given the following QueryExpression which selects aggregated data for a person:
+{% code-example %}
 ```csharp
 IList<dynamic> aggregates = db.SelectOne(
     dbo.Person.Id,
@@ -16,8 +17,6 @@ IList<dynamic> aggregates = db.SelectOne(
     dbo.Person.Id
 )
 ```
-
-{% collapsable title="SQL statement" %}
 ```sql
 SELECT        
 	[dbo].[Person].[Id], 
@@ -29,7 +28,7 @@ FROM
 GROUP BY 
 	[dbo].[Person].[Id]
 ```
-{% /collapsable %}
+{% /code-example %}
 
 We can materialize this into a database view named *PersonTotalPurchasesView*:
 ```sql
@@ -49,6 +48,7 @@ GO
 ```
 
 Regenerating code using the dbExpression CLI tool (```dbex gen```), the code will now contain a database entity (POCO) named ```PersonTotalPurchasesView```, which can be used in any query operation that supports views.  For example, to retrieve view data for a single person:
+{% code-example %}
 ```csharp
 //return a PersonTotalPurchasesView, where the person's id is 1.
 PersonTotalPurchasesView person_total = db.SelectOne<PersonTotalPurchasesView>()
@@ -56,8 +56,6 @@ PersonTotalPurchasesView person_total = db.SelectOne<PersonTotalPurchasesView>()
     .Where(dbo.PersonTotalPurchasesView.Id == 1)
     .Execute();
 ```
-
-{% collapsable title="SQL statement" %}
 ```sql
 exec sp_executesql N'SELECT TOP(1)
 	[dbo].[PersonTotalPurchasesView].[Id],
@@ -68,11 +66,12 @@ FROM
 WHERE
 	[dbo].[PersonTotalPurchasesView].[Id] = @P1;',N'@P1 int',@P1=1
 ```
-{% /collapsable %}
+{% /code-example %}
 
 This returns an instance of ```PersonTotalPurchasesView``` with properties ```PersonId```, ```TotalAmount```, and ```TotalCount``` properties.
 
 To retrieve view data for many:
+{% code-example %}
 ```csharp
 //return a list of PersonTotalPurchasesView, where the list contains any person who has a sum of purchases exceeding $2,500.
 IList<PersonTotalPurchasesView> people_totals = db.SelectMany<PersonTotalPurchasesView>()
@@ -80,8 +79,6 @@ IList<PersonTotalPurchasesView> people_totals = db.SelectMany<PersonTotalPurchas
     .Where(dbo.PersonTotalPurchasesView.TotalAmount > 2500)
     .Execute();
 ```
-
-{% collapsable title="SQL statement" %}
 ```sql
 exec sp_executesql N'SELECT
 	[dbo].[PersonTotalPurchasesView].[Id],
@@ -92,9 +89,10 @@ FROM
 WHERE
 	[dbo].[PersonTotalPurchasesView].[TotalAmount] > @P1;',N'@P1 money',@P1=$2500.0000
 ```
-{% /collapsable %}
+{% /code-example %}
 
 Using a view to update records:
+{% code-example %}
 ```csharp
 //update any person's credit limit by 10% (rounding down to the nearest integer) who has spent more than $2,500 and a credit limit exists
 int affectedCount = db.Update(
@@ -105,8 +103,6 @@ int affectedCount = db.Update(
     .Where(dbo.PersonTotalPurchasesView.TotalAmount > 2500)
     .Execute();
 ```
-
-{% collapsable title="SQL statement" %}
 ```sql
 exec sp_executesql N'UPDATE
 	[dbo].[Person]
@@ -119,9 +115,10 @@ WHERE
 	[dbo].[PersonTotalPurchasesView].[TotalAmount] > @P2;
 SELECT @@ROWCOUNT;',N'@P1 float,@P2 money',@P1=1.1000000000000001,@P2=$2500.0000
 ```
-{% /collapsable %}
+{% /code-example %}
 
 Using a view to delete records:
+{% code-example %}
 ```csharp
 //delete persons who haven't made any purchases
 int affectedCount = db.Delete()
@@ -130,8 +127,6 @@ int affectedCount = db.Delete()
     .Where(dbo.PersonTotalPurchasesView.Id == dbex.Null)
     .Execute();
 ```
-
-{% collapsable title="SQL statement" %}
 ```sql
 DELETE
 	[dbo].[Person]
@@ -142,4 +137,4 @@ WHERE
 	[dbo].[PersonTotalPurchasesView].[Id] IS NULL;
 SELECT @@ROWCOUNT;
 ```
-{% /collapsable %}
+{% /code-example %}

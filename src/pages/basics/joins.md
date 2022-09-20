@@ -11,6 +11,8 @@ dbExpression supports the following join types in QueryExpressions:
 * Cross Join
 
 ## Left Join
+
+{% code-example %}
 ```csharp
 //select all people who do not have an address
 IList<Person> people = db.SelectMany<Person>()
@@ -19,8 +21,6 @@ IList<Person> people = db.SelectMany<Person>()
     .Where(dbo.PersonAddress.Id == dbex.Null)
     .Execute();
 ```
-
-{% collapsable title="SQL statement" %}
 ```sql
 SELECT
     [dbo].[Person].[Id],
@@ -40,9 +40,11 @@ FROM
 WHERE
     [dbo].[Person_Address].[Id] IS NULL;
 ```
-{% /collapsable %}
+{% /code-example %}
 
 ## Right Join
+
+{% code-example %}
 ```csharp
 //get person credit limit info for people in zip 94043
 IList<dynamic> info = db.SelectMany(
@@ -58,8 +60,6 @@ IList<dynamic> info = db.SelectMany(
     .Where(dbo.Address.Zip == zip & dbo.Address.AddressType == AddressType.Billing)
     .Execute();
 ```
-
-{% collapsable title="SQL statement" %}
 ```sql
 exec sp_executesql N'SELECT
     [dbo].[Person].[Id],
@@ -76,9 +76,11 @@ WHERE
     AND
     [dbo].[Address].[AddressType] = @P2;',N'@P1 varchar(10),@P2 int',@P1='94043',@P2=2
 ```
-{% /collapsable %}
+{% /code-example %}
 
 ## Inner Join
+
+{% code-example %}
 ```csharp
 //select all address records for person with id equal 1
 IList<Address> addresses = db.SelectMany<Address>()
@@ -87,8 +89,6 @@ IList<Address> addresses = db.SelectMany<Address>()
     .Where(dbo.PersonAddress.PersonId == 1)
     .Execute();
 ```
-
-{% collapsable title="SQL statement" %}
 ```sql
 exec sp_executesql N'SELECT
 	[dbo].[Address].[Id],
@@ -106,9 +106,11 @@ FROM
 WHERE
 	[dbo].[Person_Address].[PersonId] = @P1;',N'@P1 int',@P1=1
 ```
-{% /collapsable %}
+{% /code-example %}
 
 ## Full Join
+
+{% code-example %}
 ```csharp
 //select data set for people's purchases
 IList<dynamic> purchases = db.SelectMany(
@@ -122,8 +124,6 @@ IList<dynamic> purchases = db.SelectMany(
     .FullJoin(dbo.Purchase).On(dbo.Purchase.PersonId == dbo.Person.Id)
     .Execute();
 ```
-
-{% collapsable title="SQL statement" %}
 ```sql
 exec sp_executesql N'SELECT
     [dbo].[Person].[Id],
@@ -135,9 +135,11 @@ FROM
     [dbo].[Person]
     FULL JOIN [dbo].[Purchase] ON [dbo].[Purchase].[PersonId] = [dbo].[Person].[Id];',N'@P1 float',@P1=0
 ```
-{% /collapsable %}
+{% /code-example %}
 
 ## Cross Join
+
+{% code-example %}
 ```csharp
 //select all product combinations price totals
 IList<double> prices = db.SelectMany(
@@ -147,8 +149,6 @@ IList<double> prices = db.SelectMany(
     .CrossJoin(dbo.Product.As("p2"))
     .Execute();
 ```
-
-{% collapsable title="SQL statement" %}
 ```sql
 SELECT
     ([p1].[Price] + [p2].[Price])
@@ -156,4 +156,4 @@ FROM
     [dbo].[Product] AS [p1]
     CROSS JOIN [dbo].[Product] AS [p2];
 ```
-{% /collapsable %}
+{% /code-example %}

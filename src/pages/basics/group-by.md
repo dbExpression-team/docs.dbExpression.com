@@ -5,9 +5,10 @@ description: How to use group by clauses when fluently building query expression
 
 Results can be grouped by using the ```GroupBy``` method while composing a QueryExpression. dbExpression supports grouping by any number of expression elements.
 
+{% code-example %}
 ```csharp
 //select the count of records grouped by last name
-IList<dynamic> averages = db.SelectMany(
+IList<dynamic> counts = db.SelectMany(
         dbo.Person.LastName,
         db.fx.Count(dbo.Person.LastName).As("LastNameCount")
     )
@@ -15,8 +16,6 @@ IList<dynamic> averages = db.SelectMany(
     .GroupBy(dbo.Person.LastName)
     .Execute();
 ```
-
-{% collapsable title="SQL statement" %}
 ```sql
 SELECT
 	[dbo].[Person].[LastName],
@@ -26,10 +25,11 @@ FROM
 GROUP BY
 	[dbo].[Person].[LastName];
 ```
-{% /collapsable %}
+{% /code-example %}
 
 Group by is typically used with aggregation functions, but also works as a means to select distinct items.
 
+{% code-example %}
 ```csharp
 //select unique last names ordered ascending
 IList<string> uniqueLastNames = db.SelectMany(dbo.Person.LastName)
@@ -38,8 +38,6 @@ IList<string> uniqueLastNames = db.SelectMany(dbo.Person.LastName)
     .OrderBy(dbo.Person.LastName.Asc)
     .Execute();
 ```
-
-{% collapsable title="SQL statement" %}
 ```sql
 SELECT
     [dbo].[Person].[LastName]
@@ -50,4 +48,4 @@ GROUP BY
 ORDER BY
     [dbo].[Person].[LastName] ASC;
 ```
-{% /collapsable %}
+{% /code-example %}

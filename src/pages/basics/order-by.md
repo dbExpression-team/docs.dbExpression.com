@@ -4,6 +4,8 @@ description: How to use order by clauses when fluently building query expression
 ---
 
 Results can be ordered either ascending or descending by using the ```Asc``` or ```Desc``` properties of a field expression (or any valid expression element).  When not provided, order defaults to ascending.  dbExpression supports ordering by any number of expression elements.
+
+{% code-example %}
 ```csharp
 //select all people ordered by last name descending
 IList<Person> people = db.SelectMany<Person>()
@@ -11,8 +13,6 @@ IList<Person> people = db.SelectMany<Person>()
     .OrderBy(dbo.Person.LastName.Desc)
     .Execute();
 ```
-
-{% collapsable title="SQL statement" %}
 ```sql
 SELECT
     [dbo].[Person].[Id],
@@ -31,8 +31,9 @@ FROM
 ORDER BY
     [dbo].[Person].[LastName] DESC;
 ```
-{% /collapsable %}
+{% /code-example %}
 
+{% code-example %}
 ```csharp
 //select all people ordered by gender type ascending and last name ascending
 IList<Person> people = db.SelectMany<Person>()
@@ -43,8 +44,6 @@ IList<Person> people = db.SelectMany<Person>()
     )
     .Execute();
 ```
-
-{% collapsable title="SQL statement" %}
 ```sql
 SELECT
     [dbo].[Person].[Id],
@@ -64,4 +63,4 @@ ORDER BY
     [dbo].[Person].[GenderType] ASC,
     [dbo].[Person].[LastName] ASC;
 ```
-{% /collapsable %}
+{% /code-example %}

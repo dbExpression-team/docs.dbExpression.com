@@ -18,18 +18,17 @@ Use ```fx``` to access these functions for building QueryExpressions. So, using 
 
 > Use the ```fx``` property of the database accessor to use database functions
 
+{% code-example %}
 ```csharp
 //select the avg total purchase amount
 double avgSale = db.SelectOne(db.fx.Avg(dbo.Purchase.TotalPurchaseAmount))
     .From(dbo.Purchase)
     .Execute();
 ```
-
-{% collapsable title="SQL statement" %}
 ```sql
 SELECT TOP(1)
 	AVG([dbo].[Purchase].[TotalPurchaseAmount])
 FROM
 	[dbo].[Purchase];
 ```
-{% /collapsable %}
+{% /code-example %}

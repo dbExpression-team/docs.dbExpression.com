@@ -18,6 +18,7 @@ This would cause a compilation error:  ```CS0034 Operator '==' is ambiguous on o
 
  While you can cast a ```null``` as a specific type, it is *preferable* to use ```dbex.Null```.  The following expressions are both valid and produce identical SQL statements:
 
+{% code-example %}
 ```csharp
 // it is known that the equality comparison is to a type of 
 // DateTime? as we are casting a CLR null to DateTime?
@@ -33,8 +34,6 @@ db.SelectOne<Person>()
     .Where(dbo.Person.LastLoginDate == dbex.Null)
     .Execute();
 ```
-
-{% collapsable title="SQL statement" %}
 ```sql
 SELECT TOP(1)
 	[dbo].[Person].[Id],
@@ -53,4 +52,4 @@ FROM
 WHERE
 	[dbo].[Person].[LastLoginDate] IS NULL;
 ```
-{% /collapsable %}
+{% /code-example %}

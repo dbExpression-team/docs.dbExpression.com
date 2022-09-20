@@ -98,7 +98,7 @@ DateTimeOffset registration = db.SelectOne(dbo.Person.RegistrationDate)
     .Execute();
 ```
 
-{% collapsable title="SQL statement" %}
+{% code-example %}
 ```sql
 exec sp_executesql N'SELECT TOP(1)
 	[dbo].[Person].[RegistrationDate]
@@ -107,7 +107,7 @@ FROM
 WHERE
 	[dbo].[Person].[Id] = @P1;',N'@P1 int',@P1=1
 ```
-{% /collapsable %}
+{% /code-example %}
 
 This filter specifies a field expression greater than a literal value:
 ```csharp
@@ -118,8 +118,6 @@ IList<Person> people = db.SelectMany<Person>()
     .Where(dbo.Person.LastLoginDate > yesterday)
     .Execute();
 ```
-
-{% collapsable title="SQL statement" %}
 ```sql
 exec sp_executesql N'SELECT
 	[dbo].[Person].[Id],
@@ -138,9 +136,10 @@ FROM
 WHERE
 	[dbo].[Person].[LastLoginDate] > @P1;',N'@P1 datetimeoffset(7)',@P1='2021-04-14 00:00:00 -05:00'
 ```
-{% /collapsable %}
+{% /code-example %}
 
 This filter specifies a field expression equal to a literal value:
+{% code-example %}
 ```csharp
 IList<Person> people = db.SelectMany<Person>()
     .From(dbo.Person)
@@ -148,8 +147,6 @@ IList<Person> people = db.SelectMany<Person>()
     .Where(dbo.Person.LastName == "Cartman")
     .Execute();
 ```
-
-{% collapsable title="SQL statement" %}
 ```sql
 exec sp_executesql N'SELECT
 	[dbo].[Person].[Id],
@@ -168,9 +165,10 @@ FROM
 WHERE
 	[dbo].[Person].[LastName] = @P1;',N'@P1 varchar(20)',@P1='Cartman'
 ```
-{% /collapsable %}
+{% /code-example %}
 
 This filter specifies a field expression equal to a field expression (all people with the same first name as their last name):
+{% code-example %}
 ```csharp
 IList<Person> people = db.SelectMany<Person>()
     .From(dbo.Person)
@@ -178,8 +176,6 @@ IList<Person> people = db.SelectMany<Person>()
     .Where(dbo.Person.FirstName == dbo.Person.LastName)
     .Execute();
 ```
-
-{% collapsable title="SQL statement" %}
 ```sql
 SELECT
 	[dbo].[Person].[Id],
@@ -198,9 +194,10 @@ FROM
 WHERE
 	[dbo].[Person].[FirstName] = [dbo].[Person].[LastName];
 ```
-{% /collapsable %}
+{% /code-example %}
 
 This filter specifies a field expression greater than a literal value and additionally a field expression greater than or equal to a literal value:
+{% code-example %}
 ```csharp
 IList<Person> people = db.SelectMany<Person>()
    .From(dbo.Person)
@@ -212,8 +209,6 @@ IList<Person> people = db.SelectMany<Person>()
    )
    .Execute();
 ```
-
-{% collapsable title="SQL statement" %}
 ```sql
 exec sp_executesql N'SELECT
 	[dbo].[Person].[Id],
@@ -234,7 +229,7 @@ WHERE
 	AND
 	[dbo].[Person].[CreditLimit] >= @P2;',N'@P1 int,@P2 int',@P1=2020,@P2=25000
 ```
-{% /collapsable %}
+{% /code-example %}
 
 This filter specifies a field expression that is one of a set of literal values:
 
@@ -252,7 +247,7 @@ IList<Person> people = db.SelectMany<Person>()
     .Execute();
 ```
 
-{% collapsable title="SQL statement" %}
+{% code-example %}
 ```sql
 exec sp_executesql N'SELECT
 	[dbo].[Person].[Id],
@@ -277,7 +272,7 @@ WHERE
 	OR
 	[dbo].[Person].[LastName] = @P3;',N'@P1 varchar(20),@P2 varchar(20),@P3 varchar(20)',@P1='Broflovski',@P2='Cartman',@P3='McCormick'
 ```
-{% /collapsable %}
+{% /code-example %}
 
 ### Filter expressions in Join clauses
 ```csharp
@@ -292,7 +287,7 @@ IList<dynamic> person_totals = db.SelectMany(
     .Execute();
 ```
 
-{% collapsable title="SQL statement" %}
+{% code-example %}
 ```sql
 SELECT
 	[dbo].[Person].[Id],
@@ -303,7 +298,7 @@ FROM
 GROUP BY
 	[dbo].[Person].[Id];
 ```
-{% /collapsable %}
+{% /code-example %}
 
 ```csharp
 IList<dynamic> person_zips = db.SelectMany(
@@ -322,7 +317,7 @@ IList<dynamic> person_zips = db.SelectMany(
     .Execute();
 ```
 
-{% collapsable title="SQL statement" %}
+{% code-example %}
 ```sql
 exec sp_executesql N'SELECT
 	[dbo].[Person].[Id],
@@ -334,7 +329,7 @@ FROM
 	AND
 	[dbo].[Address].[AddressType] = @P1;',N'@P1 int',@P1=1
 ```
-{% /collapsable %}
+{% /code-example %}
 
 ### Filter expressions in Having clauses
 ```csharp
@@ -351,7 +346,7 @@ IList<dynamic> people = db.SelectMany(
     .Execute();
 ```
 
-{% collapsable title="SQL statement" %}
+{% code-example %}
 ```sql
 exec sp_executesql N'SELECT
 	[dbo].[Person].[LastName],
@@ -363,7 +358,7 @@ GROUP BY
 HAVING
 	COUNT([dbo].[Person].[Id]) > @P1;',N'@P1 int',@P1=1
 ```
-{% /collapsable %}
+{% /code-example %}
 
 ### Filter expressions using arithmetic
 Filter expressions can also be composed using arithmetic expressions in Where clauses, Join clauses, and Having clauses (see [Advanced Queries (Arithmetic)](advanced-query-expressions#arithmetic) to learn more about using arithmetic expressions in queries).
@@ -378,7 +373,7 @@ IList<Product> products = db.SelectMany<Product>()
     .Execute();
 ```
 
-{% collapsable title="SQL statement" %}
+{% code-example %}
 ```sql
 exec sp_executesql N'SELECT
 	[dbo].[Product].[Id],
@@ -403,7 +398,7 @@ FROM
 WHERE
 	(([dbo].[Product].[Quantity] * [dbo].[Product].[ListPrice]) - ([dbo].[Product].[Quantity] * [dbo].[Product].[Price])) > @P1;',N'@P1 float',@P1=1000
 ```
-{% /collapsable %}
+{% /code-example %}
 
 Arithmetic expression in a Join clause:
 ```csharp
@@ -417,7 +412,7 @@ IList<dynamic> purchases = db.SelectMany(
     .Execute();
 ```
 
-{% collapsable title="SQL statement" %}
+{% code-example %}
 ```sql
 exec sp_executesql N'SELECT
 	[dbo].[Purchase].[OrderNumber],
@@ -429,7 +424,7 @@ FROM
 	AND
 	[dbo].[Purchase].[TotalPurchaseAmount] > @P1;',N'@P1 money',@P1=$100.0000
 ```
-{% /collapsable %}
+{% /code-example %}
 
 And an arithmetic expression in a Having clause:
 ```csharp
@@ -444,7 +439,7 @@ IList<dynamic> purchases = db.SelectMany(
     .Execute();
 ```
 
-{% collapsable title="SQL statement" %}
+{% code-example %}
 ```sql
 exec sp_executesql N'SELECT
 	[dbo].[Purchase].[OrderNumber],
@@ -457,4 +452,4 @@ GROUP BY
 HAVING
 	SUM([dbo].[PurchaseLine].[PurchasePrice]) > @P1;',N'@P1 decimal(3,0)',@P1=100
 ```
-{% /collapsable %}
+{% /code-example %}

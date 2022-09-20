@@ -5,6 +5,7 @@ description: How to use the top clause when fluently building query expressions.
 
 Use the ```Top``` method while composing a QueryExpression to limit the number of results affected/returned from execution.
 
+{% code-example %}
 ```csharp
 //select the top 5 purchases by dollar amount
 IList<Purchase> purchases = db.SelectMany<Purchase>()
@@ -13,8 +14,6 @@ IList<Purchase> purchases = db.SelectMany<Purchase>()
     .OrderBy(dbo.Purchase.TotalPurchaseAmount.Desc)
     .Execute();
 ```
-
-{% collapsable title="SQL statement" %}
 ```sql
 SELECT TOP(5)
     [dbo].[Purchase].[Id],
@@ -35,9 +34,11 @@ FROM
 ORDER BY
     [dbo].[Purchase].[TotalPurchaseAmount] DESC;
 ```
-{% /collapsable %}
+{% /code-example %}
 
 ```Top``` can also be used in conjunction with the ```Distinct``` method.
+
+{% code-example %}
 ```csharp
 //select the top 5 distinct persons by name
 IList<Person> persons = db.SelectMany(
@@ -53,8 +54,6 @@ IList<Person> persons = db.SelectMany(
     )
     .Execute();
 ```
-
-{% collapsable title="SQL statement" %}
 ```sql
 SELECT DISTINCT TOP(5)
 	[dbo].[Person].[FirstName],
@@ -66,4 +65,4 @@ ORDER BY
 	[dbo].[Person].[FirstName] ASC
 ;
 ```
-{% /-output %}
+{% /code-example %}

@@ -4,6 +4,8 @@ description: How to use the offset and limit statements when fluently building q
 ---
 
 Use the ```Offset``` and ```Limit``` methods while composing a QueryExpression to return a window of results from execution of a QueryExpression.
+
+{% code-example %}
 ```csharp
 //skip the first 10 matched records, and only return 10 records
 IList<Person> people = db.SelectMany<Person>()
@@ -13,8 +15,6 @@ IList<Person> people = db.SelectMany<Person>()
     .Limit(10)
     .Execute();
 ```
-
-{% collapsable title="SQL statement" %}
 ```sql
 exec sp_executesql N'SELECT
     [dbo].[Person].[Id],
@@ -35,8 +35,9 @@ ORDER BY
     OFFSET @P1 ROWS
     FETCH NEXT @P2 ROWS ONLY;',N'@P1 int,@P2 int',@P1=10,@P2=10
 ```
-{% /collapsable %}
+{% /code-example %}
 
+{% code-example %}
 ```csharp
 //skip the first record, and return all remaining records
 IList<Person> notTheLastPersonToRegister = db.SelectMany<Person>()
@@ -45,8 +46,6 @@ IList<Person> notTheLastPersonToRegister = db.SelectMany<Person>()
     .Offset(1)
     .Execute();
 ```
-
-{% collapsable title="SQL statement" %}
 ```sql
 exec sp_executesql N'SELECT
     [dbo].[Person].[Id],
@@ -67,4 +66,4 @@ ORDER BY
     OFFSET @P1	 ROWS
 ;',N'@P1 int',@P1=1
 ```
-{% /collapsable %}
+{% /code-example %}

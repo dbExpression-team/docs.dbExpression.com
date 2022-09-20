@@ -6,6 +6,7 @@ description: How to use union and union all when fluently building query express
 Use the ```Union``` and ```Union All``` methods while composing a QueryExpression to append 
 multiple select statements and return a single rowset.
 
+{% code-example %}
 ```csharp
 IList<dynamic> results = db.SelectMany(
             dbo.Person.Id,
@@ -21,8 +22,6 @@ IList<dynamic> results = db.SelectMany(
         )
         .From(dbo.Address);
 ```
-
-{% collapsable title="SQL statement" %}
 ```sql
 SELECT
 	[dbo].[Person].[Id],
@@ -38,8 +37,9 @@ SELECT
 FROM
 	[dbo].[Address];
 ```
-{% /collapsable %}
+{% /code-example %}
 
+{% code-example %}
 ```csharp
 IList<dynamic> results = db.SelectMany(
             dbo.Person.Id,
@@ -55,8 +55,6 @@ IList<dynamic> results = db.SelectMany(
         )
         .From(dbo.Address);
 ```
-
-{% collapsable title="SQL statement" %}
 ```sql
 SELECT
 	[dbo].[Person].[Id],
@@ -72,10 +70,11 @@ SELECT
 FROM
 	[dbo].[Address];
 ```
-{% /collapsable %}
+{% /code-example %}
 
 *Union* and *Union All* can be used in conjunction with other database functions, grouping, ordering, etc.  For example, the following pivots data using different database functions,  and aggregation, finally ordering the result set (purely for example, we know there's a better way):
 
+{% code-example %}
 ```csharp
 IList<dynamic> results = db.SelectMany(
             dbex.Alias<string>("Pivot", "State"),
@@ -115,7 +114,6 @@ IList<dynamic> results = db.SelectMany(
 ```
 Note the use of tuples to define the alias in the outer select clause's *Sum* function.  This requires an additional namespace in a using statement ```HatTrick.DbEx.Sql.Builder.Alias```, see [Aliasing](/aliasing/column) for more details.
 
-{% collapsable title="SQL statement" %}
 ```sql
 exec sp_executesql N'SELECT
 	[Pivot].[State],
@@ -165,4 +163,4 @@ GROUP BY
 ORDER BY
 	[Pivot].[State] ASC;',N'@P1 nchar(1),@P2 int,@P3 nchar(1),@P4 int,@P5 nchar(1),@P6 int',@P1=N'*',@P2=0,@P3=N'*',@P4=1,@P5=N'*',@P6=2
 ```
-{% /collapsable %}
+{% /code-example %}

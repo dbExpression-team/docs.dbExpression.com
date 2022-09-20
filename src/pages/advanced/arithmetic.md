@@ -40,6 +40,7 @@ db.fx.IsNull(dbo.Product.Height, 0) * db.fx.IsNull(dbo.Product.Width, 0) * db.fx
 ```
 
 An example QueryExpression using arithmetic expressions to select data calculated by the database engine:
+{% code-example %}
 ```csharp
 //select the product info (inventory on hand, price of inventory and projected margin on sales)
 IList<dynamic> inventoryStats = db.SelectMany(
@@ -52,8 +53,6 @@ IList<dynamic> inventoryStats = db.SelectMany(
     .From(dbo.Product)
     .Execute();
 ```
-
-{% collapsable title="SQL statement" %}
 ```sql
 SELECT
     [dbo].[Product].[Id],
@@ -64,6 +63,6 @@ SELECT
 FROM
     [dbo].[Product];
 ```
-{% /collapsable %}
+{% /code-example %}
 
 Arithmetic expressions are also useful for filtering data retrieved from the database, see [Filter Expressions](/filters/filter-expressions#filter-expressions-in-where-clauses) for using arithmetic expressions in Where (and other) clauses.

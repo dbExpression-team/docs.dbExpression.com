@@ -18,6 +18,7 @@ IList<dynamic> purchases = db.SelectMany(
 Execution of this would cause the following runtime exception during mapping to a dynamic object:  ```HatTrick.DbEx.Sql.DbExpressionException : An element with the same key 'Id' already exists in the ExpandoObject.```
 
 This is corrected by providing a field-level alias on one (or more) of the ```Id``` fields by using the ```As(alias)``` method:
+{% code-example %}
 ```csharp
 IList<dynamic> purchases = db.SelectMany(
         dbo.Person.Id.As("PersonId"),
@@ -29,8 +30,6 @@ IList<dynamic> purchases = db.SelectMany(
     .InnerJoin(dbo.Person).On(dbo.Purchase.PersonId == dbo.Person.Id)
     .Execute();
 ```
-
-{% collapsable title="SQL statement" %}
 ```sql
 SELECT
 	[dbo].[Person].[Id] AS [PersonId],
@@ -41,4 +40,4 @@ FROM
 	[dbo].[Purchase]
 	INNER JOIN [dbo].[Person] ON [dbo].[Purchase].[PersonId] = [dbo].[Person].[Id];
 ```
-{% /collapsable %}
+{% /code-example %}

@@ -67,6 +67,7 @@ When configuring Enums (and other primitive types) using delegates, delegates mu
 
 *But why?* It's possible to logically create a ```null``` value for a field even though the property is defined as non-nullable.  Think of a *LEFT JOIN* that returns a null value for a column that's marked *NOT NULL*.    Let's say the ```AddressType``` property on the ```Address``` entity does not allow null values.  With (default) scaffolding, a null ```AddressType``` can't be mapped to an ```Address``` entity. It's possible (and perfectly viable) to have a ```null``` value for ```AddressType``` when queries are structured to do just that.  In the following example, a ```Person``` is not required to have an address, so returning a ```Person``` with no ```Address``` will result in a ```null``` for the ```AddressType``` field:
 
+{% code-example %}
 ```csharp
 db.SelectOne(
         dbo.Person.FirstName,
@@ -78,8 +79,6 @@ db.SelectOne(
     .LeftJoin(dbo.Address).On(dbo.PersonAddress.AddressId == dbo.Address.Id)
     .Execute();
 ```
-
-{% collapsable title="SQL statement" %}
 ```sql
 SELECT
 	[dbo].[Person].[FirstName]
@@ -90,7 +89,7 @@ FROM
 	LEFT JOIN [dbo].[Person_Address] ON [dbo].[Person].[Id] = [dbo].[Person_Address].[PersonId]
 	LEFT JOIN [dbo].[Address] ON [dbo].[Person_Address].[AddressId] = [dbo].[Address].[Id];
 ```
-{% /collapsable %}
+{% /code-example %}
 
 In the dynamic result from execution of this query, the ```AddressType``` property may be a ```null``` value - and again this is perfectly viable based on the query. As conversions for ```AddressType``` use the overriden delegate to convert values, it must handle the ```null``` value or an exception would occur in the delegate.
 

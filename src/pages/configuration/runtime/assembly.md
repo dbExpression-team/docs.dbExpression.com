@@ -42,28 +42,24 @@ Configure options for creating parameters for literal values for use with SQL co
 Configure options for the styling of SQL statements.
 * ```ConfigureOutputSettings(Action<SqlStatementAssemblyOptions> configure)```: use the provided delegate to configure the output settings while appending QueryExpression elements to the appender.
 
-{% collapsable title="SQL statement" %}
 A value of ```true``` would emit:
-    
 ```sql
 SELECT 
     [dbo].[Person].[Id] 
 FROM 
     [dbo].[Person]
 ```
-While a value of ```false``` would emit:
 
+While a value of ```false``` would emit:
 ```sql
 SELECT 
     [Person].[Id] 
 FROM 
     [Person]
 ```
-{% /collapsable %}
 
 * ```PrependCommaOnSelectClause``` - whether to emit commas at the beginning of a line in a SQL statement instead of at the end.
 
-{% collapsable title="SQL statement" %}
 A value of ```true``` would emit:
 ```sql
 SELECT
@@ -73,6 +69,7 @@ SELECT
 FROM
     [dbo].[Person]
 ```
+
 while a value of ```false``` would emit:
 ```sql
 SELECT
@@ -82,11 +79,9 @@ SELECT
 FROM
     [dbo].[Person]
 ```
-{% /collapsable %}
 
 * ```IdentifierDelimiter.Begin``` and  ```IdentifierDelimiter.End``` - the character separators that delimit various elements.
 
-{% collapsable title="SQL statement" %}
 A value of ```[``` for ```Begin``` and ```]``` for ```End``` (the default values for Microsoft SQL Server) would emit:
 ```sql
 SELECT
@@ -94,6 +89,7 @@ SELECT
 FROM
     [dbo].[Person]
 ```
+
 while a value of "'" (single apostrophe) would emit:
 ```sql
 SELECT
@@ -103,4 +99,3 @@ SELECT
 FROM
     'dbo'.'Person'
 ```
-{% /collapsable %}

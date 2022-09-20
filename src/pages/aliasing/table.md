@@ -20,6 +20,7 @@ Execution of this would cause the following runtime exception during execution o
 
 By aliasing one of the tables, the query will execute without exception:
 
+{% code-example %}
 ```csharp
 IList<dynamic> persons = db.SelectMany(
         dbo.Person.Id,
@@ -35,8 +36,6 @@ IList<dynamic> persons = db.SelectMany(
 		// ^ use table alias for sec.Person in join condition
     .Execute();
 ```
-
-{% collapsable title="SQL statement" %}
 ```sql
 SELECT
 	[dbo].[Person].[Id],
@@ -47,7 +46,7 @@ FROM
 	[dbo].[Person]
 	INNER JOIN [sec].[Person] AS [secure] ON [dbo].[Person].[Id] = [secure].[Id];
 ```
-{% /collapsable %}
+{% /code-example %}
 
 The QueryExpression can be simplified by using a variable to reference the table alias (produces an identical SQL statement):
 ```csharp

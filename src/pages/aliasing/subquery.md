@@ -98,8 +98,7 @@ The outer query is completed by ordering by *LastName* and *FirstName* ascending
     );
 ...
 ```
-
-{% collapsable title="SQL statement" %}
+And the final sql statement:
 ```sql
 exec sp_executesql N'SELECT
 	[dbo].[Person].[Id] AS [PersonId]
@@ -130,4 +129,3 @@ ORDER BY
 	,[vips].[PurchaseCount] DESC;',N'@P1 char(1),@P2 int,@P3 int',@P1=' ',@P2=3,@P3=2019
 
 ```
-{% /collapsable %}

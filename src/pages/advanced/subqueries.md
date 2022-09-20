@@ -5,6 +5,7 @@ description: How to fluently build subqueries for use with outer query expressio
 
 dbExpression supports subqueries in QueryExpressions.  The general form of subqueries in a JOIN condition:
 
+{% code-example %}
 ```csharp
 IList<dynamic> vips = db.SelectMany(
 	dbo.Person.Id, 
@@ -27,8 +28,6 @@ IList<dynamic> vips = db.SelectMany(
 .On(dbex.Alias("t0", "PersonId") == dbo.Person.Id)
 .Execute();
 ```
-
-{% collapsable title="SQL statement" %}
 ```sql
 exec sp_executesql N'SELECT
 	[dbo].[Person].[Id],
@@ -51,6 +50,6 @@ FROM
 			SUM([dbo].[Purchase].[TotalPurchaseAmount]) DESC
 	) AS [t0] ON [t0].[PersonId] = [dbo].[Person].[Id];',N'@P1 float',@P1=25
 ```
-{% /collapsable %}
+{% /code-example %}
 
 Subqueries are discussed in more detail in [Subquery Aliasing](/aliasing/subquery).

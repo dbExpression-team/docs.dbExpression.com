@@ -1,6 +1,7 @@
 import { Collapsable } from '@/components/Collapsable'
 import { Callout } from '@/components/Callout'
-import { QuickLink, QuickLinks } from '@/components/QuickLinks'
+import { QuickLinks, QuickLink } from '@/components/QuickLinks'
+import { CodeExample } from '@/components/CodeExample'
 
 const tags = {
   callout: {
@@ -43,12 +44,16 @@ const tags = {
       href: { type: String },
     },
   },
-  'collapsable': {
+  collapsable: {
 	  selfClosing: true,
 	  render: Collapsable,
 	  attributes : {
 		  title: { type: String }
 	  }
+  },
+  'code-example': {
+    selfClosing: false,
+    render: CodeExample
   }
 }
 

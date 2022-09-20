@@ -4,6 +4,8 @@ description: How to use the having clause when fluently building query expressio
 ---
 
 Aggregated results can be filtered by using the ```Having``` method while composing a QueryExpression.
+
+{% code-example %}
 ```csharp
 IList<dynamic> maxPurchases = db.SelectMany(
         dbo.Person.Id,
@@ -24,8 +26,6 @@ IList<dynamic> maxPurchases = db.SelectMany(
     )
     .Execute();
 ```
-
-{% collapsable title="SQL statement" %}
 ```sql
 exec sp_executesql N'SELECT
     [dbo].[Person].[Id],
@@ -44,6 +44,6 @@ HAVING
 ORDER BY
     [dbo].[Person].[LastName] ASC;',N'@P1 float',@P1=18
 ```
-{% /collapsable %}
+{% /code-example %}
 
 The having clause is discussed in greater detail in [Filter Expressions](/filters/filter-expressions#filter-expressions-in-having-clauses).

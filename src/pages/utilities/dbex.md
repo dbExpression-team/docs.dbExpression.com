@@ -10,6 +10,7 @@ title: dbex
 
 The helper method ```dbex.Null``` creates an expression to be used anywhere a ```null``` is needed.  dbExpression requires clarity on types, so ```dbex.Null``` should be used instead of  ```null``` when it is expected to produce a SQL statement with a server side ```NULL```.  
 
+{% code-example %}
 ```csharp
 DateTime? value = db.SelectOne(
     db.fx.DateAdd(DateParts.Year, 1, db.fx.Cast(dbo.Person.CreditLimit).AsDateTime())
@@ -18,8 +19,6 @@ DateTime? value = db.SelectOne(
 .Execute();
 
 ```
-
-{% collapsable title="SQL statement" %}
 ```sql
 exec sp_executesql N'SELECT TOP(1)
 	DATEADD(year, @P1, CAST([dbo].[Person].[CreditLimit] AS DateTime))
@@ -28,7 +27,7 @@ FROM
 WHERE
 	[dbo].[Person].[CreditLimit] IS NULL;',N'@P1 int',@P1=1
 ```
-{% /collapsable %}
+{% /code-example %}
 
 ## dbex.Coerce
 
@@ -72,6 +71,7 @@ dbExpression supports aliasing for columns, tables, and subqueries.  the ```dbex
 
 When building and executing QueryExpressions to return entities, the ```dbex.GetDefaultMappingFor``` method returns an ```Action``` delegate that uses the scaffolded mapping mechanism to map rowset data to an instance of an entity.  This method is useful when the default mapping should be applied, but some changes to the entity need to be made before returning from execution (using a custom mapping delegate).
 
+{% code-example %}
 ```csharp
 IList<Person> persons = db.SelectMany<Person>()
     .From(dbo.Person)
@@ -87,8 +87,6 @@ IList<Person> persons = db.SelectMany<Person>()
         }
     );
 ```
-
-{% collapsable title="SQL statement" %}
 ```sql
 SELECT
 	[dbo].[Person].[Id],
@@ -105,7 +103,7 @@ SELECT
 FROM
 	[dbo].[Person];
 ```
-{% /collapsable %}
+{% /code-example %}
 
 The ```dbex.GetDefaultMappingFor``` method is more useful, and is more commonly used in conjunction with ```dbex.SelectAllFor```.
 
@@ -136,6 +134,7 @@ Both of these strategies continue to work as modifications to the schema are mad
 *So why are we covering this?*
 
 Sometimes it's useful to return additional properties in a single query, but guard for future schema changes.  For example, a QueryExpression that returns a list of 'Person' and *additionally* includes the state of their mailing address:
+{% code-example %}
 ```csharp
 IList<(Person, StateType?)> persons = db.SelectMany(
         dbex.SelectAllFor(dbo.Person),
@@ -153,8 +152,6 @@ IList<(Person, StateType?)> persons = db.SelectMany(
         }
     );
 ```
-
-{% collapsable title="SQL statement" %}
 ```sql
 exec sp_executesql N'SELECT
 	[dbo].[Person].[Id],
@@ -176,7 +173,7 @@ FROM
 	AND
 	[dbo].[Address].[AddressType] = @P1;',N'@P1 int',@P1=1
 ```
-{% /collapsable %}
+{% /code-example %}
 
 If the QueryExpression had been written where all fields of *Person* were enumerated:
 ```csharp
@@ -241,6 +238,7 @@ IList<dynamic> person_purchases = db.SelectMany(
 ```
 
 This can be corrected by using an alias (see [Aliasing](/aliasing/column)) on the field accessor ```dbo.Purchase.Id```:
+{% code-example %}
 ```csharp
 IList<dynamic> person_purchases = db.SelectMany(
         dbex.SelectAllFor(dbo.Person),
@@ -251,8 +249,6 @@ IList<dynamic> person_purchases = db.SelectMany(
     .InnerJoin(dbo.Purchase).On(dbo.Person.Id == dbo.Purchase.PersonId)
     .Execute();
 ```
-
-{% collapsable title="SQL statement" %}
 ```sql
 SELECT
 	[dbo].[Person].[Id],
@@ -272,10 +268,11 @@ FROM
 	[dbo].[Person]
 	INNER JOIN [dbo].[Purchase] ON [dbo].[Person].[Id] = [dbo].[Purchase].[PersonId];
 ```
-{% /collapsable %}
+{% /code-example %}
 
 But, another option is to alias the name of the *Id* column on *Person* by using a delegate to provide a column alias:
 
+{% code-example %}
 ```csharp
 IList<dynamic> person_purchases = db.SelectMany(
         dbex.SelectAllFor(dbo.Person, name => name == nameof(dbo.Person.Id) ? "PersonId" : name),
@@ -286,8 +283,6 @@ IList<dynamic> person_purchases = db.SelectMany(
     .InnerJoin(dbo.Purchase).On(dbo.Person.Id == dbo.Purchase.PersonId)
     .Execute();
 ```
-
-{% collapsable title="SQL statement" %}
 ```sql
 SELECT
 	[dbo].[Person].[Id] AS [PersonId],
@@ -307,9 +302,10 @@ FROM
 	[dbo].[Person]
 	INNER JOIN [dbo].[Purchase] ON [dbo].[Person].[Id] = [dbo].[Purchase].[PersonId];
 ```
-{% /collapsable %}
+{% /code-example %}
 
 Or prepend a value to create an alias to all columns for *Person*: 
+{% code-example %}
 ```csharp
 IList<dynamic> person_purchases = db.SelectMany(
         dbex.SelectAllFor(dbo.Person, "Person_"),
@@ -320,8 +316,6 @@ IList<dynamic> person_purchases = db.SelectMany(
     .InnerJoin(dbo.Purchase).On(dbo.Person.Id == dbo.Purchase.PersonId)
     .Execute();
 ```
-
-{% collapsable title="SQL statement" %}
 ```sql
 SELECT
 	[dbo].[Person].[Id] AS [Person_Id],
@@ -341,14 +335,13 @@ FROM
 	[dbo].[Person]
 	INNER JOIN [dbo].[Purchase] ON [dbo].[Person].[Id] = [dbo].[Purchase].[PersonId];
 ```
-{% /collapsable %}
+{% /code-example %}
 
 *This would result in dynamic objects where all property names start with "Person_", which may not be desirable*.
 
 The ```dbex.SelectAllFor``` is also useful when selecting ```dynamic``` objects when using multiple ```dbex.SelectAllFor``` methods that cause property name collisions:
 
 ```csharp
-
 static string alias(string entity, string name)
     {
         switch (name)
@@ -361,6 +354,7 @@ static string alias(string entity, string name)
         }
     };
 ```
+{% code-example %}
 ```csharp
 IList<dynamic> person_purchases = db.SelectMany(
         dbex.SelectAllFor(dbo.Person, name => alias(nameof(Person), name))
@@ -371,8 +365,6 @@ IList<dynamic> person_purchases = db.SelectMany(
     .Execute();
     
 ```
-
-{% collapsable title="SQL statement" %}
 ```sql
 SELECT
 	[dbo].[Person].[Id] AS [Person_Id],
@@ -403,12 +395,13 @@ FROM
 	[dbo].[Person]
 	INNER JOIN [dbo].[Purchase] ON [dbo].[Person].[Id] = [dbo].[Purchase].[PersonId];
 ```
-{% /collapsable %}
+{% /code-example %}
 
 ## dbex.BuildAssignmentsFor
 
 By design, dbExpression does not provide any entity change tracking features.  However, dbExpression does provide a feature to allow for constructing an UPDATE based on the delta of property values between two entities.
 
+{% code-example %}
 ```csharp
 
 int personId = 1;
@@ -441,8 +434,6 @@ db.Update(
     .Where(dbo.Person.Id == personId)
     .Execute();
 ```
-
-{% collapsable title="SQL statement" %}
 ```sql
 exec sp_executesql N'UPDATE
 	[dbo].[Person]
@@ -455,5 +446,5 @@ WHERE
 	[dbo].[Person].[Id] = @P3;
 SELECT @@ROWCOUNT;',N'@P1 int,@P2 int,@P3 int',@P1=5000,@P2=2021,@P3=1
 ```
-{% /collapsable %}
+{% /code-example %}
 
