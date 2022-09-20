@@ -233,6 +233,7 @@ WHERE
 
 This filter specifies a field expression that is one of a set of literal values:
 
+{% code-example %}
 ```csharp
 IList<Person> people = db.SelectMany<Person>()
     .From(dbo.Person)
@@ -246,8 +247,6 @@ IList<Person> people = db.SelectMany<Person>()
     )
     .Execute();
 ```
-
-{% code-example %}
 ```sql
 exec sp_executesql N'SELECT
 	[dbo].[Person].[Id],
@@ -275,6 +274,7 @@ WHERE
 {% /code-example %}
 
 ### Filter expressions in Join clauses
+{% code-example %}
 ```csharp
 IList<dynamic> person_totals = db.SelectMany(
         dbo.Person.Id,
@@ -286,8 +286,6 @@ IList<dynamic> person_totals = db.SelectMany(
     .GroupBy(dbo.Person.Id)
     .Execute();
 ```
-
-{% code-example %}
 ```sql
 SELECT
 	[dbo].[Person].[Id],
@@ -300,6 +298,7 @@ GROUP BY
 ```
 {% /code-example %}
 
+{% code-example %}
 ```csharp
 IList<dynamic> person_zips = db.SelectMany(
         dbo.Person.Id,
@@ -316,8 +315,6 @@ IList<dynamic> person_zips = db.SelectMany(
     )
     .Execute();
 ```
-
-{% code-example %}
 ```sql
 exec sp_executesql N'SELECT
 	[dbo].[Person].[Id],
@@ -332,6 +329,7 @@ FROM
 {% /code-example %}
 
 ### Filter expressions in Having clauses
+{% code-example %}
 ```csharp
 IList<dynamic> people = db.SelectMany(
         dbo.Person.LastName,
@@ -345,8 +343,6 @@ IList<dynamic> people = db.SelectMany(
     )
     .Execute();
 ```
-
-{% code-example %}
 ```sql
 exec sp_executesql N'SELECT
 	[dbo].[Person].[LastName],
@@ -364,6 +360,7 @@ HAVING
 Filter expressions can also be composed using arithmetic expressions in Where clauses, Join clauses, and Having clauses (see [Advanced Queries (Arithmetic)](advanced-query-expressions#arithmetic) to learn more about using arithmetic expressions in queries).
 
 Arithmetic expression in a Where clause:
+{% code-example %}
 ```csharp
 IList<Product> products = db.SelectMany<Product>()
     .From(dbo.Product)
@@ -372,8 +369,6 @@ IList<Product> products = db.SelectMany<Product>()
     )
     .Execute();
 ```
-
-{% code-example %}
 ```sql
 exec sp_executesql N'SELECT
 	[dbo].[Product].[Id],
@@ -401,6 +396,7 @@ WHERE
 {% /code-example %}
 
 Arithmetic expression in a Join clause:
+{% code-example %}
 ```csharp
 IList<dynamic> purchases = db.SelectMany(
         dbo.Purchase.OrderNumber,
@@ -411,8 +407,6 @@ IList<dynamic> purchases = db.SelectMany(
     .InnerJoin(dbo.Purchase).On(dbo.PurchaseLine.PurchaseId == dbo.Purchase.Id & dbo.Purchase.TotalPurchaseAmount > 100)
     .Execute();
 ```
-
-{% code-example %}
 ```sql
 exec sp_executesql N'SELECT
 	[dbo].[Purchase].[OrderNumber],
@@ -427,6 +421,7 @@ FROM
 {% /code-example %}
 
 And an arithmetic expression in a Having clause:
+{% code-example %}
 ```csharp
 IList<dynamic> purchases = db.SelectMany(
         dbo.Purchase.OrderNumber,
@@ -438,8 +433,6 @@ IList<dynamic> purchases = db.SelectMany(
     .Having(db.fx.Sum(dbo.PurchaseLine.PurchasePrice) > 100)
     .Execute();
 ```
-
-{% code-example %}
 ```sql
 exec sp_executesql N'SELECT
 	[dbo].[Purchase].[OrderNumber],

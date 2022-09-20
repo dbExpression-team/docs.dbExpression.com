@@ -53,7 +53,13 @@ const tags = {
   },
   'code-example': {
     selfClosing: false,
-    render: CodeExample
+    render: CodeExample,
+	  attributes : {
+		  labels: { 
+        type: Array,
+        default: ['C#', 'SQL']
+      }
+	  }
   }
 }
 
