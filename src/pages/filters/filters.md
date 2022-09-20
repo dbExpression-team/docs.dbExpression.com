@@ -90,6 +90,7 @@ Filter expressions are the composition of one or more logical expressions to lim
 
 ### Filter expressions in Where clauses
 The following filter specifies a field expression to be equal to the literal value of 1:
+{% code-example %}
 ```csharp
 DateTimeOffset registration = db.SelectOne(dbo.Person.RegistrationDate)
     .From(dbo.Person)
@@ -97,8 +98,6 @@ DateTimeOffset registration = db.SelectOne(dbo.Person.RegistrationDate)
     .Where(dbo.Person.Id == 1)
     .Execute();
 ```
-
-{% code-example %}
 ```sql
 exec sp_executesql N'SELECT TOP(1)
 	[dbo].[Person].[RegistrationDate]
@@ -110,6 +109,7 @@ WHERE
 {% /code-example %}
 
 This filter specifies a field expression greater than a literal value:
+{% code-example %}
 ```csharp
 var yesterday = DateTime.Now.Date.AddDays(-1);
 IList<Person> people = db.SelectMany<Person>()
