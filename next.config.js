@@ -1,4 +1,5 @@
 const withMarkdoc = require('@markdoc/next.js')
+const { BASE_PATH } = process.env
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -9,8 +10,10 @@ const nextConfig = {
     scrollRestoration: true,
     images: {
       allowFutureImage: true,
+      
     },
   },
+  basePath: BASE_PATH,
   async redirects() {
     return [
       {
@@ -19,8 +22,8 @@ const nextConfig = {
         permanent: true
       },
       {
-        source: '/rtd/:slug*',
-        destination: '/:slug*',
+        source: '/rtd/reference/mssql/:path*',
+        destination: '/reference/mssql/:path*',
         permanent: false
       }
     ]

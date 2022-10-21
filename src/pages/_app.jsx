@@ -42,7 +42,10 @@ function collectHeadings(nodes, slugify = slugifyWithCounter()) {
       }
     }
 
-    sections.push(...collectHeadings(node.children ?? [], slugify))
+    //this causes ANY partials to add their headings to the mix
+    //think "CoreConcepts.jsx" with a partial
+
+    //sections.push(...collectHeadings(node.children ?? [], slugify))
   }
 
   return sections
@@ -50,11 +53,8 @@ function collectHeadings(nodes, slugify = slugifyWithCounter()) {
 
 export default function App({ Component, pageProps }) {
 
-  let title = pageProps.markdoc?.frontmatter.title
-
-  let pageTitle =
-    pageProps.markdoc?.frontmatter.pageTitle ||
-    `${pageProps.markdoc?.frontmatter.title} - Docs`
+  let title =
+    pageProps.markdoc?.frontmatter.title || 'dbExpression - Docs'
 
   let description = pageProps.markdoc?.frontmatter.description
 
@@ -63,12 +63,10 @@ export default function App({ Component, pageProps }) {
     : []
 
   return (
-    <>
+    <>      
       <Head>
-        <title>{pageTitle}</title>
+        <title>{title}</title>
         {description && <meta name="description" content={description} />}
-        <meta property="og:image" content="/dbexpression-og-image.png" />
-        <meta property="twitter:image" content="/dbexpression-twitter-image.png" />
       </Head>
       <Script key="ga-script" strategy='afterInteractive' src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}`} />
       <Script id="ga-script-local" strategy='afterInteractive'>
@@ -80,7 +78,7 @@ export default function App({ Component, pageProps }) {
           gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}');
         `}
       </Script>
-      <Layout title={title} tableOfContents={tableOfContents} >
+      <Layout title={title} description={description} tableOfContents={tableOfContents} >
         <Component {...pageProps} />
       </Layout>
     </>

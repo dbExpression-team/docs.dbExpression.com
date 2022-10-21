@@ -9,15 +9,19 @@ require("prismjs/components/prism-csharp");
 require("prismjs/components/prism-sql");
 
 export function Fence({ children, language }) {
+  let fixedCode = children
+  if (Array.isArray(children)) {
+    fixedCode = children.join("")
+  }
   return (
-    <Highlight
+    <Highlight 
       {...defaultProps}
-      code={children.trimEnd()}
+      code={fixedCode.trim()}
       language={language}
       theme={undefined}
     >
       {({ className, style, tokens, getTokenProps }) => (
-        <pre className={clsx("scrollbar-thin scrollbar-thumb-slate-300 scrollbar-track-slate-100 dark:scrollbar-thumb-slate-700 dark:scrollbar-track-slate-300 overlow-y-scroll", className)} style={style}>
+        <pre className={clsx("scrollbar-thin scrollbar-thumb-slate-300 scrollbar-track-slate-100 hover:scrollbar-thumb-slate-400 dark:scrollbar-thumb-slate-700 dark:scrollbar-track-slate-300 dark:hover:scrollbar-thumb-slate-600 overlow-y-scroll", className)} style={style}>
           <code>
             {tokens.map((line, lineIndex) => (
               <Fragment key={lineIndex}>

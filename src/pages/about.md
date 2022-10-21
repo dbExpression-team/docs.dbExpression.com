@@ -1,3 +1,5 @@
+{% query-expression-part-definition /%}
+
 ## What were we trying to achieve?
 The motivation behind dbExpression was a desire to bring the capabilities of the data persistence engine into the hands of the application developer.  With dbExpression, the code that handles the basics of pushing data into and pulling data out of your target database is generated via a CLI tool.  We refer to this generated code as the dbExpression scaffolding.  The scaffolding contains all the classes and functional plumbing necessary to insert, update, delete and query your data with expressions that live directly within your application source code.  When you modify your target database in any way, regenerating the scaffolding exposes those changes to your application, keeping schema changes in sync with your application code.
 

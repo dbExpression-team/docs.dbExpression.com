@@ -1,5 +1,6 @@
 import { Callout } from '@/components/Callout'
 import { Fence } from '@/components/Fence'
+import { InlineCode } from '@/components/InlineCode'
 import { nodes as defaultNodes } from '@markdoc/markdoc'
 
 const nodes = {
@@ -23,6 +24,14 @@ const nodes = {
         type: String,
       },
     },
+  },
+  code: {
+    render: InlineCode,
+  	attributes: {
+  		content: {
+  			type: String
+  		}
+  	}
   },
   blockquote: {
   	render: Callout,

@@ -35,6 +35,7 @@ module.exports = {
 	  require('tailwind-scrollbar')
   ],
   variants: {
-	  scrollbar: ['dark']
+	  scrollbar: ['dark', 'rounded'],
+    padding: ['last']
   }
 }

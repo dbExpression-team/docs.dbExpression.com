@@ -1,9 +1,25 @@
+import { Accordian } from '@/components/Accordian'
 import { Collapsable } from '@/components/Collapsable'
 import { Callout } from '@/components/Callout'
 import { QuickLinks, QuickLink } from '@/components/QuickLinks'
+
+import { CoreConcepts } from '@/components/CoreConcepts'
 import { CodeExample } from '@/components/CodeExample'
+import { OffsiteUrl } from '@/components/OffsiteUrl'
+import { MicrosoftDocsUrl } from '@/components/MicrosoftDocsUrl'
+import { QueryExpressionPartDefinition } from '@/components/QueryExpressionPartDefinition'
+import { SupportedVersionList } from '@/components/SupportedVersionList'
+import { ExecutionPipelineImage } from '@/components/ExecutionPipelineImage'
+import { QueryExecutionSequenceImage } from '@/components/QueryExecutionSequenceImage'
+import { MethodDescriptor } from '@/components/MethodDescriptor'
 
 const tags = {
+  accordian: {
+    attributes: {
+      caption: { type: String }
+    },
+    render: Accordian,
+  },
   callout: {
     attributes: {
       title: { type: String },
@@ -60,7 +76,81 @@ const tags = {
         default: ['C#', 'SQL']
       }
 	  }
-  }
+  },
+  'offsite-url': {
+    selfClosing: true,
+    render: OffsiteUrl,
+	  attributes : {
+		  url: { 
+        type: String
+      },
+      label: { 
+        type: String,
+        required: true
+      }
+	  }
+  },
+  'ms-docs-url': {
+    selfClosing: true,
+    render: MicrosoftDocsUrl,
+	  attributes : {
+		  path: { 
+        type: String
+      },
+      label: { 
+        type: String,
+        required: true
+      }
+	  }
+  },
+  'supported-versions': {
+    selfClosing: true,
+    render: SupportedVersionList,
+	  attributes : {
+		  versions: { 
+        type: Array
+      },
+      initial_version: { 
+        type: String
+      },
+      listAll : {
+        type: Boolean,
+        default: true
+      }
+	  }
+  },
+  'query-expression-part-definition': {
+    selfClosing: true,
+    render: QueryExpressionPartDefinition
+  },
+  'query-execution-sequence-image': {
+    render: QueryExecutionSequenceImage,
+	  attributes : {
+		  highlight: { 
+        type: String
+      }
+	  }
+  },
+  'execution-pipeline-image': {
+    selfClosing: true,
+    render: ExecutionPipelineImage,
+	  attributes : {
+		  type: { 
+        type: String
+      }
+	  }
+  },
+  'core-concepts': {
+    render: CoreConcepts,
+	  attributes : {
+		  caption: { 
+        type: String
+      }
+	  }
+  },
+  'method-descriptor': {
+    render: MethodDescriptor
+  },
 }
 
 export default tags

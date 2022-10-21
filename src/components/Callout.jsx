@@ -15,11 +15,39 @@ const styles = {
     title: 'text-amber-900 dark:text-amber-500',
     body: 'text-amber-800 [--tw-prose-underline:theme(colors.amber.400)] [--tw-prose-background:theme(colors.amber.50)] prose-a:text-amber-900 prose-code:text-amber-900 dark:text-slate-300 dark:[--tw-prose-underline:theme(colors.sky.700)] dark:prose-code:text-slate-300',
   },
+  installation: {
+    container:
+      'bg-sky-50 dark:bg-slate-800/60 dark:ring-1 dark:ring-slate-300/10',
+    title: 'text-sky-900 dark:text-sky-400',
+    body: 'text-sky-800 [--tw-prose-background:theme(colors.sky.50)] prose-a:text-sky-900 prose-code:text-sky-900 dark:text-slate-300 dark:prose-code:text-slate-300',
+  },
+  presets: {
+    container:
+      'bg-sky-50 dark:bg-slate-800/60 dark:ring-1 dark:ring-slate-300/10',
+    title: 'text-sky-900 dark:text-sky-400',
+    body: 'text-sky-800 [--tw-prose-background:theme(colors.sky.50)] prose-a:text-sky-900 prose-code:text-sky-900 dark:text-slate-300 dark:prose-code:text-slate-300',
+  },
+  plugins: {
+    container:
+      'bg-sky-50 dark:bg-slate-800/60 dark:ring-1 dark:ring-slate-300/10',
+    title: 'text-sky-900 dark:text-sky-400',
+    body: 'text-sky-800 [--tw-prose-background:theme(colors.sky.50)] prose-a:text-sky-900 prose-code:text-sky-900 dark:text-slate-300 dark:prose-code:text-slate-300',
+  },
+  theming: {
+    container:
+      'bg-sky-50 dark:bg-slate-800/60 dark:ring-1 dark:ring-slate-300/10',
+    title: 'text-sky-900 dark:text-sky-400',
+    body: 'text-sky-800 [--tw-prose-background:theme(colors.sky.50)] prose-a:text-sky-900 prose-code:text-sky-900 dark:text-slate-300 dark:prose-code:text-slate-300',
+  },
 }
 
 const icons = {
   note: (props) => <Icon icon="lightbulb" {...props} />,
   warning: (props) => <Icon icon="warning" color="amber" {...props} />,
+  installation: (props) => <Icon icon="installation" {...props} />,
+  presets: (props) => <Icon icon="presets" {...props} />,
+  plugins: (props) => <Icon icon="plugins" {...props} />,
+  theming: (props) => <Icon icon="theming" {...props} />,
 }
 
 export function Callout({ type = 'note', title, children }) {
