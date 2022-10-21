@@ -15,7 +15,6 @@ Use the `Replace` function to replace all occurrences of a pattern with another 
 {
     "syntax" : "db.fx.Replace({expression}, {find}, {replacement})",
     "arguments" : [
-        ,
         {
             "argumentName" : "expression",
             "required" : true,
