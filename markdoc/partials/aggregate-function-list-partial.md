@@ -18,7 +18,7 @@
 * Standard Deviation
 ---
 * StDevP
-* Standard Deviation of a Population
+* Population Standard Deviation
 ---
 * Sum
 * Sum
@@ -27,5 +27,5 @@
 * Variance
 ---
 * VarP
-* Variance of a Population
+* Population Variance
 {% /table %}
