@@ -30,9 +30,9 @@ jobs:
       - name: Create env file
         run: |
           touch .env.local
-          echo NEXT_PUBLIC_GOOGLE_ANALYTICS_ID=$GOOGLE_ANALYTICS_ID >> $GITHUB_ENV
-          echo SITE_URL=$SITE_URL >> $GITHUB_ENV
-          echo BASE_PATH=$BASE_PATH >> $GITHUB_ENV
+          echo NEXT_PUBLIC_GOOGLE_ANALYTICS_ID=$GOOGLE_ANALYTICS_ID >> .env.local
+          echo SITE_URL=$SITE_URL >> .env.local
+          echo BASE_PATH=$BASE_PATH >> .env.local
 
       - name: npm install, build, and test
         run: |
