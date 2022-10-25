@@ -45,7 +45,7 @@ IList<Person> persons = db.SelectMany(
         dbo.Person.FirstName,
         dbo.Person.LastName
     )
-    .Top(expected)
+    .Top(5)
     .Distinct()
     .From(dbo.Person)
     .OrderBy(
