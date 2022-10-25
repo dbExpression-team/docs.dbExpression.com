@@ -22,7 +22,11 @@ Let's start by creating an empty database named *SimpleConsoleDb* and add a tabl
     )
     GO
 ```
-Next, create a .NET Console Application named *SimpleConsole*.
+Next, we'll create a .NET 6.0 Console Application named *SimpleConsole*.
+
+```bash
+PS C:\> dotnet new console --framework net6.0 --name SimpleConsole
+```
 
 In the project root, add a file named *appsettings.json* and add a *ConnectionStrings* section with a connection string named *Default* with the value set to the connection string of the newly created *SimpleConsoleDb* database (your *Data Source* may be different):
 ```js
@@ -32,7 +36,7 @@ In the project root, add a file named *appsettings.json* and add a *ConnectionSt
     }
 }
 ```
-Ensure the ***Copy to Output Directory* property of *appsettings.json*** file is set to "Copy always" or "Copy if newer".
+Ensure the *Copy to Output Directory* property of *appsettings.json* file is set to "Copy always" or "Copy if newer".
 
 ## 2. Install dbExpression dotnet tool and NuGet packages
 
@@ -52,13 +56,7 @@ PM> dotnet tool install HatTrick.DbEx.Tools --global
 	PM> Install-Package Microsoft.Extensions.Configuration.Json
 	```
 
-2. Install [Microsoft.Extensions.DependencyInjection](https://www.nuget.org/packages/Microsoft.Extensions.DependencyInjection) package so dbExpression has a service collection/provider for its services:
- 
-	```bash
-	PM> Install-Package Microsoft.Extensions.DependencyInjection
-	```
-    
-3. Install the [dbExpression Microsoft SQL Server](https://www.nuget.org/packages/HatTrick.DbEx.MsSql) package into your project:
+2. Install the [dbExpression Microsoft SQL Server](https://www.nuget.org/packages/HatTrick.DbEx.MsSql) package into your project:
  
 	```bash
 	PM> Install-Package HatTrick.DbEx.MsSql
@@ -71,7 +69,7 @@ The dbExpression CLI tool is used to generate code providing the foundation or '
 
 ### Preparing for Scaffold Generation
 
-You will need a code generation configuration file *dbex.config.json* containing a valid connection string.  To get a basic *dbex.config.json* file, you can run the following dbExpression CLI command from your terminal:
+You will need a code generation configuration file (*dbex.config.json*) containing a valid connection string.  To get a basic *dbex.config.json* file, you can run the following dbExpression CLI command from your terminal:
 
 ```bash
 PM> dbex makeconfig
@@ -79,11 +77,17 @@ PM> dbex makeconfig
 
 > The `?` option provides usage instructions: `dbex makeconfig -?`
 
-Change the `rootNamespace` property to a value of *SimpleConsole* and set the *connectionString* value to the same value used in the *appsettings.json* file.  Your configuration file should now resemble the following:
+In the config file, change:
+- the version (`source.platform.version`) to the version of your database, we're using 2019
+- the `connectionString` value to the same value used in the *appsettings.json* file
+- the `nullable` value to enable, disable, or simply remove the property
+- the `rootNamespace` property to a value of *SimpleConsole*
+
+Your configuration file should now resemble the following:
 
 ```js
 {
-    "rootNamespace": "SimpleConsole",
+    "nullable": "enable",
     "source": {
         "platform": {
             "key" : "MsSql",
@@ -93,33 +97,21 @@ Change the `rootNamespace` property to a value of *SimpleConsole* and set the *c
             "value": "Data Source=(LocalDB)\\MSSQLLocalDB;Initial Catalog=SimpleConsoleDb;Integrated Security=true"
         }
     },
-    "nullable": "enable"
+    "rootNamespace": "SimpleConsole"
 }
 ```
 
-Default values will be used to generate the scaffolding code.  Defaults can be overridden in the configuration file, see the [Scaffold Configuration](/configuration/scaffolding) topic to learn how to change default values and for other scaffolding topics.  Note the *optional* additional property named `nullable` (defaults to "disable") which indicates the scaffolded code should support the `nullable` language feature.
+We'll use the default values for all other properties in the file to generate the scaffolding code.  Defaults can be overridden in the configuration file, see the [Scaffold Configuration](./core-concepts/configuration/scaffolding) topic to learn how to change default values and for other scaffolding topics.  Note the *optional* additional property named `nullable` (defaults to "disable") which indicates the scaffolded code should support the `nullable` language feature.
 
 ### Generate the Scaffold Code
 
-Once you have the *dbex.config.json* file, run the dbExpression CLI `gen` command to generate the scaffolding.  By default, the generated scaffold code is placed within a directory named 'DbEx' directly within your current working directory.
+Once you have the *dbex.config.json* file complete, run the dbExpression CLI `gen` command to generate the scaffolding.  By default, the generated scaffold code is placed within a directory named 'DbEx' directly within your current working directory.
 
 ```bash
 PM> dbex gen
 ```
 
 > The `-p` option can be used if your *dbex.config.json* file resides in a directory different from your current working directory: `dbex gen -p {path to dbex.config.json}`
-
-## How does dbExpression use the generated code?
-
-dbExpression uses the scaffolded code to enable fluent composition of SQL queries specific to your application's domain.  Some dbExpression nomenclature we'll use throughout the docs:
-
-{% partial file="basic-queries-partial.md" /%}
-
-A few more and we're ready to configure your application and write some queries:
-
-* **Expression element** - The abstract parts that are stitched together using fluent builders to form a complete QueryExpression.  You'll see these via Intellisense when building QueryExpressions.  They have types like `AnyElement`, which is just about anything, and `AnyElement<int>` which is anything typed as an `int`; for example the integer result of a database function, integer arithmetic, or a database column typed as an *INT*.  All .NET CLR primitives have a corresponding expression element type (plus strings and byte arrays).
-* **SQL statement** - A QueryExpression rendered as a string for execution against a target database.
-* **Execution Pipeline** - Manages the process of assembling a QueryExpression into a SQL statement, executing against the target database, and optionally managing/mapping any returned rowset data.
 
 ## 4. Configure your application
 dbExpression requires minimal application startup configuration to operate.  Configuration of a database for use in your application only requires a connection string so it can connect to your target database to execute SQL statements.
@@ -157,9 +149,9 @@ Typically for dbExpression startup configuration, you'll need these using statem
 * `Microsoft.Extensions.Configuration` - to read configuration files.
 * `Microsoft.Extensions.DependencyInjection` - namepace containing the `AddDbExpression()` extension method to register database services.
 * `HatTrick.DbEx.MsSql.Configuration` - enables fluent configuration of dbExpression for use with one or more Microsoft SQL Server databases.
-* `SimpleConsole.DataService` - the namespace (created through scaffolding) that contains the *database accessor* to fluently build QueryExpressions for the *SimpleConsoleDb* database.
+* `SimpleConsole.DataService` - the namespace (created through scaffolding) that contains the *database accessor* to fluently build queries for the *SimpleConsoleDb* database.
 * `SimpleConsole.dboData` - the namespace (created through scaffolding) containing the entities representing the tables and views in the *dbo* schema in the database (your scaffolded code in this namespace should contain a single entity - *Person*).
-* `SimpleConsole.dboDataService` - the namespace (created through scaffolding) that contains all *schema accessor* classes to fluently build QueryExpressions for entities in the *dbo* schema.
+* `SimpleConsole.dboDataService` - the namespace (created through scaffolding) that contains all *schema accessor* classes to fluently build queries for entities in the *dbo* schema.
 
 And to use use a static database accessor (we're using it for this walk-thru):
 * `HatTrick.DbEx.Sql` - namespace containing the `UseStaticRuntimeFor<T>()` extension method, which opts-in to using `dbExpression` statically.
@@ -167,9 +159,6 @@ And to use use a static database accessor (we're using it for this walk-thru):
 See the [Runtime Configuration](/configuration/runtime) section for instructions and usage examples of all runtime configuration options.
 
 ## 5. Execute a Query
-To execute a QueryExpression, simply add the `Execute` or `ExecuteAsync` method to the QueryExpression:
-
-![Expression Execution](https://dbexpressionpublic.blob.core.windows.net/docs/query-expression-execution.png)
 
 Let's provide some additional code after the existing configuration code to insert and select from the *Person* table:
 ```csharp
@@ -238,17 +227,18 @@ Now run the application, and you should see the following from `Console.WriteLin
 Charlie Brown was born on 6/15/1959.
 ```
 
-You have successfully written and executed a couple of queries using dbExpression!  Refer back to this section at any time and adapt these steps to your environment to start using dbExpression.
+You have successfully written and executed a couple of queries using dbExpression!
 
-## Examples in the Docs
+## Core Concepts
 
-The examples throughout the remainder of this documentation assume:
-The existence of scaffolding code generated with the dbExpression CLI tool.  To build a local copy of the database and follow along with the examples:
-* Create an empty database named *MsSqlDbExTest* and build schema with the [script file in the GitHub repo](/HatTrickLabs/dbExpression/blob/master/test/HatTrick.DbEx.MsSql.Test.Database/schema.sql).
-* Load the database with data using the [script file in the GitHub repo](/HatTrickLabs/dbExpression/blob/master/test/HatTrick.DbEx.MsSql.Test.Database/data.sql). 
-* Add some images (binary data) to the database using the [script file in the GitHub repo](/HatTrickLabs/dbExpression/blob/master/test/HatTrick.DbEx.MsSql.Test.Database/images.sql).
+We'll cover a couple of other high-level features of dbExpression, and then move to the next section of the docs which cover the core concepts 
+of dbExpression (with full examples).  To follow along and run the query examples on your own, 
+we'll assume the existence of scaffolding code generated with the dbExpression CLI tool.  To build a local copy of the database:
+* Create an empty database named *MsSqlDbExTest* (you can call it anything you like, just change the script file references) and build schema with the [script file in the GitHub repo](https://github.com/HatTrickLabs/dbExpression/blob/master/test/HatTrick.DbEx.MsSql.Test.Integration/schema.sql).
+* Load the database with data using the [script file in the GitHub repo](https://github.com/HatTrickLabs/dbExpression/blob/master/test/HatTrick.DbEx.MsSql.Test.Integration/data.sql). 
+* Add some images (binary data) to the database using the [script file in the GitHub repo](https://github.com/HatTrickLabs/dbExpression/blob/master/test/HatTrick.DbEx.MsSql.Test.Integration/images.sql).
 
-> If you download the sample projects to run locally:
->  * All projects target .NET 6.0
->  * Visual Studio 2022 or higher is required
->  * All projects are configured to opt-in to nullable feature (although not required to use dbExpression)
+If you download/clone the sample projects to run locally:
+* All projects target .NET 6.0
+* Visual Studio 2022 or higher is required
+* All projects are configured to opt-in to the nullable feature (although not required to use dbExpression)
