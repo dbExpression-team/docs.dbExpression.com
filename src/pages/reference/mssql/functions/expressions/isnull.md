@@ -36,7 +36,7 @@ Use the `IsNull` function to return the first non-null item from two expressions
                 },
 				{ 
                     "typeName" : "IComparable",
-					"description" : "Must be the same type as `first_expression`."
+					"description" : "Must be the equivalent .NET type as `first_expression`, i.e. `first_expression` is  `AnyElement<int> and `second_expression` is int."
                 }
             ]
         }           
