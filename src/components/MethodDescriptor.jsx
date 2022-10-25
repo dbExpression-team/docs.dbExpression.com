@@ -63,71 +63,69 @@ export function MethodDescriptor(children) {
             <h3>Arguments</h3>
             <div>
                 {attributes.arguments == null && <div className='pl-8 pb-2'>(none)</div>}
-
-
-                <Disclosure defaultOpen='true'>
+                {attributes.arguments && attributes.arguments.map((arg, idx) =>
+                    <Disclosure key={idx}>
                     {({ open }) => (
-                        attributes.arguments && attributes.arguments.map((arg, idx) =>
-                            <div key={idx} className='w-full pl-4 pb-2 flex-rows'>
-                                <div className='pb-6'>
-                                    <dl>
-                                        <dt>
-                                            <div className='flex place-items-center'>
-                                                <Disclosure.Button className='bg-white dark:bg-slate-900 xself-center' >
-                                                    { open ? 
-                                                    <ChevronDownIcon className='h-5 w-5 text-gray-600 dark:text-slate-400 xself-center'/>
-                                                    :
-                                                    <ChevronRightIcon className='h-5 w-5 text-gray-600 dark:text-slate-400 xself-center'/>
-                                                    }
-                                                </Disclosure.Button>
-                                                <span className='text-lg font-medium text-gray-700 dark:text-slate-100 pl-2'>{arg.argumentName}</span>
-                                            </div>
-                                        </dt>
-                                        <dd className='pl-12'>{arg.description && <span className='text-base text-gray-700 dark:text-slate-300'>&ndash; {arg.description}</span>}</dd>
-                                    </dl>
-                                </div>
-                                <Disclosure.Panel>
-                                <div className='text-base pl-12'>
-                                    <table className='table-fixed text-base text-gray-800 dark:text-slate-300'>
-                                        <tbody>
-                                            <tr>
-                                                <td className='w-1/3 md:w-1/6'>required</td>
-                                                <td>{arg.hasOwnProperty('required') && <span>{typeof arg.required == "boolean" ? (arg.required ? "yes" : "no") : `conditional: ${arg.required}`}</span>}</td>
-                                            </tr>
-                                            <tr>
-                                                <td className=''>valid types</td>
-                                                <td>{arg.types &&                               
-                                                    <div>
-                                                        <dl className='pb-8'>
-                                                            {arg.types.map((type, idx) => (
-                                                                <>
-                                                                <dt>
-                                                                    {type.predicate && <div className='-translate-x-4 pt-4'>&bull; <em>{type.predicate}</em></div>}
-                                                                    {getCode(type.typeName)}
-                                                                </dt>
-                                                                <dd className={clsx('-mt-4 pl-8 dark:border-slate-800', type.description || type.notes ? 'pb-4' : 'pb-.5')}>{type.description}
-                                                                    {type.notes && 
-                                                                    <ul>
-                                                                        {type.notes.map((note, idx) =>
-                                                                            <li key={idx}>{note}</li>
-                                                                        )}
-                                                                    </ul>
-                                                                    }                                                
-                                                                </dd>
-                                                                </>
-                                                            ))}
-                                                        </dl>
-                                                    </div>}
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>                            
-                                </div>
-                                </Disclosure.Panel>
+                        <div key={idx} className='w-full pl-4 pb-2 flex-rows'>
+                            <div className='pb-6'>
+                                <dl>
+                                    <dt>
+                                        <div className='flex place-items-center'>
+                                            <Disclosure.Button className='bg-white dark:bg-slate-900 xself-center' >
+                                                { open ? 
+                                                <ChevronDownIcon className='h-5 w-5 text-gray-600 dark:text-slate-400 xself-center'/>
+                                                :
+                                                <ChevronRightIcon className='h-5 w-5 text-gray-600 dark:text-slate-400 xself-center'/>
+                                                }
+                                            </Disclosure.Button>
+                                            <span className='font-medium text-gray-700 dark:text-slate-100 pl-2'>{arg.argumentName}</span>
+                                        </div>
+                                    </dt>
+                                    <dd className='pl-12'>{arg.description && <span className='text-base text-gray-700 dark:text-slate-300'>&ndash; {arg.description}</span>}</dd>
+                                </dl>
                             </div>
-                        )                
+                            <Disclosure.Panel>
+                            <div className='text-base pl-12'>
+                                <table className='table-fixed text-base text-gray-800 dark:text-slate-300'>
+                                    <tbody>
+                                        <tr>
+                                            <td className='w-1/3 md:w-1/6'>required</td>
+                                            <td>{arg.hasOwnProperty('required') && <span>{typeof arg.required == "boolean" ? (arg.required ? "yes" : "no") : `conditional: ${arg.required}`}</span>}</td>
+                                        </tr>
+                                        <tr>
+                                            <td className=''>valid types</td>
+                                            <td>{arg.types &&                               
+                                                <div>
+                                                    <dl className='pb-8'>
+                                                        {arg.types.map((type, idx) => (
+                                                            <>
+                                                            <dt>
+                                                                {type.predicate && <div className='-translate-x-4 pt-4'>&bull; <em>{type.predicate}</em></div>}
+                                                                {getCode(type.typeName)}
+                                                            </dt>
+                                                            <dd className={clsx('-mt-4 pl-8 dark:border-slate-800', type.description || type.notes ? 'pb-4' : 'pb-.5')}>{type.description}
+                                                                {type.notes && 
+                                                                <ul>
+                                                                    {type.notes.map((note, idx) =>
+                                                                        <li key={idx}>{note}</li>
+                                                                    )}
+                                                                </ul>
+                                                                }                                                
+                                                            </dd>
+                                                            </>
+                                                        ))}
+                                                    </dl>
+                                                </div>}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>                            
+                            </div>
+                            </Disclosure.Panel>
+                        </div>
+                    )}                       
+                    </Disclosure>
                 )}
-                </Disclosure>
             </div>
             {attributes.returns && 
                 <>
