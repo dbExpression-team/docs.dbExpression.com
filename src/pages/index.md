@@ -39,20 +39,20 @@ IList<dynamic> purchases_shipped_by_year = await db.SelectMany(
 And here's the SQL statement dbExpression assembled and executed against the database:
 ```sql
 exec sp_executesql N'SELECT
-	[dbo].[Person].[Id]
-	,([dbo].[Person].[FirstName] + @P1 + [dbo].[Person].[LastName]) AS [CustomerName]
-	,COUNT([dbo].[Purchase].[ShipDate]) AS [ShippedCount]
-	,DATEPART(year, [dbo].[Purchase].[ShipDate]) AS [ShippedYear]
+	[dbo].[Person].[Id],
+	([dbo].[Person].[FirstName] + @P1 + [dbo].[Person].[LastName]) AS [CustomerName],
+	COUNT([dbo].[Purchase].[ShipDate]) AS [ShippedCount],
+	DATEPART(year, [dbo].[Purchase].[ShipDate]) AS [ShippedYear]
 FROM
 	[dbo].[Purchase]
 	INNER JOIN [dbo].[Person] ON [dbo].[Purchase].[PersonId] = [dbo].[Person].[Id]
 WHERE
 	[dbo].[Purchase].[ShipDate] IS NOT NULL
 GROUP BY
-	[dbo].[Person].[Id]
-	,[dbo].[Person].[FirstName]
-	,[dbo].[Person].[LastName]
-	,DATEPART(year, [dbo].[Purchase].[ShipDate])
+	[dbo].[Person].[Id],
+	[dbo].[Person].[FirstName],
+	[dbo].[Person].[LastName],
+	DATEPART(year, [dbo].[Purchase].[ShipDate])
 ;',N'@P1 char(1)',@P1=' '
 ```
 
