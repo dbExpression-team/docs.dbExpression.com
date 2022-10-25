@@ -114,8 +114,6 @@ IList<dynamic> results = db.SelectMany(
         .GroupBy(dbex.Alias("Pivot", "State"))
         .OrderBy(dbex.Alias("Pivot", "State"));
 ```
-Note the use of tuples to define the alias in the outer select clause's *Sum* function.  This requires an additional namespace in a using statement `HatTrick.DbEx.Sql.Builder.Alias`, see [Aliasing](/aliasing/column) for more details.
-
 ```sql
 exec sp_executesql N'SELECT
 	[Pivot].[State],
@@ -166,3 +164,5 @@ ORDER BY
 	[Pivot].[State] ASC;',N'@P1 nchar(1),@P2 int,@P3 nchar(1),@P4 int,@P5 nchar(1),@P6 int',@P1=N'*',@P2=0,@P3=N'*',@P4=1,@P5=N'*',@P6=2
 ```
 {% /code-example %}
+
+Note the use of tuples to define the alias in the outer select clause's *Sum* function.  This requires an additional namespace in a using statement `HatTrick.DbEx.Sql.Builder.Alias`, see [Aliasing](../aliasing/column) for more details.
