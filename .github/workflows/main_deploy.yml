@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 env:
-  GOOGLE_ANALYTICS_ID: G-BND29F2QPK
+  GOOGLE_ANALYTICS_ID: G-5E8SMEDZT3
   SITE_URL: https://dbexpression.com/docs
   BASE_PATH: /docs
 
