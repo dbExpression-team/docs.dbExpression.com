@@ -365,7 +365,7 @@ function Header({ navigation }) {
  return (
     <header
       className={clsx(
-        'sticky top-0 z-50 flex flex-wrap items-center justify-between bg-white px-4 py-5 shadow-md shadow-slate-900/5 transition duration-500 dark:shadow-none sm:px-6 lg:px-8',
+        'sticky top-0 z-50 flex flex-wrap items-center justify-between bg-white px-4 pt-4 pb-1 shadow-md shadow-slate-900/5 transition duration-500 dark:shadow-none sm:px-6 lg:px-8',
         isScrolled
           ? 'dark:bg-slate-900/95 dark:backdrop-blur dark:[@supports(backdrop-filter:blur(0))]:bg-slate-900/75'
           : 'dark:bg-transparent'
@@ -377,7 +377,7 @@ function Header({ navigation }) {
       {/* <div className="-my-5 mr-6 sm:mr-8 md:mr-0">
         <Search />
       </div> */}
-      <div className="relative flex md:flex-grow items-center h-12 min-h-full">
+      <div className="relative flex md:flex-grow items-center min-h-full">
         <div className="relative flex hidden md:visible md:block basis-0 justify-start gap-6 sm:gap-8 md:flex-grow">
           <Link href="https://dbexpression.com" className="group" aria-label="dbExpression">
             <DbExMascot className="h-6 w-6" />
@@ -533,7 +533,7 @@ export function Layout({ children, title, tableOfContents }) {
     <>
       <Header navigation={navigation} />
 
-      <div className="relative mx-auto flex max-w-8xl -mt-4 lg:mt-0 justify-center sm:px-2">
+      <div className="relative mx-auto flex max-w-8xl justify-center sm:px-2">
         <div className="hidden lg:relative lg:block lg:flex-none lg:py-12 ">
           <div className="absolute inset-y-0 right-0 w-[50vw] bg-slate-50 dark:hidden" />
           <div className="sticky top-[4.5rem] -ml-0.5 h-[calc(100vh-4.5rem)] overflow-y-auto pb-16 pt-4 pl-0.5 scrollbar">
