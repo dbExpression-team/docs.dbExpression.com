@@ -18,7 +18,7 @@ IList<dynamic> purchases = db.SelectMany(
 ```
 Execution of this would cause the following runtime exception during mapping to a dynamic object:  `HatTrick.DbEx.Sql.DbExpressionException : An element with the same key 'Id' already exists in the ExpandoObject.`
 
-This is corrected by providing a field-level alias on one (or more) of the `Id` fields by using the `As({alias})` method:
+This is corrected by providing a field-level alias on one (or more) of the `Id` fields by using the `As(...)` method:
 {% code-example %}
 ```csharp
 IList<dynamic> purchases = db.SelectMany(

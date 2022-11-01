@@ -53,8 +53,7 @@ function collectHeadings(nodes, slugify = slugifyWithCounter()) {
 
 export default function App({ Component, pageProps }) {
 
-  let title =
-    pageProps.markdoc?.frontmatter.title || 'dbExpression - Docs'
+  let title = pageProps.markdoc?.frontmatter.title || 'dbExpression - read the docs'
 
   let description = pageProps.markdoc?.frontmatter.description
 
@@ -67,6 +66,7 @@ export default function App({ Component, pageProps }) {
       <Head>
         <title>{title}</title>
         {description && <meta name="description" content={description} />}
+        <meta name='keywords'  content='dbexpression db expression microsoft sql server sqlserver' />
       </Head>
       <Script key="ga-script" strategy='afterInteractive' src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}`} />
       <Script id="ga-script-local" strategy='afterInteractive'>

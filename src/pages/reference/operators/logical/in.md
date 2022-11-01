@@ -8,6 +8,11 @@ description: dbExpression IN operation
 
 Use the `In` operation to determine if a value matches any values.
 
+{% core-concepts caption="logical operators" %}
+`In` is one of the set of logical operators used to create filter expressions.
+{% partial file="logical-operators-partial.md" /%}
+{% /core-concepts %}
+
 {% method-descriptor %}
 ```json
 {

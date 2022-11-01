@@ -26,8 +26,8 @@ export function CoreConcepts({ caption, children }) {
                   </div>
                 </div>
                 <div className='w-full flex items-center'>
-                <Disclosure.Panel>
-                  <div className="border-t bg-white dark:bg-slate-900 border-slate-200 dark:border-sky-700">
+                <Disclosure.Panel className="w-full">
+                  <div className="w-full border-t bg-white dark:bg-slate-900 border-slate-200 dark:border-sky-700">
                     <div className='my-2 mx-3 relative shrink'>{children}</div>
                   </div>
                 </Disclosure.Panel>

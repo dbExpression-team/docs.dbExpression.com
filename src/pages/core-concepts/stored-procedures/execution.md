@@ -3,17 +3,33 @@ title: Executing Stored Procedures
 ---
 
 To return data from execution of a stored procedure, dbExpression uses various methods in the fluent
-method chain just before `Execute` and `ExecuteAsync`.  These include:
-use one of these methods while building the stored procedure query:
-* `GetValue<T>()` - Execution of the stored procedure returns a scalar value with type `T`.
-* `GetValues<T>()` - Execution of the stored procedure returns a list of scalar values with type `T`.
-* `GetValue<T>(Func<ISqlFieldReader,T>)` - Execution of the stored procedure returns an object of type `T`.
-* `GetValues<T>(Func<ISqlFieldReader,T>)` - Execution of the stored procedure returns a list of objects with type `T`.
-* `GetValue()` - Execution of the stored procedure returns a single `dynamic` object, where the properties of the dynamic object are determined by the returned rowset.
-* `GetValues()` - Execution of the stored procedure returns a list of `dynamic` objects, where the properties of each dynamic object are determined by the returned rowset(s).
+method chain just before `Execute` and `ExecuteAsync`.  Use one of these methods to end the stored procedure 
+query and specify the return:
+
+{% table %}
+---
+* `GetValue<T>()`
+* Execution of the stored procedure returns a scalar value with type `T`.
+---
+* `GetValues<T>()`
+* Execution of the stored procedure returns a list of scalar values with type `T`.
+---
+* `GetValue<T>(Func<ISqlFieldReader,T>)`
+* Execution of the stored procedure returns an object of type `T`.
+---
+* `GetValues<T>(Func<ISqlFieldReader,T>)`
+* Execution of the stored procedure returns a list of objects with type `T`.
+---
+* `GetValue()`
+* Execution of the stored procedure returns a single `dynamic` object, where the properties of the dynamic object are determined by the returned rowset.
+---
+* `GetValues()`
+* Execution of the stored procedure returns a list of `dynamic` objects, where the properties of each dynamic object are determined by the returned rowset(s).
+{% /table %}
 
 ## Returning a scalar value
-To return a scalar value from execution of a stored procedure, use the generic `GetValue<T>` method, where `T` is the desired return type.  For example, using a stored procedure defined as follows:
+To return a scalar value from execution of a stored procedure, use the generic `GetValue<T>` method, where `T` is the desired return type.  
+For example, using a stored procedure defined as follows:
 ```sql
 CREATE PROCEDURE [dbo].[GetMaxCreditLimitLessThan]
     @CreditLimit INT

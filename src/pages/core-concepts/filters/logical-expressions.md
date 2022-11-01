@@ -4,13 +4,7 @@ title: Logical Expressions
 
 Logical expressions equate to a true/false result.  Logical expressions are created by using one of the following operators between two (or more) comparison expressions and/or literal values:
 
-| Operator | Description                |
-|:--------:|----------------------------|
-|   &      | AND                        |
-|   \|     | OR                         |
-|   !      | Negation                   |
-|   Like   | Like(...)                  |
-|   In     | In(...)                  |
+{% partial file="logical-operators-partial.md" /%}
 
 You can combine any number of comparison and/or arithmetic expressions using logical operators to create composite expressions.
 ```csharp

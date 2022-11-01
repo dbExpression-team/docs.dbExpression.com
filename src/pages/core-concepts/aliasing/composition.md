@@ -2,16 +2,18 @@
 title: Aliasing the Composition of Elements
 ---
 
-When using aliased fields with other elements like functions, you can use the `dbex.Alias` helper, but in most cases you can use a tuple representing the alias to improve readability.  Database functions accepting tuples that represent derived tables have been implemented as extension methods and are in a different namespace than the core methods of the database functions.  Use the namespaces `HatTrick.DbEx.Sql.Expression.Alias` and `HatTrick.DbEx.MsSql.Expression.Alias` to access database functions that accept tuples.  Implementation as extension methods was chosen as it is not common to use derived tables that require aliasing.  Having all of the methods signatures that accept tuples mixed in with the core method signatures heavily polluted the method overload list for some database functions.  So, using tuples for aliasing with functions is an "opt-in" feature via using statements.  
+When using aliased fields with other elements like functions, you can use the `dbex.Alias` helper method, but in most cases you can use a tuple representing the alias to improve readability.  Database functions accepting tuples that represent derived tables have been implemented as extension methods and are in a different namespace than the core methods of the database functions. 
+
+Implementation as extension methods was chosen as it is not common to use derived tables that require aliasing.  Having all of the methods signatures that accept tuples mixed in with the core method signatures heavily polluted the method overload list for some database functions.  So, using tuples for aliasing with functions is an "opt-in" feature via using statements.  
 
 > Database functions accepting tuples representing derived tables have been implemented as extension 
-methods and are in a different namespace.
+methods in a different namespace.
 
 Use the namespaces `HatTrick.DbEx.Sql.Builder.Alias` and `HatTrick.DbEx.MsSql.Builder.Alias` 
 to access method signatures of database functions that accept tuples.
 
-The following example uses a tuple with the `IsNull` function.  Again, dbExpression requires clarity on types, the use of a tuple in the `IsNull` function is valid as the method can
-infer the data type to use in creating the `AddressTyp` property on each `dynamic` object returned.
+The following example uses a tuple with the `IsNull` function.  The use of a tuple in the `IsNull` function is valid as the method can
+infer the data type to use in creating the `AddressType` property on each `dynamic` object returned.
 
 {% code-example %}
 ```csharp
@@ -60,12 +62,9 @@ FROM
 ```
 {% /code-example %}
 
-The use of aliasing with the `IsNull` function above could have been specified using the `dbex.Alias` helper method:
+The `IsNull` function above could have just as easily been specified using the `dbex.Alias` helper method:
 ```csharp
 //using dbex.Alias<AddressType> for specifying the aliased field
 db.fx.IsNull(dbex.Alias<AddressType>("Address", "Type"), AddressType.Shipping).As("AddressType")
-
-//using a tuple for specifying the aliased field
-db.fx.IsNull(("Address", "Type"), AddressType.Shipping).As("AddressType")
 ```
 The two are functionally equivalent and produce the same sql statement, but the later provides better readability.

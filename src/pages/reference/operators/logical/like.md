@@ -8,6 +8,11 @@ description: dbExpression LIKE operation
 
 Use the `Like` operation to find values that match the provided pattern.
 
+{% core-concepts caption="logical operators" %}
+`Like` is one of the set of logical operators used to create filter expressions.
+{% partial file="logical-operators-partial.md" /%}
+{% /core-concepts %}
+
 {% method-descriptor %}
 ```json
 {

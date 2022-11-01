@@ -277,8 +277,7 @@ HAVING
 
 ## Filter expressions using arithmetic
 
-Filter expressions can also be composed using arithmetic expressions in *WHERE* clauses, *JOIN* clauses, and *HAVING* clauses 
-(see [Advanced Queries (Arithmetic)](../../core-concepts/advanced/arithmetic) to learn more about using arithmetic expressions in queries).
+Filter expressions can also be composed using arithmetic expressions in *WHERE* clauses, *JOIN* clauses, and *HAVING* clauses.
 
 Arithmetic expression in a *WHERE* clause:
 {% code-example %}

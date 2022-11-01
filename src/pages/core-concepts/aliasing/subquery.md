@@ -68,7 +68,7 @@ In the "first" `INNER JOIN`, we join an aggregation query that gets a count of p
 ...
 ```
 
-The selected fields use field aliasing to alias columns in the SQL statement as *PurchaseYear* and *PurchaseCount*.  The subquery is aliased using `As({alias})` method to alias the subquery as *vips*.  The join condition between the "outer" query and the subquery uses the `dbex.Alias` utility method to ensure a valid ON condition:
+The selected fields use field aliasing to alias columns in the SQL statement as *PurchaseYear* and *PurchaseCount*.  The subquery is aliased using `As(...)` method to alias the subquery as *vips*.  The join condition between the "outer" query and the subquery uses the `dbex.Alias` utility method to ensure a valid ON condition:
 
 ```csharp
 ...
