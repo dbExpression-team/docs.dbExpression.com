@@ -65,7 +65,7 @@ float result = db.SelectOne(
         db.fx.StDev(dbo.Product.ShippingWeight)
     )
     .From(dbo.Product)
-    .OrderBy(db.fx.StDev(dbo.Product.ShippingWeight).Desc)
+    .OrderBy(db.fx.StDev(dbo.Product.ShippingWeight).Desc())
     .Execute();
 ```
 ```sql

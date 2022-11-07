@@ -82,7 +82,7 @@ Select and order by the square root of a product's depth.
 ```csharp
 IList<Product> result = db.SelectMany<Product>()
     .From(dbo.Product)
-    .OrderBy(db.fx.Sqrt(dbo.Product.Depth).Desc)
+    .OrderBy(db.fx.Sqrt(dbo.Product.Depth).Desc())
     .Execute();
 ```
 ```sql

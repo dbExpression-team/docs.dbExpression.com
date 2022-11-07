@@ -10,7 +10,7 @@ Results can be ordered either ascending or descending by using the `Asc` or `Des
 //select all people ordered by last name descending
 IList<Person> people = db.SelectMany<Person>()
     .From(dbo.Person)
-    .OrderBy(dbo.Person.LastName.Desc)
+    .OrderBy(dbo.Person.LastName.Desc())
     .Execute();
 ```
 ```sql

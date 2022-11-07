@@ -65,7 +65,7 @@ int count = db.SelectOne(
         db.fx.Count(dbo.Purchase.TotalPurchaseAmount)
     )
     .From(dbo.Purchase)
-    .OrderBy(db.fx.Count(dbo.Purchase.TotalPurchaseAmount).Desc)
+    .OrderBy(db.fx.Count(dbo.Purchase.TotalPurchaseAmount).Desc())
     .Execute();
 ```
 ```sql

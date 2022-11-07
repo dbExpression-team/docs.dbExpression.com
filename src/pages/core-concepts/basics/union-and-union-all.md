@@ -111,8 +111,8 @@ IList<dynamic> results = db.SelectMany(
             .Where(dbo.Address.AddressType == AddressType.Billing)
             .GroupBy(dbo.Address.State)
         ).As("Pivot")
-        .GroupBy(dbex.Alias("Pivot", "State"))
-        .OrderBy(dbex.Alias("Pivot", "State"));
+        .GroupBy(("Pivot", "State"))
+        .OrderBy(("Pivot", "State"));
 ```
 ```sql
 exec sp_executesql N'SELECT

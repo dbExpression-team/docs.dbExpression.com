@@ -93,7 +93,7 @@ Select a list of persons, ordered descending by the length of their last name.
 ```csharp
 IList<Person> result = db.SelectMany<Person>()
 	.From(dbo.Person)
-	.OrderBy(db.fx.Len(dbo.Person.LastName).Desc)
+	.OrderBy(db.fx.Len(dbo.Person.LastName).Desc())
 	.Execute();
 ```
 ```sql

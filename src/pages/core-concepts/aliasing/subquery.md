@@ -38,8 +38,8 @@ IList<dynamic> person_stats = db.SelectMany(
     .OrderBy(
         dbo.Person.LastName,
         dbo.Person.FirstName,
-        dbex.Alias("vips", "PurchaseYear"),
-        dbex.Alias("vips", "PurchaseCount").Desc
+        ("vips", "PurchaseYear"),
+        ("vips", "PurchaseCount").Desc()
     );
 
 ```
@@ -68,12 +68,12 @@ In the "first" `INNER JOIN`, we join an aggregation query that gets a count of p
 ...
 ```
 
-The selected fields use field aliasing to alias columns in the SQL statement as *PurchaseYear* and *PurchaseCount*.  The subquery is aliased using `As(...)` method to alias the subquery as *vips*.  The join condition between the "outer" query and the subquery uses the `dbex.Alias` utility method to ensure a valid ON condition:
+The selected fields use field aliasing to alias columns in the SQL statement as *PurchaseYear* and *PurchaseCount*.  The subquery is aliased using `As(...)` method to alias the subquery as *vips*.  The join condition between the "outer" query and the subquery uses the alias of the subquery for the ON condition:
 
 ```csharp
 ...
     .As("vips").On(dbo.Person.Id == ("vips", "PersonId")) 
-	// ^ using a tuple for the alias
+	//                                  ^ using a tuple for the alias
 ...
 ```
 
@@ -86,15 +86,15 @@ The subquery alias of *vips* enables the aliasing of the subquery fields in the 
 ...
 ```
 
-The outer query is completed by ordering by *LastName* and *FirstName* ascending, and using the `dbex.Alias` utility method to order by the *PurchaseYear* virtual column ascending and the *PurchaseCount* virtual column descending:
+The outer query is completed by ordering by *LastName* ascending, *FirstName* ascending, *PurchaseYear* virtual column ascending (from the aliased subquery), and the *PurchaseCount* virtual column descending (from the aliased subquery):
 
 ```csharp
 ...
     .OrderBy(
         dbo.Person.LastName,
         dbo.Person.FirstName,
-        dbex.Alias("vips", "PurchaseYear"),
-        dbex.Alias("vips", "PurchaseCount").Desc
+        ("vips", "PurchaseYear"),
+        ("vips", "PurchaseCount").Desc()
     );
 ...
 ```

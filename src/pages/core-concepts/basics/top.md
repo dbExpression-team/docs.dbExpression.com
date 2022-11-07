@@ -11,7 +11,7 @@ Use the `Top` method while composing a query to limit the number of results affe
 IList<Purchase> purchases = db.SelectMany<Purchase>()
     .Top(5)
     .From(dbo.Purchase)
-    .OrderBy(dbo.Purchase.TotalPurchaseAmount.Desc)
+    .OrderBy(dbo.Purchase.TotalPurchaseAmount.Desc())
     .Execute();
 ```
 ```sql
@@ -49,8 +49,8 @@ IList<Person> persons = db.SelectMany(
     .Distinct()
     .From(dbo.Person)
     .OrderBy(
-        dbo.Person.LastName.Asc, 
-        dbo.Person.FirstName.Asc
+        dbo.Person.LastName, 
+        dbo.Person.FirstName
     )
     .Execute();
 ```

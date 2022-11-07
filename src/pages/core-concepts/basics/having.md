@@ -15,7 +15,7 @@ IList<dynamic> maxPurchases = db.SelectMany(
     )
     .From(dbo.Person)
     .InnerJoin(dbo.Purchase).On(dbo.Purchase.PersonId == dbo.Person.Id)
-    .OrderBy(dbo.Person.LastName.Asc)
+    .OrderBy(dbo.Person.LastName)
     .GroupBy(
         dbo.Person.Id, 
         dbo.Person.FirstName, 

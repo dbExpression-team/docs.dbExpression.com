@@ -89,7 +89,7 @@ IList<double> minSales = db.SelectMany(
         db.fx.Min(dbo.Purchase.TotalPurchaseAmount)
     )
     .From(dbo.Purchase)
-    .OrderBy(db.fx.Min(dbo.Purchase.TotalPurchaseAmount).Desc)
+    .OrderBy(db.fx.Min(dbo.Purchase.TotalPurchaseAmount).Desc())
     .Execute();
 ```
 ```sql

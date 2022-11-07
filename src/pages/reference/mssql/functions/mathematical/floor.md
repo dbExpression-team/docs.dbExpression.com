@@ -81,7 +81,7 @@ IList<double> value = db.SelectMany(
         dbo.Purchase.TotalPurchaseAmount
     )
     .From(dbo.Purchase)
-    .OrderBy(db.fx.Floor(dbo.Purchase.TotalPurchaseAmount).Desc)
+    .OrderBy(db.fx.Floor(dbo.Purchase.TotalPurchaseAmount).Desc())
     .Execute();
 ```
 ```sql

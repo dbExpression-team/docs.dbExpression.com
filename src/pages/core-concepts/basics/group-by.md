@@ -43,7 +43,7 @@ IList<dynamic> persons = db.SelectMany(
         dbo.Person.LastName
     ).OrderBy(
         dbo.Person.LastName,
-        dbo.Person.FirstName.Desc
+        dbo.Person.FirstName.Desc()
     )
     .Execute();
 ```
@@ -72,7 +72,7 @@ Group by is typically used with aggregation functions, but also works as a means
 IList<string> uniqueLastNames = db.SelectMany(dbo.Person.LastName)
     .From(dbo.Person)
     .GroupBy(dbo.Person.LastName)
-    .OrderBy(dbo.Person.LastName.Asc)
+    .OrderBy(dbo.Person.LastName.Asc())
     .Execute();
 ```
 ```sql

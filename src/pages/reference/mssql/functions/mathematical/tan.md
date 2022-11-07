@@ -76,7 +76,7 @@ Select and order by the tangent of a product's depth.
 ```csharp
 IList<Product> result = db.SelectMany<Product>()
     .From(dbo.Product)
-    .OrderBy(db.fx.Tan(dbo.Product.Depth).Desc)
+    .OrderBy(db.fx.Tan(dbo.Product.Depth).Desc())
     .Execute();
 ```
 ```sql

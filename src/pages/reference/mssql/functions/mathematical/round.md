@@ -243,7 +243,7 @@ IList<double> value = db.SelectMany(
         dbo.Purchase.TotalPurchaseAmount
     )
     .From(dbo.Purchase)
-    .OrderBy(db.fx.Round(dbo.Purchase.TotalPurchaseAmount, 1).Desc)
+    .OrderBy(db.fx.Round(dbo.Purchase.TotalPurchaseAmount, 1).Desc())
     .Execute();
 ```
 ```sql

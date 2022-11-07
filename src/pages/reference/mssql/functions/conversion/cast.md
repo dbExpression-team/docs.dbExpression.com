@@ -145,7 +145,7 @@ int cast = db.SelectOne(
         db.fx.Cast(dbo.Address.Zip).AsInt()
     )
     .From(dbo.Address)
-    .OrderBy(db.fx.Cast(dbo.Address.Zip).AsInt().Desc)
+    .OrderBy(db.fx.Cast(dbo.Address.Zip).AsInt().Desc())
     .Execute();
 ```
 ```sql

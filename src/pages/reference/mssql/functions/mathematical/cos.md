@@ -76,7 +76,7 @@ Select and order by the cosine of a product's depth.
 ```csharp
 IList<Product> result = db.SelectMany<Product>()
     .From(dbo.Product)
-    .OrderBy(db.fx.Cos(dbo.Product.Depth).Desc)
+    .OrderBy(db.fx.Cos(dbo.Product.Depth).Desc())
     .Execute();
 ```
 ```sql

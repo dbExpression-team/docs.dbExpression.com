@@ -89,7 +89,7 @@ Select and order by the arccosine of a product's depth.
 IList<Product> result = db.SelectMany<Product>()
     .From(dbo.Product)
     .Where(dbo.Product.Depth > 0 & dbo.Product.Depth < 1)
-    .OrderBy(db.fx.ACos(dbo.Product.Depth).Desc)
+    .OrderBy(db.fx.ACos(dbo.Product.Depth).Desc())
     .Execute();
 ```
 ```sql

@@ -128,7 +128,7 @@ IList<double> avgSales = db.SelectMany(
         db.fx.Avg(dbo.Purchase.TotalPurchaseAmount)
     )
     .From(dbo.Purchase)
-    .OrderBy(db.fx.Avg(dbo.Purchase.TotalPurchaseAmount).Desc)
+    .OrderBy(db.fx.Avg(dbo.Purchase.TotalPurchaseAmount).Desc())
     .Execute();
 ```
 ```sql

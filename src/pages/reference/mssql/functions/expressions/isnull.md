@@ -123,7 +123,7 @@ Select a list of purchases, ordered by a relevant date.
 ```csharp
 IList<Purchase> products = db.SelectMany<Purchase>()
     .From(dbo.Purchase)
-    .OrderBy(db.fx.IsNull(dbo.Purchase.ExpectedDeliveryDate, dbo.Purchase.ShipDate).Desc)
+    .OrderBy(db.fx.IsNull(dbo.Purchase.ExpectedDeliveryDate, dbo.Purchase.ShipDate).Desc())
     .Execute();
 ```
 ```sql
