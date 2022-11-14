@@ -17,7 +17,7 @@ infer the data type to use in creating the `AddressType` property on each `dynam
 
 {% code-example %}
 ```csharp
-IList<dynamic> address_stats = db.SelectMany(
+IEnumerable<dynamic> address_stats = db.SelectMany(
         dbo.Person.FirstName,
         dbo.Person.LastName,
         db.fx.IsNull(("Address", "Type"), AddressType.Shipping).As("AddressType"),

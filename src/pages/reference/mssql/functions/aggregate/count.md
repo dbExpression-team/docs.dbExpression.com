@@ -83,7 +83,7 @@ Select the count of all purchases, grouped by payment
 method type having an count greater than 10 .
 {% code-example %}
 ```csharp
-IList<int> counts = db.SelectMany(
+IEnumerable<int> counts = db.SelectMany(
         db.fx.Count()
     )
     .From(dbo.Purchase)

@@ -83,7 +83,7 @@ Select the variance for the population of all products, grouped by product
 category type having a variance for the population greater than 1.
 {% code-example %}
 ```csharp
-IList<float> results = db.SelectMany(
+IEnumerable<float> results = db.SelectMany(
         db.fx.VarP(dbo.Product.ShippingWeight)
     )
     .From(dbo.Product)

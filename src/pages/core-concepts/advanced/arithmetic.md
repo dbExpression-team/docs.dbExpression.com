@@ -43,7 +43,7 @@ An example query using arithmetic expressions to select data calculated by the d
 {% code-example %}
 ```csharp
 //select the product info (inventory on hand, price of inventory and projected margin on sales)
-IList<dynamic> inventoryStats = db.SelectMany(
+IEnumerable<dynamic> inventoryStats = db.SelectMany(
         dbo.Product.Id,
         dbo.Product.Name,
         dbo.Product.Quantity.As("QuantityOnHand"),

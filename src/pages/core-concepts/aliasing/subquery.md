@@ -12,7 +12,7 @@ int year = 2021;
 // calendar year are considered VIP customers
 int purchaseCount = 3;
 
-IList<dynamic> person_stats = db.SelectMany(
+IEnumerable<dynamic> person_stats = db.SelectMany(
         dbo.Person.Id.As("PersonId"),
         (dbo.Person.FirstName + " " + dbo.Person.LastName).As("FullName"),
         dbex.Alias<int>("vips", "PurchaseCount"),

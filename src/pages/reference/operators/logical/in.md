@@ -75,7 +75,7 @@ Use the `In` operation to determine if a value matches any values.
 Find all persons where their first name is one of the values in the list
 {% code-example %}
 ```csharp
-IList<Person> persons = db.SelectMany<Person>()
+IEnumerable<Person> persons = db.SelectMany<Person>()
     .From(dbo.Person)
     .Where(dbo.Person.FirstName.In("Jane", "John", "Mary", "Joe"))
     .Execute();
@@ -103,7 +103,7 @@ WHERE
 Find all persons where their first name is not one of the values in the list
 {% code-example %}
 ```csharp
-IList<Person> persons = db.SelectMany<Person>()
+IEnumerable<Person> persons = db.SelectMany<Person>()
     .From(dbo.Person)
     .Where(!dbo.Person.FirstName.In("Jane", "John", "Mary", "Joe"))
     .Execute();
@@ -132,7 +132,7 @@ WHERE
 Find product counts by category having a category value in the list
 {% code-example %}
 ```csharp
-IList<dynamic> product_counts = db.SelectMany(
+IEnumerable<dynamic> product_counts = db.SelectMany(
         dbo.Product.ProductCategoryType,
         db.fx.Count().As("CategoryCount")
     )
@@ -163,7 +163,7 @@ HAVING
 ### Join Clause
 {% code-example %}
 ```csharp
-IList<Person> persons = db.SelectMany<Person>()
+IEnumerable<Person> persons = db.SelectMany<Person>()
     .From(dbo.Person)
     .InnerJoin(dbo.PersonAddress).On(
         dbo.PersonAddress.PersonId.In(1, 12, 14) 

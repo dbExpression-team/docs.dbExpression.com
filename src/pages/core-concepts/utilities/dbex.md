@@ -77,7 +77,7 @@ When building and executing queries to return entities, the `dbex.GetDefaultMapp
 
 {% code-example %}
 ```csharp
-IList<Person> persons = db.SelectMany<Person>()
+IEnumerable<Person> persons = db.SelectMany<Person>()
     .From(dbo.Person)
     .Execute(row => 
         { 
@@ -115,13 +115,13 @@ The `dbex.GetDefaultMappingFor` method is more useful, and is more commonly used
 
 When executing queries and returning entities, simply using an entity based query works fine:
 ```csharp
-IList<Person> persons = db.SelectMany<Person>()
+IEnumerable<Person> persons = db.SelectMany<Person>()
     .From(dbo.Person)
     .Execute();
 ```
 There is an equivalent approach to return exactly the same results:
 ```csharp
-IList<Person> persons = db.SelectMany(
+IEnumerable<Person> persons = db.SelectMany(
         dbex.SelectAllFor(dbo.Person)
     )
     .From(dbo.Person)
@@ -140,7 +140,7 @@ Both of these strategies continue to work as modifications to the schema are mad
 Sometimes it's useful to return additional properties in a single query, but guard for future schema changes.  For example, a query that returns a list of *Person* and *additionally* includes the *State* of their mailing address:
 {% code-example %}
 ```csharp
-IList<(Person, StateType?)> persons = db.SelectMany(
+IEnumerable<(Person, StateType?)> persons = db.SelectMany(
         dbex.SelectAllFor(dbo.Person),
         dbo.Address.State
     )
@@ -181,7 +181,7 @@ FROM
 
 If the query had been written where all fields of *Person* were enumerated:
 ```csharp
-IList<(Person, StateType?)> persons = db.SelectMany(
+IEnumerable<(Person, StateType?)> persons = db.SelectMany(
         dbo.Person.Id,
         dbo.Person.FirstName,
         dbo.Person.LastName,
@@ -228,7 +228,7 @@ Using `dbex.SelectAllFor` returns all columns for the *Person* table (effectivel
 `dbex.SelectAllFor` includes an overload that provides aliasing functionality.  This is useful when selecting from more than one table, and the resulting rowset has more than one column with the same name and mapping to `dynamic` objects.  For example:
 
 ```csharp
-IList<dynamic> person_purchases = db.SelectMany(
+IEnumerable<dynamic> person_purchases = db.SelectMany(
         dbex.SelectAllFor(dbo.Person),
         dbo.Purchase.Id,
         dbo.Purchase.PurchaseDate
@@ -244,7 +244,7 @@ Execution of this would cause the following runtime exception during mapping to 
 This can be corrected by using an alias (see [Aliasing](../../core-concepts/aliasing/column)) on the field accessor `dbo.Purchase.Id`:
 {% code-example %}
 ```csharp
-IList<dynamic> person_purchases = db.SelectMany(
+IEnumerable<dynamic> person_purchases = db.SelectMany(
         dbex.SelectAllFor(dbo.Person),
         dbo.Purchase.Id.As("PurchaseId"),
         dbo.Purchase.PurchaseDate
@@ -278,7 +278,7 @@ But, another option is to alias the name of the *Id* column on *Person* by using
 
 {% code-example %}
 ```csharp
-IList<dynamic> person_purchases = db.SelectMany(
+IEnumerable<dynamic> person_purchases = db.SelectMany(
         dbex.SelectAllFor(dbo.Person, name => name == nameof(dbo.Person.Id) ? "PersonId" : name),
         dbo.Purchase.Id,
         dbo.Purchase.PurchaseDate
@@ -311,7 +311,7 @@ FROM
 Or prepend a value to create an alias to all columns for *Person*: 
 {% code-example %}
 ```csharp
-IList<dynamic> person_purchases = db.SelectMany(
+IEnumerable<dynamic> person_purchases = db.SelectMany(
         dbex.SelectAllFor(dbo.Person, "Person_"),
         dbo.Purchase.Id,
         dbo.Purchase.PurchaseDate
@@ -359,7 +359,7 @@ static string alias(string entity, string name)
         }
     };
 
-IList<dynamic> person_purchases = db.SelectMany(
+IEnumerable<dynamic> person_purchases = db.SelectMany(
         dbex.SelectAllFor(dbo.Person, name => alias(nameof(Person), name))
         .Concat(dbex.SelectAllFor(dbo.Purchase, name => alias(nameof(Purchase), name))) 
         // ^ LINQ concat, not database concat function

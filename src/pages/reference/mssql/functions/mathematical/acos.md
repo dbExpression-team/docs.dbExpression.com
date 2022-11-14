@@ -86,7 +86,7 @@ WHERE
 Select and order by the arccosine of a product's depth.
 {% code-example %}
 ```csharp
-IList<Product> result = db.SelectMany<Product>()
+IEnumerable<Product> result = db.SelectMany<Product>()
     .From(dbo.Product)
     .Where(dbo.Product.Depth > 0 & dbo.Product.Depth < 1)
     .OrderBy(db.fx.ACos(dbo.Product.Depth).Desc())
@@ -127,7 +127,7 @@ Select product details grouped by product
 category and arccosine of the product's depth.
 {% code-example %}
 ```csharp
-IList<dynamic> results = db.SelectMany(
+IEnumerable<dynamic> results = db.SelectMany(
         dbo.Product.ProductCategoryType,
         db.fx.ACos(dbo.Product.Depth).As("calculated_value")
     )
@@ -160,7 +160,7 @@ Select the ids of all products, grouped by product
 category type having an arccosine of the product's height greater than 1.
 {% code-example %}
 ```csharp
-IList<ProductCategoryType?> results = db.SelectMany(
+IEnumerable<ProductCategoryType?> results = db.SelectMany(
         dbo.Product.ProductCategoryType
     )
     .From(dbo.Product)

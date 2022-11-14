@@ -131,7 +131,7 @@ Use the `DateAdd` function to add a number to a part of a date.
 Select the addition of 1 to the ship date of all products.
 {% code-example %}
 ```csharp
-IList<DateTime?> result = db.SelectMany(
+IEnumerable<DateTime?> result = db.SelectMany(
         db.fx.DateAdd(DateParts.Year, 1, dbo.Purchase.ShipDate)
     )
     .From(dbo.Purchase)
@@ -149,7 +149,7 @@ FROM
 Select all product ids where it took longer than 15 days from purchase to ship.
 {% code-example %}
 ```csharp
-IList<int> result = db.SelectMany(
+IEnumerable<int> result = db.SelectMany(
         dbo.Purchase.Id
     )
     .From(dbo.Purchase)
@@ -170,7 +170,7 @@ WHERE
 Select all purchases ordered by the addition of 1 to ship date. (this example shows order, but the actual logic isn't any different than simply ordering by ship date).
 {% code-example %}
 ```csharp
-IList<Purchase> result = db.SelectMany<Purchase>()
+IEnumerable<Purchase> result = db.SelectMany<Purchase>()
     .From(dbo.Purchase)
     .OrderBy(db.fx.DateAdd(DateParts.Week, 1, dbo.Purchase.ShipDate))
     .Execute();
@@ -202,7 +202,7 @@ Select product information grouped by product category type and the
 addition of 1 to ship date. (this example shows grouping, but the actual logic isn't any different than simply grouping by date created).
 {% code-example %}
 ```csharp
-IList<dynamic> results = db.SelectMany(
+IEnumerable<dynamic> results = db.SelectMany(
         dbo.Product.ProductCategoryType,
         db.fx.DateAdd(DateParts.Week, 1, dbo.Product.DateCreated).As("NewDateCreated")
     )
@@ -229,7 +229,7 @@ GROUP BY
 Select purchase values grouped by payment method type that haven't shipped in the past week.
 {% code-example %}
 ```csharp
-IList<dynamic> results = db.SelectMany(
+IEnumerable<dynamic> results = db.SelectMany(
         dbo.Purchase.PaymentMethodType,
         dbo.Purchase.ShipDate
     )

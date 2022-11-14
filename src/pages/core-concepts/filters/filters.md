@@ -112,7 +112,7 @@ This filter specifies a field expression greater than a literal value:
 {% code-example %}
 ```csharp
 var yesterday = DateTime.Now.Date.AddDays(-1);
-IList<Person> people = db.SelectMany<Person>()
+IEnumerable<Person> people = db.SelectMany<Person>()
     .From(dbo.Person)
     //DateTime field expression comparison to DateTime literal value
     .Where(dbo.Person.LastLoginDate > yesterday)
@@ -141,7 +141,7 @@ WHERE
 This filter specifies a field expression equal to a literal value:
 {% code-example %}
 ```csharp
-IList<Person> people = db.SelectMany<Person>()
+IEnumerable<Person> people = db.SelectMany<Person>()
     .From(dbo.Person)
     //string field expression comparison to string literal value
     .Where(dbo.Person.LastName == "Cartman")
@@ -170,7 +170,7 @@ WHERE
 This filter specifies a field expression equal to a field expression (all people with the same first name as their last name):
 {% code-example %}
 ```csharp
-IList<Person> people = db.SelectMany<Person>()
+IEnumerable<Person> people = db.SelectMany<Person>()
     .From(dbo.Person)
     //string field expression comparison to string field expression
     .Where(dbo.Person.FirstName == dbo.Person.LastName)
@@ -199,7 +199,7 @@ WHERE
 This filter specifies a field expression greater than a literal value and additionally a field expression greater than or equal to a literal value:
 {% code-example %}
 ```csharp
-IList<Person> people = db.SelectMany<Person>()
+IEnumerable<Person> people = db.SelectMany<Person>()
    .From(dbo.Person)
    //logical And
    .Where(
@@ -235,7 +235,7 @@ This filter specifies a field expression that is one of a set of literal values:
 
 {% code-example %}
 ```csharp
-IList<Person> people = db.SelectMany<Person>()
+IEnumerable<Person> people = db.SelectMany<Person>()
     .From(dbo.Person)
     //logical Or
     .Where(
@@ -276,7 +276,7 @@ WHERE
 ### Filter expressions in Join clauses
 {% code-example %}
 ```csharp
-IList<dynamic> person_totals = db.SelectMany(
+IEnumerable<dynamic> person_totals = db.SelectMany(
         dbo.Person.Id,
         db.fx.Sum(dbo.Purchase.TotalPurchaseAmount).As("LifetimeValue")
     )
@@ -300,7 +300,7 @@ GROUP BY
 
 {% code-example %}
 ```csharp
-IList<dynamic> person_zips = db.SelectMany(
+IEnumerable<dynamic> person_zips = db.SelectMany(
         dbo.Person.Id,
         dbo.Address.Zip
     )
@@ -331,7 +331,7 @@ FROM
 ### Filter expressions in Having clauses
 {% code-example %}
 ```csharp
-IList<dynamic> people = db.SelectMany(
+IEnumerable<dynamic> people = db.SelectMany(
         dbo.Person.LastName,
         db.fx.Count(dbo.Person.Id).As("LastNameCount")
     )
@@ -362,7 +362,7 @@ Filter expressions can also be composed using arithmetic expressions in Where cl
 Arithmetic expression in a Where clause:
 {% code-example %}
 ```csharp
-IList<Product> products = db.SelectMany<Product>()
+IEnumerable<Product> products = db.SelectMany<Product>()
     .From(dbo.Product)
     .Where(
         ((dbo.Product.Quantity * dbo.Product.ListPrice) - (dbo.Product.Quantity * dbo.Product.Price)) > 1000
@@ -398,7 +398,7 @@ WHERE
 Arithmetic expression in a Join clause:
 {% code-example %}
 ```csharp
-IList<dynamic> purchases = db.SelectMany(
+IEnumerable<dynamic> purchases = db.SelectMany(
         dbo.Purchase.OrderNumber,
         dbo.PurchaseLine.PurchasePrice,
         dbo.PurchaseLine.Quantity
@@ -423,7 +423,7 @@ FROM
 And an arithmetic expression in a Having clause:
 {% code-example %}
 ```csharp
-IList<dynamic> purchases = db.SelectMany(
+IEnumerable<dynamic> purchases = db.SelectMany(
         dbo.Purchase.OrderNumber,
         db.fx.Sum(dbo.PurchaseLine.PurchasePrice)
     )

@@ -53,7 +53,7 @@ Use the `IsNull` function to return the first non-null item from two expressions
 Select the expected delivery date, else the ship date (both can be null, so the return type is `DateTime?`).
 {% code-example %}
 ```csharp
-IList<DateTime?> result = db.SelectMany(
+IEnumerable<DateTime?> result = db.SelectMany(
         db.fx.IsNull(dbo.Purchase.ExpectedDeliveryDate, dbo.Purchase.ShipDate).As("latest_date")
     )
     .From(dbo.Purchase)
@@ -70,7 +70,7 @@ FROM
 Select the expected delivery date and if it is null return the current date.
 {% code-example %}
 ```csharp
-IList<DateTime> result = db.SelectMany(
+IEnumerable<DateTime> result = db.SelectMany(
         db.fx.IsNull(dbo.Purchase.ExpectedDeliveryDate, DateTime.UtcNow).As("latest_date")
     )
     .From(dbo.Purchase)
@@ -88,7 +88,7 @@ FROM
 Select purchases where relevant dates or over a week ago.
 {% code-example %}
 ```csharp
-IList<Purchase> purchases = db.SelectMany<Purchase>()
+IEnumerable<Purchase> purchases = db.SelectMany<Purchase>()
     .From(dbo.Purchase)
     .Where(
         db.fx.IsNull(dbo.Purchase.ExpectedDeliveryDate, dbo.Purchase.ShipDate) < DateTime.UtcNow.AddDays(-7)
@@ -121,7 +121,7 @@ WHERE
 Select a list of purchases, ordered by a relevant date.
 {% code-example %}
 ```csharp
-IList<Purchase> products = db.SelectMany<Purchase>()
+IEnumerable<Purchase> products = db.SelectMany<Purchase>()
     .From(dbo.Purchase)
     .OrderBy(db.fx.IsNull(dbo.Purchase.ExpectedDeliveryDate, dbo.Purchase.ShipDate).Desc())
     .Execute();
@@ -153,7 +153,7 @@ Select the cast of all product quantities, grouped by product category
 type and cast of product quantity.
 {% code-example %}
 ```csharp
-IList<dynamic> values = db.SelectMany(
+IEnumerable<dynamic> values = db.SelectMany(
         dbo.Purchase.PaymentMethodType,
         db.fx.IsNull(dbo.Purchase.ExpectedDeliveryDate, dbo.Purchase.ShipDate).As("relevant_date")
     )
@@ -180,7 +180,7 @@ GROUP BY
 Select a list of payment methods and a 'relevant date(s)' where no activity has taken place for more than 7 days.
 {% code-example %}
 ```csharp
-IList<dynamic> values = db.SelectMany(
+IEnumerable<dynamic> values = db.SelectMany(
         dbo.Purchase.PaymentMethodType,
         db.fx.IsNull(dbo.Purchase.ExpectedDeliveryDate, dbo.Purchase.ShipDate).As("relevant_date")
     )

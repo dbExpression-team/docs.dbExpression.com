@@ -58,7 +58,7 @@ Use the `Right` function to return the end of a string with the specified number
 Select the last letter of city
 {% code-example %}
 ```csharp
-IList<string> result = db.SelectMany(
+IEnumerable<string> result = db.SelectMany(
 		db.fx.Right(dbo.Address.City, 1)
 	)
 	.From(dbo.Address)
@@ -76,7 +76,7 @@ FROM
 Select address ids where the city name ends with "ly"
 {% code-example %}
 ```csharp
-IList<int> result = db.SelectMany(
+IEnumerable<int> result = db.SelectMany(
 		dbo.Address.Id
 	)
 	.From(dbo.Address)
@@ -97,7 +97,7 @@ WHERE
 Select a list of persons, ordered by the last character of their first name.
 {% code-example %}
 ```csharp
-IList<Person> persons = db.SelectMany<Person>()
+IEnumerable<Person> persons = db.SelectMany<Person>()
     .From(dbo.Person)
     .OrderBy(
         db.fx.Right(dbo.Person.FirstName, 1)
@@ -128,7 +128,7 @@ ORDER BY
 Select a list of data for persons, grouped by the initial of their last name.
 {% code-example %}
 ```csharp
-IList<dynamic> values = db.SelectMany(
+IEnumerable<dynamic> values = db.SelectMany(
         db.fx.Count().As("count"),
         dbo.Person.YearOfLastCreditLimitReview,
         db.fx.Right(dbo.Person.LastName, 1).As("last_character")
@@ -157,7 +157,7 @@ GROUP BY
 Select a list of data for persons, grouped by the last character of their last name having a last character equal to ".".
 {% code-example %}
 ```csharp
-IList<dynamic> addresses = db.SelectMany(
+IEnumerable<dynamic> addresses = db.SelectMany(
         db.fx.Count().As("count"),
         dbo.Person.YearOfLastCreditLimitReview,
         db.fx.Right(dbo.Person.LastName, 1).As("last_character")

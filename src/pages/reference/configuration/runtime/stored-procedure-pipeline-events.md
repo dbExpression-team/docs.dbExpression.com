@@ -10,7 +10,7 @@ published by the stored procedure execution pipeline as follows:
 
 {% execution-pipeline-image type="Stored Procedure" %}
 ```csharp
-IList<int> person_ids = db.sp.dbo.SelectPersons(
+IEnumerable<int> person_ids = db.sp.dbo.SelectPersons(
 		birthDate: DateTime.UtcNow.Date.AddYears(-18)
 	)
 	.GetValues<int>()

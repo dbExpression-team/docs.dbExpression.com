@@ -163,7 +163,7 @@ Select the cast of all product quantities, grouped by product category
 type and cast of product quantity.
 {% code-example %}
 ```csharp
-IList<dynamic> values = db.SelectMany(
+IEnumerable<dynamic> values = db.SelectMany(
         dbo.Product.ProductCategoryType,
         db.fx.Cast(dbo.Product.Quantity).AsBigInt().As("Quantity")
     )
@@ -191,7 +191,7 @@ Select the cast of all product quantities, grouped by product category
 type and cast of product quantity having n casted value less than or equal to 1,000,000.
 {% code-example %}
 ```csharp
-IList<dynamic> values = db.SelectMany(
+IEnumerable<dynamic> values = db.SelectMany(
         dbo.Product.ProductCategoryType,
         db.fx.Cast(dbo.Product.Quantity).AsBigInt().As("Quantity")
     )

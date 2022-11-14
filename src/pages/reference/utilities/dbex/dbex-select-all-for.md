@@ -56,7 +56,7 @@ in `SelectOne` or `SelectMany` queries.
 
 {% accordian caption="syntax examples" %}
 ```csharp
-IList<dynamic> person_purchases = db.SelectMany(
+IEnumerable<dynamic> person_purchases = db.SelectMany(
         dbex.SelectAllFor(dbo.Person, "Person_"),
         dbo.Purchase.Id,
         dbo.Purchase.PurchaseDate

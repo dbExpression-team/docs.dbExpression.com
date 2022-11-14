@@ -85,7 +85,7 @@ FROM
 Select the minimum of total purchase amount for all purchases ordered by the minimum of total purchase amount descending.
 {% code-example %}
 ```csharp
-IList<double> minSales = db.SelectMany(
+IEnumerable<double> minSales = db.SelectMany(
         db.fx.Min(dbo.Purchase.TotalPurchaseAmount)
     )
     .From(dbo.Purchase)
@@ -107,7 +107,7 @@ Select the minimum of total purchase amount for all purchases (ignoring null val
 method type having an minimum greater than 10 and ordered by the minimum of total purchase amount.
 {% code-example %}
 ```csharp
-IList<double> minSales = db.SelectMany(
+IEnumerable<double> minSales = db.SelectMany(
         db.fx.Min(dbo.Purchase.TotalPurchaseAmount)
     )
     .From(dbo.Purchase)

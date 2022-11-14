@@ -16,7 +16,7 @@ return, and the return type of *SELECT* operations, determine which signature yo
 
 ## Select One or Many Entities
 
-Entities in dbExpression refer to the data package classes (POCOs) that are generated via the scaffolding process.  Data package classes are generated for all tables and views in the target database (by default).  The `SelectOne` query type returns a single entity (type defined by the provided generic parameter `T`).  The `SelectMany` query type expects multiple results and returns an `IList<T>`.
+Entities in dbExpression refer to the data package classes (POCOs) that are generated via the scaffolding process.  Data package classes are generated for all tables and views in the target database (by default).  The `SelectOne` query type returns a single entity (type defined by the provided generic parameter `T`).  The `SelectMany` query type expects multiple results and returns an `IEnumerable<T>`.
 
 ### Select One Entity
 
@@ -55,7 +55,7 @@ To select a list of entities, use the `SelectMany` query type (`db.SelectMany<T>
 
 {% code-example %}
 ```csharp
-IList<Person> people = db.SelectMany<Person>()
+IEnumerable<Person> people = db.SelectMany<Person>()
     .From(dbo.Person)
     .Where(dbo.Person.LastName == "Cartman")
     .Execute();
@@ -82,7 +82,7 @@ WHERE
 
 ## Select One or Many Scalar Values
 
-Returning a single column value from a table or view is achieved by providing a single field expression (or any valid expression element) to the `SelectOne` or `SelectMany` method.  The result is a single `T` or an `IList<T>` where `T` is the .NET CLR type that maps to the SQL column type.
+Returning a single column value from a table or view is achieved by providing a single field expression (or any valid expression element) to the `SelectOne` or `SelectMany` method.  The result is a single `T` or an `IEnumerable<T>` where `T` is the .NET CLR type that maps to the SQL column type.
 
 ### Select One Scalar Value
 
@@ -107,7 +107,7 @@ WHERE
 
 {% code-example %}
 ```csharp
-IList<string> firstNames = db.SelectMany(dbo.Person.FirstName)
+IEnumerable<string> firstNames = db.SelectMany(dbo.Person.FirstName)
     .From(dbo.Person)
     .Where(dbo.Person.LastName == "Cartman")
     .Execute();
@@ -124,7 +124,7 @@ WHERE
 
 ## Select One or Many Dynamic Projections
 
-*dynamic projection* describes a constructed QueryExpression resulting in the selection of more than one field for which no first class data package class exists.  Execution of the `SelectOne` or `SelectMany` query types results in `dynamic` or `IList<dynamic>`.  Execution of the QueryExpression will create properties on each dynamic object that match the field names of the columns selected (*Id*, *FirstName*, *LastName*, etc.).
+*dynamic projection* describes a constructed QueryExpression resulting in the selection of more than one field for which no first class data package class exists.  Execution of the `SelectOne` or `SelectMany` query types results in `dynamic` or `IEnumerable<dynamic>`.  Execution of the QueryExpression will create properties on each dynamic object that match the field names of the columns selected (*Id*, *FirstName*, *LastName*, etc.).
 
 > Field names from resulting rowsets are used to create the properties on dynamic objects, so provide field names (or aliased field names) that create C# language supported property names. 
 
@@ -161,7 +161,7 @@ To select a list of dynamic objects, provide more than one field expression (or 
 
 {% code-example %}
 ```csharp
-IList<dynamic> records = db.SelectMany(
+IEnumerable<dynamic> records = db.SelectMany(
         dbo.Person.Id, 
         dbo.Person.FirstName, 
         dbo.Person.LastName

@@ -52,7 +52,7 @@ AS
 {% code-example %}
 ```csharp
 //get all person ids where the person has a credit limit less than 20000
-IList<int> personIds = db.sp.dbo.GetPersonsWithCreditLimitLessThan(20000).GetValues<int>().Execute();
+IEnumerable<int> personIds = db.sp.dbo.GetPersonsWithCreditLimitLessThan(20000).GetValues<int>().Execute();
 ```
 ```sql
 exec [dbo].[GetPersonsWithCreditLimitLessThan] @CreditLimit=20000;
@@ -109,7 +109,7 @@ AS
 
 {% code-example %}
 ```csharp
-IList<Person> persons = db.sp.dbo.GetPersonById(1).GetValues(
+IEnumerable<Person> persons = db.sp.dbo.GetPersonById(1).GetValues(
     row => new Person 
     { 
         Id = row.ReadField().GetValue<int>(),
@@ -142,7 +142,7 @@ AS
 {% code-example %}
 ```csharp
 //get all persons where the person has a credit limit less than 20000
-IList<dynamic> persons = db.sp.dbo.GetPersonsWithCreditLimitLessThan(20000).GetValues().Execute();
+IEnumerable<dynamic> persons = db.sp.dbo.GetPersonsWithCreditLimitLessThan(20000).GetValues().Execute();
 ```
 ```sql
 exec [dbo].[GetPersonsWithCreditLimitLessThan] @CreditLimit=20000;
@@ -168,7 +168,7 @@ AS
 {% code-example %}
 ```csharp
 //get all persons where the person has a credit limit less than 20000
-IList<dynamic> persons = db.sp.dbo.GetPersonsWithCreditLimitLessThan(20000).GetValues().Execute();
+IEnumerable<dynamic> persons = db.sp.dbo.GetPersonsWithCreditLimitLessThan(20000).GetValues().Execute();
 ```
 ```sql
 exec [dbo].[GetPersonsWithCreditLimitLessThan] @CreditLimit=20000;

@@ -8,7 +8,7 @@ Use the `Top` method while composing a query to limit the number of results affe
 {% code-example %}
 ```csharp
 //select the top 5 purchases by dollar amount
-IList<Purchase> purchases = db.SelectMany<Purchase>()
+IEnumerable<Purchase> purchases = db.SelectMany<Purchase>()
     .Top(5)
     .From(dbo.Purchase)
     .OrderBy(dbo.Purchase.TotalPurchaseAmount.Desc())
@@ -41,7 +41,7 @@ ORDER BY
 {% code-example %}
 ```csharp
 //select the top 5 distinct persons by name
-IList<Person> persons = db.SelectMany(
+IEnumerable<Person> persons = db.SelectMany(
         dbo.Person.FirstName,
         dbo.Person.LastName
     )

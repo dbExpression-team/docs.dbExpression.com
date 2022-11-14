@@ -74,7 +74,7 @@ FROM
 Select and order by the tangent of a product's depth.
 {% code-example %}
 ```csharp
-IList<Product> result = db.SelectMany<Product>()
+IEnumerable<Product> result = db.SelectMany<Product>()
     .From(dbo.Product)
     .OrderBy(db.fx.Tan(dbo.Product.Depth).Desc())
     .Execute();
@@ -114,7 +114,7 @@ Select product details grouped by product
 category and the tangent of the product's depth.
 {% code-example %}
 ```csharp
-IList<dynamic> results = db.SelectMany(
+IEnumerable<dynamic> results = db.SelectMany(
         dbo.Product.ProductCategoryType,
         db.fx.Tan(dbo.Product.Depth).As("calculated_value")
     )
@@ -143,7 +143,7 @@ category type having a tangent of the product's height
 greater than the product's width.
 {% code-example %}
 ```csharp
-IList<ProductCategoryType?> results = db.SelectMany(
+IEnumerable<ProductCategoryType?> results = db.SelectMany(
         dbo.Product.ProductCategoryType
     )
     .From(dbo.Product)

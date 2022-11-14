@@ -11,7 +11,7 @@ The general form of subqueries in a *JOIN* clause:
 
 {% code-example %}
 ```csharp
-IList<dynamic> vips = db.SelectMany(
+IEnumerable<dynamic> vips = db.SelectMany(
 	dbo.Person.Id, 
 	dbo.Person.FirstName, 
 	dbo.Person.LastName,

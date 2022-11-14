@@ -19,7 +19,7 @@ With dbExpression, you can easily write queries in code like this:
 ```csharp
 //query composed and compiled in c#
 
-IList<dynamic> purchases_shipped_by_year = await db.SelectMany(
+IEnumerable<dynamic> purchases_shipped_by_year = await db.SelectMany(
         dbo.Person.Id,
         (dbo.Person.FirstName + " " + dbo.Person.LastName).As("CustomerName"),
         db.fx.Count(dbo.Purchase.ShipDate).As("ShippedCount"),

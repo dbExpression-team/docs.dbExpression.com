@@ -7,7 +7,7 @@ Aggregated results can be filtered by using the `Having` method while composing 
 
 {% code-example %}
 ```csharp
-IList<dynamic> maxPurchases = db.SelectMany(
+IEnumerable<dynamic> maxPurchases = db.SelectMany(
         dbo.Person.Id,
         dbo.Person.FirstName, 
         dbo.Person.LastName,

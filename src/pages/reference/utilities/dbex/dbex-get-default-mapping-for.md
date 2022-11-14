@@ -31,7 +31,7 @@ is most commonly used in conjunction with `dbex.SelectAllFor`.
 
 {% accordian caption="syntax examples" %}
 ```csharp
-IList<Person> persons = db.SelectMany<Person>()
+IEnumerable<Person> persons = db.SelectMany<Person>()
     .From(dbo.Person)
     .Execute(row => 
         { 

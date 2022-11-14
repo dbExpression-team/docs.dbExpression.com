@@ -8,7 +8,7 @@ Results can be filtered by using the `Like` method of a string expression.
 This example selects records where a person's first name is `David` and the last name starts with `W`:
 {% code-example %}
 ```csharp
-IList<Person> persons = db.SelectMany<Person>()
+IEnumerable<Person> persons = db.SelectMany<Person>()
 	.From(dbo.Person)
 	.Where((dbo.Person.FirstName + " " + dbo.Person.LastName).Like("David W%"));
     .Execute();

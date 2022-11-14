@@ -12,7 +12,7 @@ then re-working the original query to use the new view.
 Given the following query which selects aggregated data for a person:
 {% code-example %}
 ```csharp
-IList<dynamic> aggregates = db.SelectOne(
+IEnumerable<dynamic> aggregates = db.SelectOne(
     dbo.Person.Id,
     db.fx.Sum(dbo.Purchase.TotalPurchaseAmount).As("TotalAmount"),
     db.fx.Count(dbo.Purchase.Id).As("TotalCount")
@@ -84,7 +84,7 @@ same properties as in the original `dynamic`).
 {% code-example %}
 ```csharp
 //return a list of PersonTotalPurchasesView, where the list contains any person who has a sum of purchases exceeding $2,500.
-IList<PersonTotalPurchasesView> people_totals = db.SelectMany<PersonTotalPurchasesView>()
+IEnumerable<PersonTotalPurchasesView> people_totals = db.SelectMany<PersonTotalPurchasesView>()
     .From(dbo.PersonTotalPurchasesView)
     .Where(dbo.PersonTotalPurchasesView.TotalAmount > 2500)
     .Execute();

@@ -83,7 +83,7 @@ Select the ids of all products, grouped by product
 category type having an variance greater than 1.
 {% code-example %}
 ```csharp
-IList<int> results = db.SelectMany(
+IEnumerable<int> results = db.SelectMany(
         dbo.Product.Id
     )
     .From(dbo.Product)

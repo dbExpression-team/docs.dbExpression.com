@@ -124,7 +124,7 @@ Select the average of total purchase amount for all purchases (ignoring null val
 method type and ordered by the average of total purchase amount descending.
 {% code-example %}
 ```csharp
-IList<double> avgSales = db.SelectMany(
+IEnumerable<double> avgSales = db.SelectMany(
         db.fx.Avg(dbo.Purchase.TotalPurchaseAmount)
     )
     .From(dbo.Purchase)
@@ -146,7 +146,7 @@ Select the average of total purchase amount for all purchases (ignoring null val
 method type having an average greater than 10.
 {% code-example %}
 ```csharp
-IList<double> avgSales = db.SelectMany(
+IEnumerable<double> avgSales = db.SelectMany(
         db.fx.Avg(dbo.Purchase.TotalPurchaseAmount)
     )
     .From(dbo.Purchase)

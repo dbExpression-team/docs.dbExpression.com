@@ -64,7 +64,7 @@ provided `string` for the `expression` method parameter. Therefore, `PatIndex` i
 Select the index of an occurrence of the state in the city name.
 {% code-example %}
 ```csharp
-IList<long> result = db.SelectMany(
+IEnumerable<long> result = db.SelectMany(
 		db.fx.PatIndex("%" + dbo.Address.State + "%", dbo.Address.City)
 	)
 	.From(dbo.Address)
@@ -84,7 +84,7 @@ Select a list of address ids where the value of city is equal to the value of st
 so PatIndex will return 1 only if the city exactly matches the state).
 {% code-example %}
 ```csharp
-IList<int> result = db.SelectMany(
+IEnumerable<int> result = db.SelectMany(
 		dbo.Address.Id
 	)
 	.From(dbo.Address)
@@ -105,7 +105,7 @@ WHERE
 Select a list of addresses, ordered by the index of the occurrence of line2 in line1.
 {% code-example %}
 ```csharp
-IList<Address> addresses = db.SelectMany<Address>()
+IEnumerable<Address> addresses = db.SelectMany<Address>()
     .From(dbo.Address)
     .OrderBy(db.fx.PatIndex("%" + dbo.Address.State + "%", dbo.Address.City))
     .Execute();
@@ -132,7 +132,7 @@ ORDER BY
 Select a list of address values grouped by address type and the index of line2 in line1.
 {% code-example %}
 ```csharp
-IList<dynamic> values = db.SelectMany(
+IEnumerable<dynamic> values = db.SelectMany(
 		db.fx.Count().As("count"),
 		dbo.Address.AddressType
 	)
@@ -159,7 +159,7 @@ GROUP BY
 Select a the count of addresses grouped by address type and the index of state in line1 where the value of state appears in line1.
 {% code-example %}
 ```csharp
-IList<dynamic> values = db.SelectMany(
+IEnumerable<dynamic> values = db.SelectMany(
 		db.fx.Count().As("count"),
 		dbo.Address.AddressType
 	)

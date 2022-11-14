@@ -8,7 +8,7 @@ multiple select statements and return a single rowset.
 
 {% code-example %}
 ```csharp
-IList<dynamic> results = db.SelectMany(
+IEnumerable<dynamic> results = db.SelectMany(
             dbo.Person.Id,
             dbo.Person.FirstName,
             dbo.Person.LastName
@@ -41,7 +41,7 @@ FROM
 
 {% code-example %}
 ```csharp
-IList<dynamic> results = db.SelectMany(
+IEnumerable<dynamic> results = db.SelectMany(
             dbo.Person.Id,
             dbo.Person.FirstName,
             dbo.Person.LastName
@@ -78,7 +78,7 @@ know there's a better way):
 
 {% code-example %}
 ```csharp
-IList<dynamic> results = db.SelectMany(
+IEnumerable<dynamic> results = db.SelectMany(
             dbex.Alias<string>("Pivot", "State"),
             db.fx.Sum(("Pivot", "ShippingCount")).As("Shipping"),
             db.fx.Sum(("Pivot", "MailingCount")).As("Mailing"),

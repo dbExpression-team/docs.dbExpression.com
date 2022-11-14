@@ -83,7 +83,7 @@ FROM
 Select a random value using a product's id as a seed value.
 {% code-example %}
 ```csharp
-IList<float> results = db.SelectMany(
+IEnumerable<float> results = db.SelectMany(
         db.fx.Rand(dbo.Product.Id)
     )
     .From(dbo.Product)

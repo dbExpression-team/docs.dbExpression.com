@@ -106,7 +106,7 @@ FROM
 Select the sum of total purchase amount for all purchases ordered by the sum of total purchase amount descending.
 {% code-example %}
 ```csharp
-IList<double> minSales = db.SelectMany(
+IEnumerable<double> minSales = db.SelectMany(
         db.fx.Sum(dbo.Purchase.TotalPurchaseAmount)
     )
     .From(dbo.Purchase)
@@ -128,7 +128,7 @@ Select the sum of total purchase amount for all purchases (ignoring null values)
 method type having an sum greater than 10 and ordered by the sum of total purchase amount.
 {% code-example %}
 ```csharp
-IList<double> minSales = db.SelectMany(
+IEnumerable<double> minSales = db.SelectMany(
         db.fx.Sum(dbo.Purchase.TotalPurchaseAmount)
     )
     .From(dbo.Purchase)
