@@ -8,9 +8,9 @@ Results can be ordered either ascending or descending by using the `Asc` or `Des
 {% code-example %}
 ```csharp
 //select all people ordered by last name descending
-IList<Person> people = db.SelectMany<Person>()
+IEnumerable<Person> people = db.SelectMany<Person>()
     .From(dbo.Person)
-    .OrderBy(dbo.Person.LastName.Desc)
+    .OrderBy(dbo.Person.LastName.Desc())
     .Execute();
 ```
 ```sql
@@ -36,7 +36,7 @@ ORDER BY
 {% code-example %}
 ```csharp
 //select all people ordered by gender type ascending and last name ascending
-IList<Person> people = db.SelectMany<Person>()
+IEnumerable<Person> people = db.SelectMany<Person>()
     .From(dbo.Person)
     .OrderBy(
         dbo.Person.GenderType,

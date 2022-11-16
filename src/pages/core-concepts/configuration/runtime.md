@@ -189,7 +189,7 @@ public class CustomerService
         this.db = db ?? throw new ArgumentNullException(nameof(db));
     }
     
-    public async Task<IList<Customer>> GetCustomersAsync(int offset, int limit)
+    public async Task<IEnumerable<Customer>> GetCustomersAsync(int offset, int limit)
     {
         return await db.SelectMany<Customer>() // <- db is an instance of MyDatabase
             .From(dbo.Customer)
@@ -248,7 +248,7 @@ public class CustomerService
         
     }
 
-    public async Task<IList<Customer>> GetCustomersAsync(int offset, int limit)
+    public async Task<IEnumerable<Customer>> GetCustomersAsync(int offset, int limit)
     {
         return await db.SelectMany<Customer>() // <- using a static accessor for your database
             .From(dbo.Customer)

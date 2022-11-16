@@ -11,7 +11,7 @@ The general form of subqueries in a *JOIN* clause:
 
 {% code-example %}
 ```csharp
-IList<dynamic> vips = db.SelectMany(
+IEnumerable<dynamic> vips = db.SelectMany(
 	dbo.Person.Id, 
 	dbo.Person.FirstName, 
 	dbo.Person.LastName,
@@ -27,7 +27,7 @@ IList<dynamic> vips = db.SelectMany(
 	.From(dbo.Purchase)
 	.GroupBy(dbo.Purchase.PersonId)
 	.Having(db.fx.Sum(dbo.Purchase.TotalPurchaseAmount) > 25)
-	.OrderBy(db.fx.Sum(dbo.Purchase.TotalPurchaseAmount).Desc)
+	.OrderBy(db.fx.Sum(dbo.Purchase.TotalPurchaseAmount).Desc())
 ).As("t0")
 .On(dbex.Alias("t0", "PersonId") == dbo.Person.Id)
 .Execute();

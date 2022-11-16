@@ -58,7 +58,7 @@ Use the `Left` function to return the start of a string with the specified numbe
 Select the first letter of city
 {% code-example %}
 ```csharp
-IList<string> result = db.SelectMany(
+IEnumerable<string> result = db.SelectMany(
 		db.fx.Left(dbo.Address.City, 1)
 	)
 	.From(dbo.Address)
@@ -76,7 +76,7 @@ FROM
 Select address ids where the city name starts with "D"
 {% code-example %}
 ```csharp
-IList<int> result = db.SelectMany(
+IEnumerable<int> result = db.SelectMany(
 		dbo.Address.Id
 	)
 	.From(dbo.Address)
@@ -97,7 +97,7 @@ WHERE
 Select a list of persons, ordered by their initials.
 {% code-example %}
 ```csharp
-IList<Person> persons = db.SelectMany<Person>()
+IEnumerable<Person> persons = db.SelectMany<Person>()
     .From(dbo.Person)
     .OrderBy(
         db.fx.Left(dbo.Person.FirstName, 1),
@@ -130,7 +130,7 @@ ORDER BY
 Select a list of data for persons, grouped by the initial of their last name.
 {% code-example %}
 ```csharp
-IList<dynamic> values = db.SelectMany(
+IEnumerable<dynamic> values = db.SelectMany(
         db.fx.Count().As("count"),
         dbo.Person.YearOfLastCreditLimitReview,
         db.fx.Left(dbo.Person.LastName, 1).As("last_initial")
@@ -159,7 +159,7 @@ GROUP BY
 Select a list of data for persons, grouped by the initial of their last name having a first initial of last name in the last half of the alphabet.
 {% code-example %}
 ```csharp
-IList<dynamic> addresses = db.SelectMany(
+IEnumerable<dynamic> addresses = db.SelectMany(
         db.fx.Count().As("count"),
         dbo.Person.YearOfLastCreditLimitReview,
         db.fx.Left(dbo.Person.LastName, 1).As("last_initial")

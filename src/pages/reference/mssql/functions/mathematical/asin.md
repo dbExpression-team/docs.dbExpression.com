@@ -86,10 +86,10 @@ WHERE
 Select and order by the arcsine of a product's depth.
 {% code-example %}
 ```csharp
-IList<Product> result = db.SelectMany<Product>()
+IEnumerable<Product> result = db.SelectMany<Product>()
     .From(dbo.Product)
     .Where(dbo.Product.Depth > 0 & dbo.Product.Depth < 1)
-    .OrderBy(db.fx.ASin(dbo.Product.Depth).Desc)
+    .OrderBy(db.fx.ASin(dbo.Product.Depth).Desc())
     .Execute();
 ```
 ```sql
@@ -127,7 +127,7 @@ Select product details grouped by product
 category and arcsine of the product's depth.
 {% code-example %}
 ```csharp
-IList<dynamic> results = db.SelectMany(
+IEnumerable<dynamic> results = db.SelectMany(
         dbo.Product.ProductCategoryType,
         db.fx.ASin(dbo.Product.Depth).As("calculated_value")
     )
@@ -160,7 +160,7 @@ Select the ids of all products, grouped by product
 category type having an arcsine of the product's height greater than 1.
 {% code-example %}
 ```csharp
-IList<ProductCategoryType?> results = db.SelectMany(
+IEnumerable<ProductCategoryType?> results = db.SelectMany(
         dbo.Product.ProductCategoryType
     )
     .From(dbo.Product)

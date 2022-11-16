@@ -37,7 +37,7 @@ Use the `Abs` function to return the absolute value of the provided value.
 Select the absolute value of total purchase amount for all purchases.
 {% code-example %}
 ```csharp
-IList<double> value = db.SelectMany(
+IEnumerable<double> value = db.SelectMany(
         db.fx.Abs(dbo.Purchase.TotalPurchaseAmount)
     )
     .From(dbo.Purchase)
@@ -56,7 +56,7 @@ Select the purchase ids of any purchase where the total purchase amount isn't th
 would have a negative value).
 {% code-example %}
 ```csharp
-IList<int> value = db.SelectMany(
+IEnumerable<int> value = db.SelectMany(
         dbo.Purchase.Id
     )
     .From(dbo.Purchase)
@@ -79,11 +79,11 @@ WHERE
 Select the absolute value of total purchase amount for all purchases ordered by the absolute value descending.
 {% code-example %}
 ```csharp
-IList<double> value = db.SelectMany(
+IEnumerable<double> value = db.SelectMany(
         db.fx.Abs(dbo.Purchase.TotalPurchaseAmount)
     )
     .From(dbo.Purchase)
-    .OrderBy(db.fx.Abs(dbo.Purchase.TotalPurchaseAmount).Desc)
+    .OrderBy(db.fx.Abs(dbo.Purchase.TotalPurchaseAmount).Desc())
     .Execute();
 ```
 ```sql
@@ -100,7 +100,7 @@ ORDER BY
 Select the payment method and absolute value of total purchase amount for all purchases, grouped by payment method type and ordered by the absolute value of total purchase amount.
 {% code-example %}
 ```csharp
-IList<dynamic> values = db.SelectMany(
+IEnumerable<dynamic> values = db.SelectMany(
         dbo.Purchase.PaymentMethodType,
         db.fx.Abs(dbo.Purchase.TotalPurchaseAmount).As("TotalPurchaseAmount")
     )
@@ -131,7 +131,7 @@ Select the payment method and absolute value of total purchase amount for all pu
 method type having an absolute value greater than 10 and ordered by the absolute value of total purchase amount.
 {% code-example %}
 ```csharp
-IList<dynamic> values = db.SelectMany(
+IEnumerable<dynamic> values = db.SelectMany(
         dbo.Purchase.PaymentMethodType,
         db.fx.Abs(dbo.Purchase.TotalPurchaseAmount).As("TotalPurchaseAmount")
     )

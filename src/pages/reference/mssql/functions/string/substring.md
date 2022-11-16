@@ -89,7 +89,7 @@ Use the `Substring` function to return a part of a string.
 Select the two characters from product name, starting after the first character.
 {% code-example %}
 ```csharp
-IList<string> result = db.SelectMany(
+IEnumerable<string> result = db.SelectMany(
         db.fx.Substring(dbo.Product.Name, 1, 2)
     )
     .From(dbo.Product)
@@ -107,7 +107,7 @@ FROM
 Select any product id where the name starts with a single letter.
 {% code-example %}
 ```csharp
-IList<int> result = db.SelectMany(
+IEnumerable<int> result = db.SelectMany(
 		dbo.Product.Id
 	)
 	.From(dbo.Product)
@@ -128,7 +128,7 @@ WHERE
 Select a list of products, ordered by their name but ignoring the first character.
 {% code-example %}
 ```csharp
-IList<Product> products = db.SelectMany<Product>()
+IEnumerable<Product> products = db.SelectMany<Product>()
 	.From(dbo.Product)
 	.OrderBy(db.fx.Substring(dbo.Product.Name, 2, db.fx.Len(dbo.Product.Name) - 1))
 	.Execute();
@@ -163,7 +163,7 @@ ORDER BY
 Select a list of address values grouped by address type and the first character of state.
 {% code-example %}
 ```csharp
-IList<dynamic> values = db.SelectMany(
+IEnumerable<dynamic> values = db.SelectMany(
         db.fx.Count().As("count"),
         dbo.Address.AddressType,
         db.fx.Substring(dbo.Address.State, 1, 1).As("ignore_first_character")
@@ -192,7 +192,7 @@ GROUP BY
 Select a count of addresses grouped by address type and the first character of state, having a first character in state in the last half of the alphabet.
 {% code-example %}
 ```csharp
-IList<dynamic> values = db.SelectMany(
+IEnumerable<dynamic> values = db.SelectMany(
         db.fx.Count().As("count"),
         dbo.Address.AddressType
     )

@@ -22,7 +22,7 @@ Let's look at some examples using enums in queries, starting with a few *SELECT*
 
 {% code-example %}
 ```csharp
-IList<Address> billing_addresses = db.SelectMany<Address>()
+IEnumerable<Address> billing_addresses = db.SelectMany<Address>()
     .From(dbo.Address)
     .Where(dbo.Address.AddressType == AddressType.Billing)
     .Execute();
@@ -50,7 +50,7 @@ Note that the *WHERE* clause uses the enum value, not the numeric version of the
 An example using an enum with an `In` clause:
 {% code-example %}
 ```csharp
-IList<Address> billing_and_mailing_addresses = db.SelectMany<Address>()
+IEnumerable<Address> billing_and_mailing_addresses = db.SelectMany<Address>()
     .From(dbo.Address)
     .Where(dbo.Address.AddressType.In(AddressType.Billing, AddressType.Mailing))
     .Execute();
@@ -76,7 +76,7 @@ WHERE
 In a `GroupBy` clause:
 {% code-example %}
 ```csharp
-IList<dynamic> count_by_address_type = db.SelectMany(
+IEnumerable<dynamic> count_by_address_type = db.SelectMany(
         dbo.Address.AddressType,
         db.fx.Count(dbo.Address.Id).As("AddressCount")
     )
@@ -98,7 +98,7 @@ GROUP BY
 In an `IsNull` database function:
 {% code-example %}
 ```csharp
-IList<AddressType> address_types = db.SelectMany(
+IEnumerable<AddressType> address_types = db.SelectMany(
         db.fx.IsNull(dbo.Address.AddressType, AddressType.Billing)
     )
     .From(dbo.Address)
@@ -153,7 +153,7 @@ value as detailed in [Runtime Configuration](../../core-concepts/configuration/r
 type of *VARCHAR(20)*.  Using this in a query is *exactly* the same as those persisted using their numeric value.
 {% code-example %}
 ```csharp
-IList<Purchase> credit_card_purchases = db.SelectMany<Purchase>()
+IEnumerable<Purchase> credit_card_purchases = db.SelectMany<Purchase>()
     .From(dbo.Purchase)
     .Where(dbo.Purchase.PaymentMethodType == PaymentMethodType.CreditCard)
     .Execute();

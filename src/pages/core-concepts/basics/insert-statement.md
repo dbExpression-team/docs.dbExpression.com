@@ -7,6 +7,8 @@ todo: create reference link to insert statement once docs for select statement a
 To start building *INSERT* queries, use the database accessor (static or dependency injected instance) followed by a `Insert` or `InsertMany`. 
 An *INSERT* query relies on the data packages (entities) generated via the scaffolding process.
 
+> In addition to `Execute`, `Insert` and `InsertMany` include `ExecuteAsync` to asynchronously insert data.
+
 ## Insert an Entity
 
 In the example below, we set properties of the `Person` entity instance and pass it to the `Insert` method.  dbExpression 
@@ -16,8 +18,6 @@ accounts for the return of data created by your database platform:
 * columns with an identity specification
 * computed column values
 * columns with server side default constraints
-
-
 
 {% code-example %}
 ```csharp

@@ -100,7 +100,7 @@ Use the `DatePart` function to return the specified part of a date.
 Select the year of ship date.
 {% code-example %}
 ```csharp
-IList<int?> result = db.SelectMany(
+IEnumerable<int?> result = db.SelectMany(
         db.fx.DatePart(DateParts.Year, dbo.Purchase.ShipDate)
     )
     .From(dbo.Purchase)
@@ -118,7 +118,7 @@ FROM
 Select all product ids of products that shipped on Friday.
 {% code-example %}
 ```csharp
-IList<int> purchase_ids = db.SelectMany(
+IEnumerable<int> purchase_ids = db.SelectMany(
         dbo.Purchase.Id
     )
     .From(dbo.Purchase)
@@ -139,7 +139,7 @@ WHERE
 Select all purchases ordered by the week the product shipped.
 {% code-example %}
 ```csharp
-IList<Purchase> result = db.SelectMany<Purchase>()
+IEnumerable<Purchase> result = db.SelectMany<Purchase>()
     .From(dbo.Purchase)
     .OrderBy(db.fx.DatePart(DateParts.Week, dbo.Purchase.ShipDate))
     .Execute();
@@ -171,7 +171,7 @@ Select product information grouped by product category type and the
 week the product was added to the system.
 {% code-example %}
 ```csharp
-IList<dynamic> results = db.SelectMany(
+IEnumerable<dynamic> results = db.SelectMany(
         dbo.Product.ProductCategoryType,
         db.fx.DatePart(DateParts.Week, dbo.Product.DateCreated).As("Week")
     )
@@ -198,7 +198,7 @@ GROUP BY
 Select purchase values grouped by payment method type that shipped the first week of the year.
 {% code-example %}
 ```csharp
-IList<dynamic> results = db.SelectMany(
+IEnumerable<dynamic> results = db.SelectMany(
         dbo.Purchase.PaymentMethodType,
         dbo.Purchase.ShipDate
     )

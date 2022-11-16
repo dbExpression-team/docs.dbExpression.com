@@ -44,7 +44,7 @@ provided `{expression}` method parameter. Therefore, `Len` in dbExpression alway
 Select the length of a person's last name.
 {% code-example %}
 ```csharp
-IList<long> result = db.SelectMany(
+IEnumerable<long> result = db.SelectMany(
 		db.fx.Len(dbo.Person.LastName)
 	)
 	.From(dbo.Person)
@@ -62,7 +62,7 @@ FROM
 Select persons whose last name is longer than their first name.
 {% code-example %}
 ```csharp
-IList<Person> persons = db.SelectMany<Person>()
+IEnumerable<Person> persons = db.SelectMany<Person>()
 	.From(dbo.Person)
 	.Where(db.fx.Len(dbo.Person.LastName) > db.fx.Len(dbo.Person.FirstName))
 	.Execute();
@@ -91,9 +91,9 @@ WHERE
 Select a list of persons, ordered descending by the length of their last name.
 {% code-example %}
 ```csharp
-IList<Person> result = db.SelectMany<Person>()
+IEnumerable<Person> result = db.SelectMany<Person>()
 	.From(dbo.Person)
-	.OrderBy(db.fx.Len(dbo.Person.LastName).Desc)
+	.OrderBy(db.fx.Len(dbo.Person.LastName).Desc())
 	.Execute();
 ```
 ```sql
@@ -120,7 +120,7 @@ ORDER BY
 Select a list of address values grouped by address type and the length of the city field.
 {% code-example %}
 ```csharp
-IList<dynamic> values = db.SelectMany(
+IEnumerable<dynamic> values = db.SelectMany(
 		dbo.Address.AddressType,
 		db.fx.Len(dbo.Address.City).As("city")
 	)
@@ -147,7 +147,7 @@ GROUP BY
 Select a list of address data, grouped by address type and city where the value of city has only 1 character.
 {% code-example %}
 ```csharp
-IList<dynamic> addresses = db.SelectMany(
+IEnumerable<dynamic> addresses = db.SelectMany(
 		db.fx.Count().As("count"),
 		dbo.Address.AddressType,
 		dbo.Address.City

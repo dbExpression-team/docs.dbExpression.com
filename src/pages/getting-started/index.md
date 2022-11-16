@@ -87,7 +87,9 @@ Your configuration file should now resemble the following:
 
 ```js
 {
-    "nullable": "enable",
+    "languageFeatures": {
+        "nullable": "enable"
+    },
     "source": {
         "platform": {
             "key" : "MsSql",

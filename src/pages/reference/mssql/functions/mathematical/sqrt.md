@@ -80,9 +80,9 @@ WHERE
 Select and order by the square root of a product's depth.
 {% code-example %}
 ```csharp
-IList<Product> result = db.SelectMany<Product>()
+IEnumerable<Product> result = db.SelectMany<Product>()
     .From(dbo.Product)
-    .OrderBy(db.fx.Sqrt(dbo.Product.Depth).Desc)
+    .OrderBy(db.fx.Sqrt(dbo.Product.Depth).Desc())
     .Execute();
 ```
 ```sql
@@ -116,7 +116,7 @@ Select product details grouped by product
 category and square root of the product's depth.
 {% code-example %}
 ```csharp
-IList<dynamic> results = db.SelectMany(
+IEnumerable<dynamic> results = db.SelectMany(
         dbo.Product.ProductCategoryType,
         db.fx.Sqrt(dbo.Product.Depth).As("calculated_value")
     )
@@ -144,7 +144,7 @@ Select the ids of all products, grouped by product
 category type having an square root of the product's height greater than 1.
 {% code-example %}
 ```csharp
-IList<ProductCategoryType?> results = db.SelectMany(
+IEnumerable<ProductCategoryType?> results = db.SelectMany(
         dbo.Product.ProductCategoryType
     )
     .From(dbo.Product)

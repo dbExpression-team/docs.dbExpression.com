@@ -66,7 +66,7 @@ Use the `Like` operation to find values that match the provided pattern.
 Find all persons where their first name starts with the letter 'J'
 {% code-example %}
 ```csharp
-IList<Person> persons = db.SelectMany<Person>()
+IEnumerable<Person> persons = db.SelectMany<Person>()
     .From(dbo.Person)
     .Where(dbo.Person.FirstName.Like("J%"))
     .Execute();
@@ -94,7 +94,7 @@ WHERE
 Find all persons where their first name does not start with the letter 'J'
 {% code-example %}
 ```csharp
-IList<Person> persons = db.SelectMany<Person>()
+IEnumerable<Person> persons = db.SelectMany<Person>()
     .From(dbo.Person)
     .Where(!dbo.Person.FirstName.Like("J%"))
     .Execute();
@@ -124,7 +124,7 @@ WHERE
 Find unique product names that have the word 'Book' in the name
 {% code-example %}
 ```csharp
-IList<string> product_counts = db.SelectMany(
+IEnumerable<string> product_counts = db.SelectMany(
         dbo.Product.Name
     )
     .From(dbo.Product)
@@ -149,7 +149,7 @@ HAVING
 Find all persons who live in a zip code that starts with '80'
 {% code-example %}
 ```csharp
-IList<Person> persons = db.SelectMany<Person>()
+IEnumerable<Person> persons = db.SelectMany<Person>()
     .From(dbo.Person)
     .InnerJoin(dbo.PersonAddress).On(dbo.Person.Id == dbo.PersonAddress.PersonId)
     .InnerJoin(dbo.Address).On(
@@ -184,7 +184,7 @@ FROM
 ind all persons who don't live in a zip code that starts with '80'
 {% code-example %}
 ```csharp
-IList<Person> persons = db.SelectMany<Person>()
+IEnumerable<Person> persons = db.SelectMany<Person>()
     .From(dbo.Person)
     .InnerJoin(dbo.PersonAddress).On(dbo.Person.Id == dbo.PersonAddress.PersonId)
     .InnerJoin(dbo.Address).On(

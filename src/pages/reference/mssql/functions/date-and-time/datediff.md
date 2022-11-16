@@ -143,7 +143,7 @@ Use the `DateDiff` function to "generally" return the difference between two dat
 Select the days difference between a product's purchase date and it's ship date.
 {% code-example %}
 ```csharp
-IList<int?> result = db.SelectMany(
+IEnumerable<int?> result = db.SelectMany(
         db.fx.DateDiff(DateParts.Day, dbo.Purchase.PurchaseDate, dbo.Purchase.ShipDate)
     )
     .From(dbo.Purchase)
@@ -161,7 +161,7 @@ FROM
 Select all purchase ids where it took longer than 7 days from purchase to ship.
 {% code-example %}
 ```csharp
-IList<int> result = db.SelectMany(
+IEnumerable<int> result = db.SelectMany(
         dbo.Purchase.Id
     )
     .From(dbo.Purchase)
@@ -182,7 +182,7 @@ WHERE
 Select all purchases ordered by the difference in weeks between purchase date and ship date.
 {% code-example %}
 ```csharp
-IList<Purchase> result = db.SelectMany<Purchase>()
+IEnumerable<Purchase> result = db.SelectMany<Purchase>()
     .From(dbo.Purchase)
     .OrderBy(db.fx.DateDiff(DateParts.Week, dbo.Purchase.PurchaseDate, dbo.Purchase.ShipDate))
     .Execute();
@@ -214,7 +214,7 @@ Select product information grouped by payment method type and the
 difference in weeks between the purchase date and ship date.
 {% code-example %}
 ```csharp
-IList<dynamic> results = db.SelectMany(
+IEnumerable<dynamic> results = db.SelectMany(
         dbo.Purchase.PaymentMethodType,
         db.fx.DateDiff(DateParts.Week, dbo.Purchase.PurchaseDate, dbo.Purchase.ShipDate).As("WeeksBetween")
     )
@@ -241,7 +241,7 @@ GROUP BY
 Select purchase values grouped by payment method type that haven't shipped in the past week.
 {% code-example %}
 ```csharp
-IList<dynamic> results = db.SelectMany(
+IEnumerable<dynamic> results = db.SelectMany(
         dbo.Purchase.PaymentMethodType,
         db.fx.DateDiff(DateParts.Day, dbo.Purchase.PurchaseDate, dbo.Purchase.ShipDate).As("DaysBetween")
     )

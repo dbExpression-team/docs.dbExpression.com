@@ -68,7 +68,7 @@ Use the `Replace` function to replace all occurrences of a pattern with another 
 Select street addresses replacing "St." with "Ave."
 {% code-example %}
 ```csharp
-IList<string> result = db.SelectMany(
+IEnumerable<string> result = db.SelectMany(
         db.fx.Replace(dbo.Address.Line1, "St.", "Ave.")
 	)
 	.From(dbo.Address)
@@ -86,7 +86,7 @@ FROM
 Select any product where replacing "Player" with "Play" changes the name.
 {% code-example %}
 ```csharp
-IList<dynamic> result = db.SelectMany(
+IEnumerable<dynamic> result = db.SelectMany(
         dbo.Product.Id,
         dbo.Product.Name
     )
@@ -109,7 +109,7 @@ WHERE
 Select a list of persons, ordered by the removal of "Mr. " with an empty string.
 {% code-example %}
 ```csharp
-IList<Person> persons = db.SelectMany<Person>()
+IEnumerable<Person> persons = db.SelectMany<Person>()
     .From(dbo.Person)
     .OrderBy(db.fx.Replace(dbo.Person.LastName, "Mr. ", ""))
     .Execute();
@@ -138,7 +138,7 @@ ORDER BY
 Select how many, and the name, of products resulting from replacing "Player" with "Play" in the name.
 {% code-example %}
 ```csharp
-IList<dynamic> values = db.SelectMany(
+IEnumerable<dynamic> values = db.SelectMany(
         db.fx.Count().As("count"),
         dbo.Product.Name
     )
@@ -165,7 +165,7 @@ GROUP BY
 Select how many, and the name, of products resulting from replacing "Player" with "Play" in the name.
 {% code-example %}
 ```csharp
-IList<dynamic> values = db.SelectMany(
+IEnumerable<dynamic> values = db.SelectMany(
         db.fx.Count().As("count"),
         dbo.Product.Name
     )

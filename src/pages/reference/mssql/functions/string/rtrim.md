@@ -39,7 +39,7 @@ Use the `RTrim` function to remove trailing spaces from a string expression.
 Select the a person's last name, with trailing spaces removed.
 {% code-example %}
 ```csharp
-IList<long> result = db.SelectMany(
+IEnumerable<long> result = db.SelectMany(
 		db.fx.RTrim(dbo.Person.LastName)
 	)
 	.From(dbo.Person)
@@ -57,7 +57,7 @@ FROM
 Select persons where their last name ends with one or more spaces.
 {% code-example %}
 ```csharp
-IList<Person> result = db.SelectMany<Person>()
+IEnumerable<Person> result = db.SelectMany<Person>()
     .From(dbo.Person)
 	.Where(db.fx.RTrim(dbo.Person.LastName) != dbo.Person.LastName)
 	.Execute();
@@ -86,7 +86,7 @@ WHERE
 Select a list of persons, ordered by their last name with trailing spaces removed.
 {% code-example %}
 ```csharp
-IList<Person> result = db.SelectMany<Person>()
+IEnumerable<Person> result = db.SelectMany<Person>()
 	.From(dbo.Person)
 	.OrderBy(db.fx.RTrim(dbo.Person.LastName))
 	.Execute();
@@ -115,7 +115,7 @@ ORDER BY
 Select a list of address values grouped by address type and the value of the city field with trailing spaces removed.
 {% code-example %}
 ```csharp
-IList<dynamic> values = db.SelectMany(
+IEnumerable<dynamic> values = db.SelectMany(
 		dbo.Address.AddressType,
 		db.fx.RTrim(dbo.Address.City).As("city")
 	)
@@ -143,7 +143,7 @@ Select a list of address data, grouped by address type and city where the value 
 is "Chicago".
 {% code-example %}
 ```csharp
-IList<dynamic> addresses = db.SelectMany(
+IEnumerable<dynamic> addresses = db.SelectMany(
 		db.fx.Count().As("count"),
 		dbo.Address.AddressType
 	)

@@ -60,7 +60,7 @@ will be the values of `{updated}`.
 int personId = 1;
 
 ...
-IList<Person> persons = db.SelectOne<Person>()
+IEnumerable<Person> persons = db.SelectOne<Person>()
      .From(dbo.Person)
      .Where(dbo.Person.Id == personId)
      .UnionAll()

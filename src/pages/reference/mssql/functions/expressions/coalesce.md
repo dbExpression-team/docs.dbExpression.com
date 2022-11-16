@@ -146,7 +146,7 @@ See the Microsoft docs for a more technically correct explanation and in-depth e
 Select the first non-null date.
 {% code-example %}
 ```csharp
-IList<object?> result = db.SelectMany(
+IEnumerable<object?> result = db.SelectMany(
         db.fx.Coalesce(dbo.Purchase.ExpectedDeliveryDate, dbo.Purchase.ShipDate, dbo.Purchase.PurchaseDate).As("latest_date")
     )
     .From(dbo.Purchase)
@@ -163,7 +163,7 @@ FROM
 Select the first non-null date, indicating the return type should be `DateTime`.
 {% code-example %}
 ```csharp
-IList<DateTime> result = db.SelectMany(
+IEnumerable<DateTime> result = db.SelectMany(
         db.fx.Coalesce<DateTime>(dbo.Purchase.ExpectedDeliveryDate, dbo.Purchase.ShipDate, dbo.Purchase.PurchaseDate).As("latest_date")
     )
     .From(dbo.Purchase)
@@ -202,7 +202,7 @@ FROM
 Select purchases where the last relevant date is over a week ago.
 {% code-example %}
 ```csharp
-IList<Purchase> purchases = db.SelectMany<Purchase>()
+IEnumerable<Purchase> purchases = db.SelectMany<Purchase>()
     .From(dbo.Purchase)
     .Where(
         db.fx.Coalesce(dbo.Purchase.ExpectedDeliveryDate, dbo.Purchase.ShipDate, dbo.Purchase.PurchaseDate) < DateTime.UtcNow.AddDays(-7)
@@ -235,9 +235,9 @@ WHERE
 Select a list of purchases, ordered by a relevant date.
 {% code-example %}
 ```csharp
-IList<Purchase> products = db.SelectMany<Purchase>()
+IEnumerable<Purchase> products = db.SelectMany<Purchase>()
     .From(dbo.Purchase)
-    .OrderBy(db.fx.Coalesce(dbo.Purchase.ExpectedDeliveryDate, dbo.Purchase.ShipDate, dbo.Purchase.PurchaseDate).Desc)
+    .OrderBy(db.fx.Coalesce(dbo.Purchase.ExpectedDeliveryDate, dbo.Purchase.ShipDate, dbo.Purchase.PurchaseDate).Desc())
     .Execute();
 ```
 ```sql
@@ -267,7 +267,7 @@ Select the cast of all product quantities, grouped by product category
 type and cast of product quantity.
 {% code-example %}
 ```csharp
-IList<dynamic> values = db.SelectMany(
+IEnumerable<dynamic> values = db.SelectMany(
         dbo.Purchase.PaymentMethodType,
         db.fx.Coalesce(dbo.Purchase.ExpectedDeliveryDate, dbo.Purchase.ShipDate, dbo.Purchase.PurchaseDate).As("relevant_date")
     )
@@ -294,7 +294,7 @@ GROUP BY
 Select a list of payment methods and a 'relevant date(s)' where no activity has taken place for more than 7 days.
 {% code-example %}
 ```csharp
-IList<dynamic> values = db.SelectMany(
+IEnumerable<dynamic> values = db.SelectMany(
         dbo.Purchase.PaymentMethodType,
         db.fx.Coalesce(dbo.Purchase.ExpectedDeliveryDate, dbo.Purchase.ShipDate, dbo.Purchase.PurchaseDate).As("relevant_date")
     )

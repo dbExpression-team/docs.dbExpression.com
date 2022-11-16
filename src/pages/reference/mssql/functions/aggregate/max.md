@@ -86,11 +86,11 @@ FROM
 Select the maximum of total purchase amount for all purchases ordered by the maximum of total purchase amount descending.
 {% code-example %}
 ```csharp
-IList<double> minSales = db.SelectMany(
+IEnumerable<double> minSales = db.SelectMany(
         db.fx.Max(dbo.Purchase.TotalPurchaseAmount)
     )
     .From(dbo.Purchase)
-    .OrderBy(db.fx.Max(dbo.Purchase.TotalPurchaseAmount).Desc)
+    .OrderBy(db.fx.Max(dbo.Purchase.TotalPurchaseAmount).Desc())
     .Execute();
 ```
 ```sql
@@ -108,7 +108,7 @@ Select the maximum of total purchase amount for all purchases (ignoring null val
 method type having an maximum greater than 10 and ordered by the maximum of total purchase amount.
 {% code-example %}
 ```csharp
-IList<double> minSales = db.SelectMany(
+IEnumerable<double> minSales = db.SelectMany(
         db.fx.Max(dbo.Purchase.TotalPurchaseAmount)
     )
     .From(dbo.Purchase)

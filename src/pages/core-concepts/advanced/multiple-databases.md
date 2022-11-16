@@ -30,7 +30,7 @@ namespace ACME.CRM
 {
     public class CustomerService
     {
-        public (Customer, IList<Orders>) GetOrdersByCustomerId(int customerId)
+        public (Customer, IEnumerable<Orders>) GetOrdersByCustomerId(int customerId)
         {
             Customer customer = customer_db.SelectMany<Customer>()  
 				// ^ 'customer_db' instead of 'db'
@@ -40,7 +40,7 @@ namespace ACME.CRM
 				// ^ disambiguate 'dbo' with the database accessor, 'customer_db'
                 .Execute();
                 
-            IList<Order> orders = sales_db.SelectMany<Order>())  
+            IEnumerable<Order> orders = sales_db.SelectMany<Order>())  
 				// ^ 'sales_db' instead of 'db'
                 .From(sales_db.dbo.Order)  
 				// ^ disambiguate 'dbo' with the database accessor, 'sales_db'
@@ -91,7 +91,7 @@ namespace ACME.CRM
 {
     public class CustomerService
     {
-        public (Customer, IList<Orders>) GetOrdersByCustomerId(int customerId)
+        public (Customer, IEnumerable<Orders>) GetOrdersByCustomerId(int customerId)
         {
             Customer customer = customer_db.SelectMany<Customer>()  
 				// ^ 'customer_db' instead of 'db'
@@ -101,7 +101,7 @@ namespace ACME.CRM
 				// ^ disambiguate 'dbo' with the database accessor, 'customer_db'
                 .Execute();
                 
-            IList<Order> orders = sales_db.SelectMany<Order>())  
+            IEnumerable<Order> orders = sales_db.SelectMany<Order>())  
 				// ^ 'sales_db' instead of 'db'
                 .From(sales_db.dbo.Order)  
 				// ^ disambiguate 'dbo' with the database accessor, 'sales_db'

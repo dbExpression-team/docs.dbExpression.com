@@ -6,7 +6,7 @@ Column aliasing in dbExpression is used to eliminate ambiguity in identical colu
 For example, the following query would return two columns with a name of `Id`:
 
 ```csharp
-IList<dynamic> purchases = db.SelectMany(
+IEnumerable<dynamic> purchases = db.SelectMany(
         dbo.Person.Id,
         dbo.Person.LastName,
         dbo.Purchase.Id,
@@ -21,7 +21,7 @@ Execution of this would cause the following runtime exception during mapping to 
 This is corrected by providing a field-level alias on one (or more) of the `Id` fields by using the `As(...)` method:
 {% code-example %}
 ```csharp
-IList<dynamic> purchases = db.SelectMany(
+IEnumerable<dynamic> purchases = db.SelectMany(
         dbo.Person.Id.As("PersonId"),
         dbo.Person.LastName,
         dbo.Purchase.Id,

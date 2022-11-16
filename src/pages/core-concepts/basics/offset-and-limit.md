@@ -12,9 +12,9 @@ queries.
 {% code-example %}
 ```csharp
 //skip the first 10 matched records, and only return 10 records
-IList<Person> people = db.SelectMany<Person>()
+IEnumerable<Person> people = db.SelectMany<Person>()
     .From(dbo.Person)
-    .OrderBy(dbo.Person.DateCreated.Desc)
+    .OrderBy(dbo.Person.DateCreated.Desc())
     .Offset(10)
     .Limit(10)
     .Execute();
@@ -44,9 +44,9 @@ ORDER BY
 {% code-example %}
 ```csharp
 //skip the first record, and return all remaining records
-IList<Person> notTheLastPersonToRegister = db.SelectMany<Person>()
+IEnumerable<Person> notTheLastPersonToRegister = db.SelectMany<Person>()
     .From(dbo.Person)
-    .OrderBy(dbo.Person.RegistrationDate.Desc)
+    .OrderBy(dbo.Person.RegistrationDate.Desc())
     .Offset(1)
     .Execute();
 ```

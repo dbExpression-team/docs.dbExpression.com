@@ -60,7 +60,7 @@ WHERE
 Select a list of product ids where the square of the product's depth is greater than 0 and less than 1.
 {% code-example %}
 ```csharp
-IList<int> results = db.SelectMany(
+IEnumerable<int> results = db.SelectMany(
         dbo.Product.Id
     )
     .From(dbo.Product)
@@ -83,9 +83,9 @@ WHERE
 Select and order by the square of a product's depth.
 {% code-example %}
 ```csharp
-IList<Product> result = db.SelectMany<Product>()
+IEnumerable<Product> result = db.SelectMany<Product>()
     .From(dbo.Product)
-    .OrderBy(db.fx.Square(dbo.Product.Depth).Desc)
+    .OrderBy(db.fx.Square(dbo.Product.Depth).Desc())
     .Execute();
 ```
 ```sql
@@ -119,7 +119,7 @@ Select product details grouped by product
 category and square of the product's depth.
 {% code-example %}
 ```csharp
-IList<dynamic> results = db.SelectMany(
+IEnumerable<dynamic> results = db.SelectMany(
         dbo.Product.ProductCategoryType,
         db.fx.Square(dbo.Product.Depth).As("calculated_value")
     )
@@ -147,7 +147,7 @@ Select the ids of all products, grouped by product
 category type having an square of the product's height greater than 1.
 {% code-example %}
 ```csharp
-IList<ProductCategoryType?> results = db.SelectMany(
+IEnumerable<ProductCategoryType?> results = db.SelectMany(
         dbo.Product.ProductCategoryType
     )
     .From(dbo.Product)

@@ -61,7 +61,7 @@ Use the `Concat` function to join two or more string values.
 Select the concatenation of city and state for addresses
 {% code-example %}
 ```csharp
-IList<string> result = db.SelectMany(
+IEnumerable<string> result = db.SelectMany(
 		db.fx.Concat(dbo.Address.City, ", ", dbo.Address.State)
 	)
 	.From(dbo.Address)
@@ -79,7 +79,7 @@ FROM
 Select address id's where line2 has a value.
 {% code-example %}
 ```csharp
-IList<int> result = db.SelectMany(
+IEnumerable<int> result = db.SelectMany(
 		dbo.Address.Id
 	)
 	.From(dbo.Address)
@@ -100,7 +100,7 @@ WHERE
 Select a list of addresses, ordered by the concatenation of city and state.
 {% code-example %}
 ```csharp
-IList<Address> addresses = db.SelectMany<Address>()
+IEnumerable<Address> addresses = db.SelectMany<Address>()
     .From(dbo.Address)
     .OrderBy(db.fx.Concat(dbo.Address.City, ", ", dbo.Address.State))
     .Execute();
@@ -127,7 +127,7 @@ ORDER BY
 Select a list of address values grouped by address type and the concatenation of city and state.
 {% code-example %}
 ```csharp
-IList<dynamic> values = db.SelectMany(
+IEnumerable<dynamic> values = db.SelectMany(
         dbo.Address.AddressType,
         db.fx.Concat(dbo.Address.City, ", ", dbo.Address.State).As("formatted_city_state")
     )
@@ -155,7 +155,7 @@ Select a count of addresses grouped by address type and the concatenation of cit
  that ends in "y" and a state that begins with "A".
 {% code-example %}
 ```csharp
-IList<dynamic> values = db.SelectMany(
+IEnumerable<dynamic> values = db.SelectMany(
         db.fx.Count().As("count"),            
         dbo.Address.AddressType
     )

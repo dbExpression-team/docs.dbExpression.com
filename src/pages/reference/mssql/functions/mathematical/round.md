@@ -200,7 +200,7 @@ db.fx.Round({expression}, {length} [,{function}])
 Round of total purchase amount for all purchases.
 {% code-example %}
 ```csharp
-IList<double> value = db.SelectMany(
+IEnumerable<double> value = db.SelectMany(
         db.fx.Round(dbo.Purchase.TotalPurchaseAmount)
     )
     .From(dbo.Purchase)
@@ -218,7 +218,7 @@ FROM
 Select all purchase ids where the rounded value is equal to 100.
 {% code-example %}
 ```csharp
-IList<int> value = db.SelectMany(
+IEnumerable<int> value = db.SelectMany(
         dbo.Purchase.Id
     )
     .From(dbo.Purchase)
@@ -239,11 +239,11 @@ WHERE
 Select the floor value of total purchase amount for all purchases ordered by the floor value descending.
 {% code-example %}
 ```csharp
-IList<double> value = db.SelectMany(
+IEnumerable<double> value = db.SelectMany(
         dbo.Purchase.TotalPurchaseAmount
     )
     .From(dbo.Purchase)
-    .OrderBy(db.fx.Round(dbo.Purchase.TotalPurchaseAmount, 1).Desc)
+    .OrderBy(db.fx.Round(dbo.Purchase.TotalPurchaseAmount, 1).Desc())
     .Execute();
 ```
 ```sql
@@ -260,7 +260,7 @@ ORDER BY
 Select the payment method and floor of total purchase amount for all purchases, grouped by payment method type and ordered by the floor of total purchase amount.
 {% code-example %}
 ```csharp
-IList<dynamic> values = db.SelectMany(
+IEnumerable<dynamic> values = db.SelectMany(
         dbo.Purchase.PaymentMethodType,
         db.fx.Round(dbo.Purchase.TotalPurchaseAmount, 2).As("TotalPurchaseAmount")
     )
@@ -288,7 +288,7 @@ Select the payment method and absolute value of total purchase amount for all pu
 method type having an absolute value greater than 10 and ordered by the absolute value of total purchase amount.
 {% code-example %}
 ```csharp
-IList<dynamic> values = db.SelectMany(
+IEnumerable<dynamic> values = db.SelectMany(
         dbo.Purchase.PaymentMethodType,
         dbo.Purchase.TotalPurchaseAmount
     )

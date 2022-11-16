@@ -7,7 +7,7 @@ dbExpression supports queries using more than one schema.  For example, the foll
 uses fields from the *dbo* and *sec* schema:
 {% code-example %}
 ```csharp
-IList<dynamic> purchases = db.SelectMany(
+IEnumerable<dynamic> purchases = db.SelectMany(
         sec.Person.Id,
         sec.Person.SocialSecurityNumber,            
         dbo.Purchase.PurchaseDate,

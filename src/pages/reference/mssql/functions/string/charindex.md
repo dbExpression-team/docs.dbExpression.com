@@ -85,7 +85,7 @@ provided `string` for the `expression` method parameter. Therefore, `CharIndex` 
 Select the first index of an address's line2 in line1 (if 0, line1 starts with line2)
 {% code-example %}
 ```csharp
-IList<long?> result = db.SelectMany(
+IEnumerable<long?> result = db.SelectMany(
 		db.fx.CharIndex(dbo.Address.Line2, dbo.Address.Line1)
 	)
 	.From(dbo.Address)
@@ -103,7 +103,7 @@ FROM
 Select any address id where line1 starts with line2
 {% code-example %}
 ```csharp
-IList<int> result = db.SelectMany(
+IEnumerable<int> result = db.SelectMany(
 		dbo.Address.Id
 	)
 	.From(dbo.Address)
@@ -124,7 +124,7 @@ WHERE
 Select a list of addresses, ordered by the index of the occurrence of line2 in line1.
 {% code-example %}
 ```csharp
-IList<Address> addresses = db.SelectMany<Address>()
+IEnumerable<Address> addresses = db.SelectMany<Address>()
     .From(dbo.Address)
     .OrderBy(db.fx.CharIndex(dbo.Address.Line2, dbo.Address.Line1))
     .Execute();
@@ -151,7 +151,7 @@ ORDER BY
 Select a list of address values grouped by address type and the index of line2 in line1.
 {% code-example %}
 ```csharp
-IList<dynamic> values = db.SelectMany(
+IEnumerable<dynamic> values = db.SelectMany(
         dbo.Address.AddressType,
         db.fx.CharIndex(dbo.Address.Line2, dbo.Address.Line1).As("first_index_of")
     )
@@ -179,7 +179,7 @@ Select a list of address values where line2 appears in line1 or the address has 
 or it is not found and charindex returns 0).
 {% code-example %}
 ```csharp
-IList<dynamic> values = db.SelectMany(
+IEnumerable<dynamic> values = db.SelectMany(
 		dbo.Address.AddressType,
 		dbo.Address.Line1,
 		dbo.Address.Line2

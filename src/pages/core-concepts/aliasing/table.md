@@ -6,7 +6,7 @@ Table aliasing in dbExpression eliminates ambiguity in identical table names in 
 query would fail during execution as the database engine cannot process the SQL statement with two tables with the same name of *Person*:
 
 ```csharp
-IList<dynamic> persons = db.SelectMany(
+IEnumerable<dynamic> persons = db.SelectMany(
         dbo.Person.Id,
         dbo.Person.FirstName,
         dbo.Person.LastName,
@@ -23,7 +23,7 @@ By aliasing one of the tables, the query will execute without exception:
 
 {% code-example %}
 ```csharp
-IList<dynamic> persons = db.SelectMany(
+IEnumerable<dynamic> persons = db.SelectMany(
         dbo.Person.Id,
         dbo.Person.FirstName,
         dbo.Person.LastName,
@@ -53,7 +53,7 @@ The query can be simplified by using a variable to reference the table alias (pr
 ```csharp
 var secPerson = sec.Person.As("secure");
 
-IList<dynamic> persons = db.SelectMany(
+IEnumerable<dynamic> persons = db.SelectMany(
         dbo.Person.Id,
         dbo.Person.FirstName,
         dbo.Person.LastName,
@@ -65,7 +65,7 @@ IList<dynamic> persons = db.SelectMany(
 ```
 Another alternative is to use the `dbex.Alias` method to create an alias for the *sec.Person* table, and select the *SSN* field using the created alias:
 ```csharp
-IList<dynamic> persons = db.SelectMany(
+IEnumerable<dynamic> persons = db.SelectMany(
         dbo.Person.Id,
         dbo.Person.FirstName,
         dbo.Person.LastName,
@@ -78,7 +78,7 @@ IList<dynamic> persons = db.SelectMany(
 ```
 If the **right-side** of the join condition uses the alias, a tuple can be used instead of the `dbex.Alias` method:
 ```csharp
-IList<dynamic> persons = db.SelectMany(
+IEnumerable<dynamic> persons = db.SelectMany(
         dbo.Person.Id,
         dbo.Person.FirstName,
         dbo.Person.LastName,

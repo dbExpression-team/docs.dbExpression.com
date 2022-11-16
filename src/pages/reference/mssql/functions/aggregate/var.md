@@ -65,7 +65,7 @@ float result = db.SelectOne(
         db.fx.Var(dbo.Product.ShippingWeight)
     )
     .From(dbo.Product)
-    .OrderBy(db.fx.Var(dbo.Product.ShippingWeight).Desc)
+    .OrderBy(db.fx.Var(dbo.Product.ShippingWeight).Desc())
     .Execute();
 ```
 ```sql
@@ -83,7 +83,7 @@ Select the ids of all products, grouped by product
 category type having an variance greater than 1.
 {% code-example %}
 ```csharp
-IList<int> results = db.SelectMany(
+IEnumerable<int> results = db.SelectMany(
         dbo.Product.Id
     )
     .From(dbo.Product)

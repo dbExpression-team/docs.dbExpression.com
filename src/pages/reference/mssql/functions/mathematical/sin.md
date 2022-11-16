@@ -56,7 +56,7 @@ FROM
 Select the sine of a product's depth (which is nullable in the database) where the depth is greater than 0 and less than 1.
 {% code-example %}
 ```csharp
-IList<float> result = db.SelectMany(
+IEnumerable<float> result = db.SelectMany(
         db.fx.Sin(dbo.Product.Depth)
     )
     .From(dbo.Product)
@@ -79,9 +79,9 @@ WHERE
 Select and order by the sine of a product's depth.
 {% code-example %}
 ```csharp
-IList<Product> result = db.SelectMany<Product>()
+IEnumerable<Product> result = db.SelectMany<Product>()
     .From(dbo.Product)
-    .OrderBy(db.fx.Sin(dbo.Product.Depth).Desc)
+    .OrderBy(db.fx.Sin(dbo.Product.Depth).Desc())
     .Execute();
 ```
 ```sql
@@ -115,7 +115,7 @@ Select product details grouped by product
 category and sine of the product's depth.
 {% code-example %}
 ```csharp
-IList<dynamic> results = db.SelectMany(
+IEnumerable<dynamic> results = db.SelectMany(
         dbo.Product.ProductCategoryType,
         db.fx.Sin(dbo.Product.Depth).As("calculated_value")
     )
@@ -147,7 +147,7 @@ Select the ids of all products, grouped by product
 category type having an sine of the product's height greater than 1.
 {% code-example %}
 ```csharp
-IList<ProductCategoryType?> results = db.SelectMany(
+IEnumerable<ProductCategoryType?> results = db.SelectMany(
         dbo.Product.ProductCategoryType
     )
     .From(dbo.Product)

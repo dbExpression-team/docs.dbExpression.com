@@ -18,7 +18,7 @@ dbExpression supports the following join types:
 {% code-example %}
 ```csharp
 //select all people who do not have an address
-IList<Person> people = db.SelectMany<Person>()
+IEnumerable<Person> people = db.SelectMany<Person>()
     .From(dbo.Person)
     .LeftJoin(dbo.PersonAddress).On(dbo.PersonAddress.PersonId == dbo.Person.Id)
     .Where(dbo.PersonAddress.Id == dbex.Null)
@@ -50,7 +50,7 @@ WHERE
 {% code-example %}
 ```csharp
 //get person credit limit info for people in zip 94043
-IList<dynamic> info = db.SelectMany(
+IEnumerable<dynamic> info = db.SelectMany(
         dbo.Person.Id,
         dbo.Person.FirstName,
         dbo.Person.LastName,
@@ -86,7 +86,7 @@ WHERE
 {% code-example %}
 ```csharp
 //select all address records for person with id equal 1
-IList<Address> addresses = db.SelectMany<Address>()
+IEnumerable<Address> addresses = db.SelectMany<Address>()
     .From(dbo.Address)
     .InnerJoin(dbo.PersonAddress).On(dbo.PersonAddress.AddressId == dbo.Address.Id)
     .Where(dbo.PersonAddress.PersonId == 1)
@@ -116,7 +116,7 @@ WHERE
 {% code-example %}
 ```csharp
 //select data set for people's purchases
-IList<dynamic> purchases = db.SelectMany(
+IEnumerable<dynamic> purchases = db.SelectMany(
         dbo.Person.Id,
         dbo.Person.FirstName,
         dbo.Person.LastName,
@@ -145,7 +145,7 @@ FROM
 {% code-example %}
 ```csharp
 //select all product combinations price totals
-IList<double> prices = db.SelectMany(
+IEnumerable<double> prices = db.SelectMany(
         (dbo.Product.As("p1").Price + dbo.Product.As("p2").Price)
     )
     .From(dbo.Product.As("p1"))

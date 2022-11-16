@@ -9,7 +9,7 @@ supports grouping by any number of expression elements.
 An example that selects the count of records grouped by last name:
 {% code-example %}
 ```csharp
-IList<dynamic> counts = db.SelectMany(
+IEnumerable<dynamic> counts = db.SelectMany(
         dbo.Person.LastName,
         db.fx.Count(dbo.Person.LastName).As("LastNameCount")
     )
@@ -31,7 +31,7 @@ GROUP BY
 An example that selects the count of records grouped by first name and last name:
 {% code-example %}
 ```csharp
-IList<dynamic> persons = db.SelectMany(
+IEnumerable<dynamic> persons = db.SelectMany(
         dbo.Person.FirstName,
         dbo.Person.LastName,
         db.fx.Count(dbo.PersonAddress.Id).As("Count")
@@ -43,7 +43,7 @@ IList<dynamic> persons = db.SelectMany(
         dbo.Person.LastName
     ).OrderBy(
         dbo.Person.LastName,
-        dbo.Person.FirstName.Desc
+        dbo.Person.FirstName.Desc()
     )
     .Execute();
 ```
@@ -69,10 +69,10 @@ Group by is typically used with aggregation functions, but also works as a means
 {% code-example %}
 ```csharp
 //select unique last names ordered ascending
-IList<string> uniqueLastNames = db.SelectMany(dbo.Person.LastName)
+IEnumerable<string> uniqueLastNames = db.SelectMany(dbo.Person.LastName)
     .From(dbo.Person)
     .GroupBy(dbo.Person.LastName)
-    .OrderBy(dbo.Person.LastName.Asc)
+    .OrderBy(dbo.Person.LastName.Asc())
     .Execute();
 ```
 ```sql

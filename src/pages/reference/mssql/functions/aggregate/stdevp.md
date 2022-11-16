@@ -65,7 +65,7 @@ float result = db.SelectOne(
         db.fx.StDevP(dbo.Product.ShippingWeight)
     )
     .From(dbo.Product)
-    .OrderBy(db.fx.StDevP(dbo.Product.ShippingWeight).Desc)
+    .OrderBy(db.fx.StDevP(dbo.Product.ShippingWeight).Desc())
     .Execute();
 ```
 ```sql
@@ -83,7 +83,7 @@ Select the product ids of all products, grouped by product
 category type having a standard deviation for the population greater than 1.
 {% code-example %}
 ```csharp
-IList<int> results = db.SelectMany(
+IEnumerable<int> results = db.SelectMany(
         dbo.Product.Id
     )
     .From(dbo.Product)

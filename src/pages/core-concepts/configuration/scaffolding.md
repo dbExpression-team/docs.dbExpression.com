@@ -29,7 +29,9 @@ The following is an example *dbex.config.json* file (there may be more here than
     "outputDirectory": "./Generated",
     "rootNamespace": "Sample",
     "databaseAccessor": "db",
-    "nullable": "disable",
+    "languageFeatures" : {
+        "nullable": "disable"
+    },
     "enums": [
         "Sample.Data.AddressType"
     ],

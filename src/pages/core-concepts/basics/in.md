@@ -8,7 +8,7 @@ Results can be filtered by using the `In` method of a field expression while com
 This example selects records where the value matches one of the items in the list:
 {% code-example %}
 ```csharp
-IList<Purchase> purchases = db.SelectMany<Purchase>()
+IEnumerable<Purchase> purchases = db.SelectMany<Purchase>()
     .From(dbo.Purchase)
     .Where(
         dbo.Purchase.PaymentMethodType.In(

@@ -1,15 +1,16 @@
 ---
-title: ExecuteAsync
+title: ExecuteAsyncEnumerable
 ---
 
-The `ExecuteAsync` method is used to **asynchronously** execute a SQL statement against a database.
+The `ExecuteAsyncEnumerable` method is used to **asynchronously* enumerate** the results of execution of 
+a SQL statement.
 
 ## Any query type or stored procedure
 
 {% method-descriptor %}
 ```json
 {
-    "syntax" : "ExecuteAsync(\r\t[{connection}]\r\t[,{commandTimeout}]\r\t[,{cancellationToken}]\r)",
+    "syntax" : "ExecuteAsyncEnumerable(\r\t[{connection}]\r\t[,{commandTimeout}]\r\t[,{cancellationToken}]\r)",
     "arguments" : [
         {
             "argumentName" : "connection",
@@ -58,7 +59,7 @@ for queries for entities and dynamics - but not scalar values.
 {% method-descriptor %}
 ```json
 {
-    "syntax" : "ExecuteAsync(\r\t[{commandTimeout}]\r\t[,{connection}]\r\t[,{read|map}]\r\t[,{cancellationToken}]\r)",
+    "syntax" : "ExecuteAsyncEnumerable(\r\t[{commandTimeout}]\r\t[,{connection}]\r\t[,{read|map}]\r\t[,{cancellationToken}]\r)",
     "arguments" : [
         {
             "argumentName" : "connection",
@@ -70,7 +71,7 @@ for queries for entities and dynamics - but not scalar values.
                 }
             ]
         },
-		{
+        {
             "argumentName" : "commandTimeout",
             "required" : false, 
             "description" : "The execution duration (in seconds) of a query before execution will timeout if not yet complete.",
@@ -80,7 +81,7 @@ for queries for entities and dynamics - but not scalar values.
                 }
             ]
         },
-        {
+		{
             "argumentName" : "read",
             "required" : false, 
             "description" : "A delegate that enables you to take full control of the data reader returned from execution.  Invocations using this parameter DO NOT have a method return." ,
@@ -116,74 +117,36 @@ for queries for entities and dynamics - but not scalar values.
 {% /method-descriptor %}
 
 {% accordian caption="syntax examples" %}
-Execute a `SelectOne` query selecting only 2 fields, but map those fields to a `Person`:
+Execute a `SelectMany` query and asynchronously serialize the data as it's received:
 ```csharp
-Person? person = await db.SelectOne(
-        dbo.Person.Id,
-        dbo.Person.FirstName
-    )
-    .From(dbo.Person)
-    .Where(dbo.Person.Id == 3)
-    .ExecuteAsync(row => new Person 
-        { 
-            Id = row.ReadField()!.GetValue<long>(), 
-            FirstName = row.ReadField()!.GetValue<string>()
-        });
-                    
-Console.WriteLine($"[{person.Id}]: Last Name: {person.LastName}, First Name: {person.FirstName}");
-// [3]: Last Name: , First Name: Joe
-
+await foreach (var person in 
+        db.SelectMany(
+            dbo.Person.Id,
+            dbo.Person.FirstName + " " + dbo.Person.LastName
+        )
+        .From(dbo.Person)
+        .ExecuteAsyncEnumerable())
+{
+    await JsonSerializer.SerializeAsync(stream, person);
+}
 ```
 
-Execute a `SelectOne` query selecting only 2 fields, but map those fields to a `Person` (note the method does not return anything):
 ```csharp
-Person person = new Person { Id = 3, LastName = "Smith" };
-await db.SelectOne<Person>()
-    .From(dbo.Person)
-    .Where(dbo.Person.Id == person.Id)
-    .ExecuteAsync(row =>
-        { 
-            //the row has all columns from [dbo].[Person], but only mapping [Id] and [FirstName]
-            person.Id = row.ReadField()!.GetValue<long>(), 
-            person.FirstName = row.ReadField()!.GetValue<string>()
-        });
-                    
-Console.WriteLine($"[{person.Id}]: Last Name: {person.LastName}, First Name: {person.FirstName}");
-// [3]: Last Name: Smith, First Name: Joe
-
-```
-
-Execute a `SelectOne` query selecting only 2 fields, but modify one of the fields and return a new `dynamic` object:
-```csharp
-Person person = new Person { Id = 3, LastName = "Smith" };
-dynamic? name = await db.SelectOne(
-        dbo.Person.FirstName,
-        dbo.Person.LastName
-    )
-    .From(dbo.Person)
-    .Where(dbo.Person.Id == person.Id)
-    .ExecuteAsync(row =>
-    {
-        var firstName = row.ReadField()!.GetValue<string>();
-        firstName = firstName == "Joe" ? "Joseph" : firstName;
-        return new { FirstName = firstName, LastName = row.ReadField()!.GetValue<string>() };
-    });
-                
-Console.WriteLine($"[{person.Id}]: Last Name: {name.LastName}, First Name: {name.FirstName}");
-// [3]: Last Name: Smith, First Name: Joseph
-
-```
-
-Execute a `SelectOne` query selecting only 1 field, and set a value on a `Person` variable, using a different value if the database value equals `Joe`:
-```csharp
-Person person = new Person { Id = 3, LastName = "Smith" };
-await db.SelectOne(dbo.Person.FirstName)
-    .From(dbo.Person)
-    .Where(dbo.Person.Id == person.Id)
-    .ExecuteAsync(value => person.FirstName = value == "Joe" ? "Joseph" : value);
-                
-Console.WriteLine($"[{person.Id}]: Last Name: {person.LastName}, First Name: {person.FirstName}");
-// [3]: Last Name: Smith, First Name: Joseph
-
+await foreach (var person in 
+        db.SelectMany(
+            dbo.Person.Id,
+            dbo.Person.FirstName,
+            bo.Person.LastName
+        )
+        .From(dbo.Person)
+        .ExecuteAsyncEnumerable(row => new 
+            { 
+                Id = row.ReadField()!.GetValue<long>(), 
+                FullName = $"{row.ReadField()!.GetValue<string>()} {row.ReadField()!.GetValue<string>()}"
+            }))
+{
+    await JsonSerializer.SerializeAsync(stream, person);
+}                   
 ```
 {% /accordian %}
+

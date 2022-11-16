@@ -38,7 +38,7 @@ Use the `Ceiling` function to returns the smallest integer value greater than or
 Select the ceiling of total purchase amount for all purchases.
 {% code-example %}
 ```csharp
-IList<double> value = db.SelectMany(
+IEnumerable<double> value = db.SelectMany(
         db.fx.Ceiling(dbo.Purchase.TotalPurchaseAmount)
     )
     .From(dbo.Purchase)
@@ -56,7 +56,7 @@ FROM
 Select all purchase ids where the ceiling of total purchase amount is less than or equal to 100.
 {% code-example %}
 ```csharp
-IList<int> value = db.SelectMany(
+IEnumerable<int> value = db.SelectMany(
         dbo.Purchase.Id
     )
     .From(dbo.Purchase)
@@ -77,11 +77,11 @@ WHERE
 Select the ceiling value of total purchase amount for all purchases ordered by the ceiling value descending.
 {% code-example %}
 ```csharp
-IList<double> value = db.SelectMany(
+IEnumerable<double> value = db.SelectMany(
         dbo.Purchase.TotalPurchaseAmount
     )
     .From(dbo.Purchase)
-    .OrderBy(db.fx.Ceiling(dbo.Purchase.TotalPurchaseAmount).Desc)
+    .OrderBy(db.fx.Ceiling(dbo.Purchase.TotalPurchaseAmount).Desc())
     .Execute();
 ```
 ```sql
@@ -98,7 +98,7 @@ ORDER BY
 Select the payment method and ceiling of total purchase amount for all purchases, grouped by payment method type and ordered by the ceiling of total purchase amount.
 {% code-example %}
 ```csharp
-IList<dynamic> values = db.SelectMany(
+IEnumerable<dynamic> values = db.SelectMany(
         dbo.Purchase.PaymentMethodType,
         db.fx.Ceiling(dbo.Purchase.TotalPurchaseAmount).As("TotalPurchaseAmount")
     )
@@ -129,7 +129,7 @@ Select the payment method and absolute value of total purchase amount for all pu
 method type having an absolute value greater than 10 and ordered by the absolute value of total purchase amount.
 {% code-example %}
 ```csharp
-IList<dynamic> values = db.SelectMany(
+IEnumerable<dynamic> values = db.SelectMany(
         dbo.Purchase.PaymentMethodType,
         db.fx.Ceiling(dbo.Purchase.TotalPurchaseAmount).As("TotalPurchaseAmount")
     )

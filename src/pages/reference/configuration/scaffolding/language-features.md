@@ -9,7 +9,9 @@ The following pseudo-json shows all language feature related properties:
 
 ```json
 {
-   "nullable": "{enable|disable}"
+   "languageFeatures" : {
+      "nullable": "{enable|disable}"
+   }
 }
 ```
 
@@ -34,7 +36,9 @@ Opts-in/out of using the `nullable` language feature by including a `#nullable e
 the following will opt-in to the `nullable` language feature in scaffolded code:
 ```json
 {
-   "nullable": "enable"
+   "languageFeatures" : {
+      "nullable": "enable"
+   }
 }
 ```
 {% /accordian %}
