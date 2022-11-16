@@ -69,7 +69,7 @@ Group by is typically used with aggregation functions, but also works as a means
 {% code-example %}
 ```csharp
 //select unique last names ordered ascending
-ILIEnumerableist<string> uniqueLastNames = db.SelectMany(dbo.Person.LastName)
+IEnumerable<string> uniqueLastNames = db.SelectMany(dbo.Person.LastName)
     .From(dbo.Person)
     .GroupBy(dbo.Person.LastName)
     .OrderBy(dbo.Person.LastName.Asc())

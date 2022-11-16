@@ -50,7 +50,7 @@ WHERE
 {% code-example %}
 ```csharp
 //get person credit limit info for people in zip 94043
-ILiIEnumerablest<dynamic> info = db.SelectMany(
+IEnumerable<dynamic> info = db.SelectMany(
         dbo.Person.Id,
         dbo.Person.FirstName,
         dbo.Person.LastName,
