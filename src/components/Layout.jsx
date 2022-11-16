@@ -138,6 +138,7 @@ const navigation = [
       { 'title': 'Elements', 'href': '/reference/elements' },
       { 'title': 'Execute', 'href': '/reference/execute' },
       { 'title': 'ExecuteAsync', 'href': '/reference/execute-async' },
+      { 'title': 'ExecuteAsyncEnumerable', 'href': '/reference/execute-async-enumerable' },
       { 
         'title': 'Configuration', 
         'href': '/reference/configuration',

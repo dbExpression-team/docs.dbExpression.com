@@ -10,9 +10,11 @@ todo: update reference link to select statement once docs for select statement a
 To start building *SELECT* queries, use the database accessor (static or dependency injected instance) followed by a `SelectOne` or `SelectMany`.  The number of data items you expect or want as a
 return, and the return type of *SELECT* operations, determine which signature you use to construct a query.
 
-> To ensure no additional data is buffered from the data reader beyond the intended single result, an explicit *TOP(1)* clause is appended to all SQL statements assembled using the `SelectOne` query type.
+> To ensure no additional data is buffered from the data reader beyond the intended single result, an explicit *TOP(1)* clause is appended to all SQL statements assembled using the `SelectOne` query type.  dbExpression does NOT validate executed `SelectOne` queries to ensure there was only one record matching your query input - it simply selects the first record.
 
-> dbExpression does NOT validate executed `SelectOne` queries to ensure there was only one record matching your query input - it simply selects the first record.
+> In addition to `Execute`, `SelectOne` and `SelectMany` queries can be executed using:
+> - `ExecuteAsync` to asynchronously execute a query
+> - `ExecuteAsyncEnumerable` to asynchronously enumerate the results of query execution
 
 ## Select One or Many Entities
 

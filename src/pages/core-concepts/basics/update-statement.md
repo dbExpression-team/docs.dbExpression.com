@@ -5,8 +5,9 @@ todo: create reference link to update statement once docs for select statement a
   [this was after the first example:] See [Advanced Queries (Arithmetic)](/advanced/arithmetic) section for more detail on using server side arithmetic.
 ---
 
-Using dbExpression, you can compose and execute direct updates against the target database.  Unlike some ORM frameworks, 
-it's not standard or required to retrieve data in order to execute an update.  
+Using dbExpression, you can compose and execute direct updates against the target database.  Unlike some ORM frameworks, it's not standard or required to retrieve data in order to execute an update.  
+
+> In addition to `Execute`, `Update` includes `ExecuteAsync` to asynchronously update data.
 
 To update a field value, use the `Set` method of the field expression. The following QueryExpression issues an update 
 to the *Person* table where *Person.Id* is equal to the literal value `1` and sets that person's credit limit to 
