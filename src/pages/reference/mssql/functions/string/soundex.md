@@ -1,27 +1,30 @@
 ---
-title: RTrim
-description: dbExpression RTRIM string function
+title: Soundex
+description: dbExpression SOUNDEX string function
 ---
 
-{% ms-docs-url label="RTrim" path="/functions/rtrim-transact-sql" /%}
+{% ms-docs-url label="Soundex" path="/functions/soundex-transact-sql" /%}
 {% supported-versions /%}
 
-## RTrim (Right Trim) String Function
+## Soundex String Function
 
-Use the `RTrim` function to remove trailing spaces from a string expression.
+Use the `Soundex` function to evaluate the similarity of two strings.
 
 {% method-descriptor %}
 ```json
 {
-    "syntax" : "db.fx.RTrim({expression})",
+    "syntax" : "db.fx.Soundex({expression})",
     "arguments" : [
         {
             "argumentName" : "expression",
             "required" : true,
-            "description" : "The value to remove trailing spaces from.",
+            "description" : "The value to use for computation of the four character result.",
             "types": [
                 { 
                     "typeName" : "AnyStringElement"
+                },
+				{ 
+                    "typeName" : "string"
                 }
             ]
         }           
@@ -36,30 +39,30 @@ Use the `RTrim` function to remove trailing spaces from a string expression.
 
 ## Examples
 ### Select Statement
-Select the a person's last name, with trailing spaces removed.
+Select the soundex value of a person's last name.
 {% code-example %}
 ```csharp
 IEnumerable<string> result = db.SelectMany(
-		db.fx.RTrim(dbo.Person.LastName)
+		db.fx.Soundex(dbo.Person.LastName)
 	)
 	.From(dbo.Person)
 	.Execute();
 ```
 ```sql
 SELECT
-	RTRIM([t0].[LastName])
+	SOUNDEX([t0].[LastName])
 FROM
 	[dbo].[Person] AS [t0];
 ```
 {% /code-example %}
 
 ### Where Clause
-Select persons where their last name ends with one or more spaces.
+Select persons where their last name is similar to their first name.
 {% code-example %}
 ```csharp
 IEnumerable<Person> result = db.SelectMany<Person>()
     .From(dbo.Person)
-	.Where(db.fx.RTrim(dbo.Person.LastName) != dbo.Person.LastName)
+	.Where(db.fx.Soundex(dbo.Person.LastName) != dbo.Person.LastName)
 	.Execute();
 ```
 ```sql
@@ -78,17 +81,17 @@ SELECT
 FROM
 	[dbo].[Person] AS [t0]
 WHERE
-	RTRIM([t0].[LastName]) <> [t0].[LastName];
+	SOUNDEX([t0].[LastName]) <> [t0].[LastName];
 ```
 {% /code-example %}
 
 ### Order By Clause
-Select a list of persons, ordered by their last name with trailing spaces removed.
+Select a list of persons, ordered by the soundex value of their last name.
 {% code-example %}
 ```csharp
 IEnumerable<Person> result = db.SelectMany<Person>()
 	.From(dbo.Person)
-	.OrderBy(db.fx.RTrim(dbo.Person.LastName))
+	.OrderBy(db.fx.Soundex(dbo.Person.LastName))
 	.Execute();
 ```
 ```sql
@@ -107,39 +110,40 @@ SELECT
 FROM
 	[dbo].[Person] AS [t0]
 ORDER BY
-	RTRIM([t0].[LastName]) ASC;
+	SOUNDEX([t0].[LastName]) ASC;
 ```
 {% /code-example %}
 
 ### Group By Clause
-Select a list of address values grouped by address type and the value of the city field with trailing spaces removed.
+Select a list of address values grouped by address type and the similarity of the names of the city they live in (distinct list
+of similar sonding cities).
 {% code-example %}
 ```csharp
 IEnumerable<dynamic> values = db.SelectMany(
 		dbo.Address.AddressType,
-		db.fx.RTrim(dbo.Address.City).As("city")
+		db.fx.Soundex(dbo.Address.City).As("city")
 	)
 	.From(dbo.Address)
 	.GroupBy(
 		dbo.Address.AddressType,
-		db.fx.RTrim(dbo.Address.City)
+		db.fx.Soundex(dbo.Address.City)
 	)
 	.Execute();
 ```
 ```sql
 SELECT
 	[t0].[AddressType],
-	RTRIM([t0].[City]) AS [city]
+	SOUNDEX([t0].[City]) AS [city]
 FROM
 	[dbo].[Address] AS [t0]
 GROUP BY
 	[t0].[AddressType],
-	RTRIM([t0].[City]);
+	SOUNDEX([t0].[City]);
 ```
 {% /code-example %}
 
 ### Having Clause
-Select a list of address data, grouped by address type and city where the value of city with trailing spaces removed
+Select a list of address data, grouped by address type and city where the value of city with leading and trailing spaces removed
 is "Chicago".
 {% code-example %}
 ```csharp
@@ -153,7 +157,7 @@ IEnumerable<dynamic> addresses = db.SelectMany(
 		dbo.Address.City
 	)
 	.Having(
-		db.fx.RTrim(dbo.Address.City) == "Los Angeles"
+		db.fx.Soundex(dbo.Address.City) == "G452"
 	)
 	.Execute();
 ```
@@ -167,7 +171,7 @@ GROUP BY
 	[t0].[AddressType],
 	[t0].[City]
 HAVING
-	RTRIM([t0].[City]) = @P1;',N'@P1 varchar(11)',@P1='Los Angeles'
+	SOUNDEX([t0].[City]) = @P1;',N'@P1 varchar(4)',@P1='G452'
 ```
 {% /code-example %}
 

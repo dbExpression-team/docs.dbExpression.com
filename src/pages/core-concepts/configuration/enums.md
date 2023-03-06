@@ -150,14 +150,14 @@ db.SelectOne(
     .Execute();
 ```
 ```sql
-SELECT
-	[dbo].[Person].[FirstName]
-	,[dbo].[Person].[LastName]
-	,[dbo].[Address].[AddressType]
+SELECT TOP(1)
+    [t0].[FirstName],
+    [t0].[LastName],
+    [t1].[AddressType]
 FROM
-	[dbo].[Person]
-	LEFT JOIN [dbo].[Person_Address] ON [dbo].[Person].[Id] = [dbo].[Person_Address].[PersonId]
-	LEFT JOIN [dbo].[Address] ON [dbo].[Person_Address].[AddressId] = [dbo].[Address].[Id];
+    [dbo].[Person] AS [t0]
+    LEFT JOIN [dbo].[Person_Address] AS [t2] ON [t0].[Id] = [t2].[PersonId]
+    LEFT JOIN [dbo].[Address] AS [t1] ON [t2].[AddressId] = [t1].[Id];
 ```
 {% /code-example %}
 

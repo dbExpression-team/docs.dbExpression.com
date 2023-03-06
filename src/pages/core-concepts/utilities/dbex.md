@@ -21,11 +21,11 @@ DateTime? value = db.SelectOne(
 ```
 ```sql
 exec sp_executesql N'SELECT TOP(1)
-	DATEADD(year, @P1, CAST([dbo].[Person].[CreditLimit] AS DateTime))
+    DATEADD(year, @P1, CAST([t0].[CreditLimit] AS DateTime))
 FROM
-	[dbo].[Person]
+    [dbo].[Person] AS [t0]
 WHERE
-	[dbo].[Person].[CreditLimit] IS NULL;',N'@P1 int',@P1=1
+    [t0].[CreditLimit] IS NULL;',N'@P1 int',@P1=1
 ```
 {% /code-example %}
 
@@ -93,19 +93,19 @@ IEnumerable<Person> persons = db.SelectMany<Person>()
 ```
 ```sql
 SELECT
-	[dbo].[Person].[Id],
-	[dbo].[Person].[FirstName],
-	[dbo].[Person].[LastName],
-	[dbo].[Person].[BirthDate],
-	[dbo].[Person].[GenderType],
-	[dbo].[Person].[CreditLimit],
-	[dbo].[Person].[YearOfLastCreditLimitReview],
-	[dbo].[Person].[RegistrationDate],
-	[dbo].[Person].[LastLoginDate],
-	[dbo].[Person].[DateCreated],
-	[dbo].[Person].[DateUpdated]
+    [t0].[Id],
+    [t0].[FirstName],
+    [t0].[LastName],
+    [t0].[BirthDate],
+    [t0].[GenderType],
+    [t0].[CreditLimit],
+    [t0].[YearOfLastCreditLimitReview],
+    [t0].[RegistrationDate],
+    [t0].[LastLoginDate],
+    [t0].[DateCreated],
+    [t0].[DateUpdated]
 FROM
-	[dbo].[Person];
+    [dbo].[Person] AS [t0];
 ```
 {% /code-example %}
 
@@ -151,31 +151,31 @@ IEnumerable<(Person, StateType?)> persons = db.SelectMany(
         { 
             var person = new Person(); 
             dbex.GetDefaultMappingFor(dbo.Person).Invoke(row, person);
-            var state = row.ReadField().GetValue<StateType?>();
+            var state = row.ReadField()!.GetValue<StateType?>();
             return (person, state); 
         }
     );
 ```
 ```sql
 exec sp_executesql N'SELECT
-	[dbo].[Person].[Id],
-	[dbo].[Person].[FirstName],
-	[dbo].[Person].[LastName],
-	[dbo].[Person].[BirthDate],
-	[dbo].[Person].[GenderType],
-	[dbo].[Person].[CreditLimit],
-	[dbo].[Person].[YearOfLastCreditLimitReview],
-	[dbo].[Person].[RegistrationDate],
-	[dbo].[Person].[LastLoginDate],
-	[dbo].[Person].[DateCreated],
-	[dbo].[Person].[DateUpdated],
-	[dbo].[Address].[State]
+    [t0].[Id],
+    [t0].[FirstName],
+    [t0].[LastName],
+    [t0].[BirthDate],
+    [t0].[GenderType],
+    [t0].[CreditLimit],
+    [t0].[YearOfLastCreditLimitReview],
+    [t0].[RegistrationDate],
+    [t0].[LastLoginDate],
+    [t0].[DateCreated],
+    [t0].[DateUpdated],
+    [t1].[State]
 FROM
-	[dbo].[Person]
-	LEFT JOIN [dbo].[Person_Address] ON [dbo].[Person].[Id] = [dbo].[Person_Address].[PersonId]
-	LEFT JOIN [dbo].[Address] ON [dbo].[Person_Address].[AddressId] = [dbo].[Address].[Id]
-	AND
-	[dbo].[Address].[AddressType] = @P1;',N'@P1 int',@P1=1
+    [dbo].[Person] AS [t0]
+    LEFT JOIN [dbo].[Person_Address] AS [t2] ON [t0].[Id] = [t2].[PersonId]
+    LEFT JOIN [dbo].[Address] AS [t1] ON [t2].[AddressId] = [t1].[Id]
+    AND
+    [t1].[AddressType] = @P1;',N'@P1 int',@P1=1
 ```
 {% /code-example %}
 
@@ -255,22 +255,22 @@ IEnumerable<dynamic> person_purchases = db.SelectMany(
 ```
 ```sql
 SELECT
-	[dbo].[Person].[Id],
-	[dbo].[Person].[FirstName],
-	[dbo].[Person].[LastName],
-	[dbo].[Person].[BirthDate],
-	[dbo].[Person].[GenderType],
-	[dbo].[Person].[CreditLimit],
-	[dbo].[Person].[YearOfLastCreditLimitReview],
-	[dbo].[Person].[RegistrationDate],
-	[dbo].[Person].[LastLoginDate],
-	[dbo].[Person].[DateCreated],
-	[dbo].[Person].[DateUpdated],
-	[dbo].[Purchase].[Id] AS [PurchaseId],
-	[dbo].[Purchase].[PurchaseDate]
+    [t0].[Id],
+    [t0].[FirstName],
+    [t0].[LastName],
+    [t0].[BirthDate],
+    [t0].[GenderType],
+    [t0].[CreditLimit],
+    [t0].[YearOfLastCreditLimitReview],
+    [t0].[RegistrationDate],
+    [t0].[LastLoginDate],
+    [t0].[DateCreated],
+    [t0].[DateUpdated],
+    [t1].[Id] AS [PurchaseId],
+    [t1].[PurchaseDate]
 FROM
-	[dbo].[Person]
-	INNER JOIN [dbo].[Purchase] ON [dbo].[Person].[Id] = [dbo].[Purchase].[PersonId];
+    [dbo].[Person] AS [t0]
+    INNER JOIN [dbo].[Purchase] AS [t1] ON [t0].[Id] = [t1].[PersonId];
 ```
 {% /code-example %}
 
@@ -289,22 +289,22 @@ IEnumerable<dynamic> person_purchases = db.SelectMany(
 ```
 ```sql
 SELECT
-	[dbo].[Person].[Id] AS [PersonId],
-	[dbo].[Person].[FirstName],
-	[dbo].[Person].[LastName],
-	[dbo].[Person].[BirthDate],
-	[dbo].[Person].[GenderType],
-	[dbo].[Person].[CreditLimit],
-	[dbo].[Person].[YearOfLastCreditLimitReview],
-	[dbo].[Person].[RegistrationDate],
-	[dbo].[Person].[LastLoginDate],
-	[dbo].[Person].[DateCreated],
-	[dbo].[Person].[DateUpdated],
-	[dbo].[Purchase].[Id],
-	[dbo].[Purchase].[PurchaseDate]
+    [t0].[Id] AS [PersonId],
+    [t0].[FirstName],
+    [t0].[LastName],
+    [t0].[BirthDate],
+    [t0].[GenderType],
+    [t0].[CreditLimit],
+    [t0].[YearOfLastCreditLimitReview],
+    [t0].[RegistrationDate],
+    [t0].[LastLoginDate],
+    [t0].[DateCreated],
+    [t0].[DateUpdated],
+    [t1].[Id],
+    [t1].[PurchaseDate]
 FROM
-	[dbo].[Person]
-	INNER JOIN [dbo].[Purchase] ON [dbo].[Person].[Id] = [dbo].[Purchase].[PersonId];
+    [dbo].[Person] AS [t0]
+    INNER JOIN [dbo].[Purchase] AS [t1] ON [t0].[Id] = [t1].[PersonId];
 ```
 {% /code-example %}
 
@@ -322,22 +322,22 @@ IEnumerable<dynamic> person_purchases = db.SelectMany(
 ```
 ```sql
 SELECT
-	[dbo].[Person].[Id] AS [Person_Id],
-	[dbo].[Person].[FirstName] AS [Person_FirstName],
-	[dbo].[Person].[LastName] AS [Person_LastName],
-	[dbo].[Person].[BirthDate] AS [Person_BirthDate],
-	[dbo].[Person].[GenderType] AS [Person_GenderType],
-	[dbo].[Person].[CreditLimit] AS [Person_CreditLimit],
-	[dbo].[Person].[YearOfLastCreditLimitReview] AS [Person_YearOfLastCreditLimitReview],
-	[dbo].[Person].[RegistrationDate] AS [Person_RegistrationDate],
-	[dbo].[Person].[LastLoginDate] AS [Person_LastLoginDate],
-	[dbo].[Person].[DateCreated] AS [Person_DateCreated],
-	[dbo].[Person].[DateUpdated] AS [Person_DateUpdated],
-	[dbo].[Purchase].[Id],
-	[dbo].[Purchase].[PurchaseDate]
+    [t0].[Id] AS [Person_Id],
+    [t0].[FirstName] AS [Person_FirstName],
+    [t0].[LastName] AS [Person_LastName],
+    [t0].[BirthDate] AS [Person_BirthDate],
+    [t0].[GenderType] AS [Person_GenderType],
+    [t0].[CreditLimit] AS [Person_CreditLimit],
+    [t0].[YearOfLastCreditLimitReview] AS [Person_YearOfLastCreditLimitReview],
+    [t0].[RegistrationDate] AS [Person_RegistrationDate],
+    [t0].[LastLoginDate] AS [Person_LastLoginDate],
+    [t0].[DateCreated] AS [Person_DateCreated],
+    [t0].[DateUpdated] AS [Person_DateUpdated],
+    [t1].[Id],
+    [t1].[PurchaseDate]
 FROM
-	[dbo].[Person]
-	INNER JOIN [dbo].[Purchase] ON [dbo].[Person].[Id] = [dbo].[Purchase].[PersonId];
+    [dbo].[Person] AS [t0]
+    INNER JOIN [dbo].[Purchase] AS [t1] ON [t0].[Id] = [t1].[PersonId];
 ```
 {% /code-example %}
 
@@ -370,33 +370,33 @@ IEnumerable<dynamic> person_purchases = db.SelectMany(
 ```
 ```sql
 SELECT
-	[dbo].[Person].[Id] AS [Person_Id],
-	[dbo].[Person].[FirstName],
-	[dbo].[Person].[LastName],
-	[dbo].[Person].[BirthDate],
-	[dbo].[Person].[GenderType],
-	[dbo].[Person].[CreditLimit],
-	[dbo].[Person].[YearOfLastCreditLimitReview],
-	[dbo].[Person].[RegistrationDate],
-	[dbo].[Person].[LastLoginDate],
-	[dbo].[Person].[DateCreated] AS [Person_DateCreated],
-	[dbo].[Person].[DateUpdated] AS [Person_DateUpdated],
-	[dbo].[Purchase].[Id] AS [PurchaseId],
-	[dbo].[Purchase].[PersonId] AS [Purchase_PersonId],
-	[dbo].[Purchase].[OrderNumber],
-	[dbo].[Purchase].[TotalPurchaseQuantity],
-	[dbo].[Purchase].[TotalPurchaseAmount],
-	[dbo].[Purchase].[PurchaseDate],
-	[dbo].[Purchase].[ShipDate],
-	[dbo].[Purchase].[ExpectedDeliveryDate],
-	[dbo].[Purchase].[TrackingIdentifier],
-	[dbo].[Purchase].[PaymentMethodType],
-	[dbo].[Purchase].[PaymentSourceType],
-	[dbo].[Purchase].[DateCreated] AS [Purchase_DateCreated],
-	[dbo].[Purchase].[DateUpdated] AS [Purchase_DateUpdated]
+    [t0].[Id] AS [Person_Id],
+    [t0].[FirstName],
+    [t0].[LastName],
+    [t0].[BirthDate],
+    [t0].[GenderType],
+    [t0].[CreditLimit],
+    [t0].[YearOfLastCreditLimitReview],
+    [t0].[RegistrationDate],
+    [t0].[LastLoginDate],
+    [t0].[DateCreated] AS [Person_DateCreated],
+    [t0].[DateUpdated] AS [Person_DateUpdated],
+    [t1].[Id] AS [Purchase_Id],
+    [t1].[PersonId] AS [Purchase_PersonId],
+    [t1].[OrderNumber],
+    [t1].[TotalPurchaseQuantity],
+    [t1].[TotalPurchaseAmount],
+    [t1].[PurchaseDate],
+    [t1].[ShipDate],
+    [t1].[ExpectedDeliveryDate],
+    [t1].[TrackingIdentifier],
+    [t1].[PaymentMethodType],
+    [t1].[PaymentSourceType],
+    [t1].[DateCreated] AS [Purchase_DateCreated],
+    [t1].[DateUpdated] AS [Purchase_DateUpdated]
 FROM
-	[dbo].[Person]
-	INNER JOIN [dbo].[Purchase] ON [dbo].[Person].[Id] = [dbo].[Purchase].[PersonId];
+    [dbo].[Person] AS [t0]
+    INNER JOIN [dbo].[Purchase] AS [t1] ON [t0].[Id] = [t1].[PersonId];
 ```
 {% /code-example %}
 
@@ -418,17 +418,17 @@ var personWithChanges = db.SelectOne<Person>()
 ...
 
 //change some properties on the person instance
-personWithChanges.CreditLimit = 5000;
+personWithChanges!.CreditLimit = 5000;
 personWithChanges.YearOfLastCreditLimitReview = DateTime.UtcNow.Year;
 
 ...
 
 var persistedState = db.SelectOne<Person>()
     .From(dbo.Person)
-    .Where(dbo.Person.Id == person.Id)
+    .Where(dbo.Person.Id == personId)
     .Execute();
 
-var fieldUpdates = dbex.BuildAssignmentsFor(dbo.Person).From(persistedState).To(personWithChanges);
+var fieldUpdates = dbex.BuildAssignmentsFor(dbo.Person).From(persistedState!).To(personWithChanges);
 
 //update based on the comparison.  updateFields will contain a SET for CreditLimit and YearOfLastCreditLimitReview
 db.Update(
@@ -439,15 +439,15 @@ db.Update(
     .Execute();
 ```
 ```sql
-exec sp_executesql N'UPDATE
-	[dbo].[Person]
+exec sp_executesql N'PDATE
+    [t0]
 SET
-	[CreditLimit] = @P1,
-	[YearOfLastCreditLimitReview] = @P2
+    [t0].[CreditLimit] = @P1,
+    [t0].[YearOfLastCreditLimitReview] = @P2
 FROM
-	[dbo].[Person]
+    [dbo].[Person] AS [t0]
 WHERE
-	[dbo].[Person].[Id] = @P3;
+    [t0].[Id] = @P3;
 SELECT @@ROWCOUNT;',N'@P1 int,@P2 int,@P3 int',@P1=5000,@P2=2021,@P3=1
 ```
 {% /code-example %}

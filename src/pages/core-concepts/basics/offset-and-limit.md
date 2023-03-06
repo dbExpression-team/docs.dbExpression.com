@@ -21,21 +21,21 @@ IEnumerable<Person> people = db.SelectMany<Person>()
 ```
 ```sql
 exec sp_executesql N'SELECT
-    [dbo].[Person].[Id],
-    [dbo].[Person].[FirstName],
-    [dbo].[Person].[LastName],
-    [dbo].[Person].[BirthDate],
-    [dbo].[Person].[GenderType],
-    [dbo].[Person].[CreditLimit],
-    [dbo].[Person].[YearOfLastCreditLimitReview],
-    [dbo].[Person].[RegistrationDate],
-    [dbo].[Person].[LastLoginDate],
-    [dbo].[Person].[DateCreated],
-    [dbo].[Person].[DateUpdated]
+    [t0].[Id],
+    [t0].[FirstName],
+    [t0].[LastName],
+    [t0].[BirthDate],
+    [t0].[GenderType],
+    [t0].[CreditLimit],
+    [t0].[YearOfLastCreditLimitReview],
+    [t0].[RegistrationDate],
+    [t0].[LastLoginDate],
+    [t0].[DateCreated],
+    [t0].[DateUpdated]
 FROM
-    [dbo].[Person]
+    [dbo].[Person] AS [t0]
 ORDER BY
-    [dbo].[Person].[DateCreated] DESC
+    [t0].[DateCreated] DESC
     OFFSET @P1 ROWS
     FETCH NEXT @P2 ROWS ONLY;',N'@P1 int,@P2 int',@P1=10,@P2=10
 ```
@@ -52,22 +52,21 @@ IEnumerable<Person> notTheLastPersonToRegister = db.SelectMany<Person>()
 ```
 ```sql
 exec sp_executesql N'SELECT
-    [dbo].[Person].[Id],
-    [dbo].[Person].[FirstName],
-    [dbo].[Person].[LastName],
-    [dbo].[Person].[BirthDate],
-    [dbo].[Person].[GenderType],
-    [dbo].[Person].[CreditLimit],
-    [dbo].[Person].[YearOfLastCreditLimitReview],
-    [dbo].[Person].[RegistrationDate],
-    [dbo].[Person].[LastLoginDate],
-    [dbo].[Person].[DateCreated],
-    [dbo].[Person].[DateUpdated]
+    [t0].[Id],
+    [t0].[FirstName],
+    [t0].[LastName],
+    [t0].[BirthDate],
+    [t0].[GenderType],
+    [t0].[CreditLimit],
+    [t0].[YearOfLastCreditLimitReview],
+    [t0].[RegistrationDate],
+    [t0].[LastLoginDate],
+    [t0].[DateCreated],
+    [t0].[DateUpdated]
 FROM
-    [dbo].[Person]
+    [dbo].[Person] AS [t0]
 ORDER BY
-    [dbo].[Person].[RegistrationDate] DESC
-    OFFSET @P1	 ROWS
-;',N'@P1 int',@P1=1
+    [t0].[RegistrationDate] DESC
+    OFFSET @P1 ROWS;',N'@P1 int',@P1=1
 ```
 {% /code-example %}

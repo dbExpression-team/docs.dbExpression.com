@@ -93,9 +93,9 @@ IEnumerable<long?> result = db.SelectMany(
 ```
 ```sql
 SELECT
-	CHARINDEX([dbo].[Address].[Line2], [dbo].[Address].[Line1])
+    CHARINDEX([t0].[Line2], [t0].[Line1])
 FROM
-	[dbo].[Address];
+    [dbo].[Address] AS [t0];
 ```
 {% /code-example %}
 
@@ -112,11 +112,11 @@ IEnumerable<int> result = db.SelectMany(
 ```
 ```sql
 exec sp_executesql N'SELECT
-	[dbo].[Address].[Id]
+    [t0].[Id]
 FROM
-	[dbo].[Address]
+    [dbo].[Address] AS [t0]
 WHERE
-	CHARINDEX([dbo].[Address].[Line2], [dbo].[Address].[Line1]) = @P1;',N'@P1 bigint',@P1=1
+    CHARINDEX([t0].[Line2], [t0].[Line1]) = @P1;',N'@P1 bigint',@P1=1
 ```
 {% /code-example %}
 
@@ -131,19 +131,19 @@ IEnumerable<Address> addresses = db.SelectMany<Address>()
 ```
 ```sql
 SELECT
-	[dbo].[Address].[Id],
-	[dbo].[Address].[AddressType],
-	[dbo].[Address].[Line1],
-	[dbo].[Address].[Line2],
-	[dbo].[Address].[City],
-	[dbo].[Address].[State],
-	[dbo].[Address].[Zip],
-	[dbo].[Address].[DateCreated],
-	[dbo].[Address].[DateUpdated]
+    [t0].[Id],
+    [t0].[AddressType],
+    [t0].[Line1],
+    [t0].[Line2],
+    [t0].[City],
+    [t0].[State],
+    [t0].[Zip],
+    [t0].[DateCreated],
+    [t0].[DateUpdated]
 FROM
-	[dbo].[Address]
+    [dbo].[Address] AS [t0]
 ORDER BY
-	CHARINDEX([dbo].[Address].[Line2], [dbo].[Address].[Line1]) ASC;
+    CHARINDEX([t0].[Line2], [t0].[Line1]) ASC;
 ```
 {% /code-example %}
 
@@ -164,13 +164,13 @@ IEnumerable<dynamic> values = db.SelectMany(
 ```
 ```sql
 SELECT
-	[dbo].[Address].[AddressType],
-	CHARINDEX([dbo].[Address].[Line2], [dbo].[Address].[Line1]) AS [first_index_of]
+    [t0].[AddressType],
+    CHARINDEX([t0].[Line2], [t0].[Line1]) AS [first_index_of]
 FROM
-	[dbo].[Address]
+    [dbo].[Address] AS [t0]
 GROUP BY
-	[dbo].[Address].[AddressType],
-	CHARINDEX([dbo].[Address].[Line2], [dbo].[Address].[Line1]);
+    [t0].[AddressType],
+    CHARINDEX([t0].[Line2], [t0].[Line1]);
 ```
 {% /code-example %}
 
@@ -197,17 +197,17 @@ IEnumerable<dynamic> values = db.SelectMany(
 ```
 ```sql
 exec sp_executesql N'SELECT
-	[dbo].[Address].[AddressType],
-	[dbo].[Address].[Line1],
-	[dbo].[Address].[Line2]
+    [t0].[AddressType],
+    [t0].[Line1],
+    [t0].[Line2]
 FROM
-	[dbo].[Address]
+    [dbo].[Address] AS [t0]
 GROUP BY
-	[dbo].[Address].[AddressType],
-	[dbo].[Address].[Line1],
-	[dbo].[Address].[Line2]
+    [t0].[AddressType],
+    [t0].[Line1],
+    [t0].[Line2]
 HAVING
-	CHARINDEX([dbo].[Address].[Line2], [dbo].[Address].[Line1]) >= @P1;',N'@P1 bigint',@P1=0
+    CHARINDEX([t0].[Line2], [t0].[Line1]) >= @P1;',N'@P1 bigint',@P1=0
 ```
 {% /code-example %}
 

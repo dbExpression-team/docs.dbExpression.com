@@ -32,6 +32,9 @@
 * Substring
 * Substring
 ---
+* Soundex
+* Soundex
+---
 * Trim
 * Trim
 {% /table %}

@@ -16,23 +16,23 @@ IEnumerable<Purchase> purchases = db.SelectMany<Purchase>()
 ```
 ```sql
 SELECT TOP(5)
-    [dbo].[Purchase].[Id],
-    [dbo].[Purchase].[PersonId],
-    [dbo].[Purchase].[OrderNumber],
-    [dbo].[Purchase].[TotalPurchaseQuantity],
-    [dbo].[Purchase].[TotalPurchaseAmount],
-    [dbo].[Purchase].[PurchaseDate],
-    [dbo].[Purchase].[ShipDate],
-    [dbo].[Purchase].[ExpectedDeliveryDate],
-    [dbo].[Purchase].[TrackingIdentifier],
-    [dbo].[Purchase].[PaymentMethodType],
-    [dbo].[Purchase].[PaymentSourceType],
-    [dbo].[Purchase].[DateCreated],
-    [dbo].[Purchase].[DateUpdated]
+    [t0].[Id],
+    [t0].[PersonId],
+    [t0].[OrderNumber],
+    [t0].[TotalPurchaseQuantity],
+    [t0].[TotalPurchaseAmount],
+    [t0].[PurchaseDate],
+    [t0].[ShipDate],
+    [t0].[ExpectedDeliveryDate],
+    [t0].[TrackingIdentifier],
+    [t0].[PaymentMethodType],
+    [t0].[PaymentSourceType],
+    [t0].[DateCreated],
+    [t0].[DateUpdated]
 FROM
-    [dbo].[Purchase]
+    [dbo].[Purchase] AS [t0]
 ORDER BY
-    [dbo].[Purchase].[TotalPurchaseAmount] DESC;
+    [t0].[TotalPurchaseAmount] DESC;
 ```
 {% /code-example %}
 
@@ -41,7 +41,7 @@ ORDER BY
 {% code-example %}
 ```csharp
 //select the top 5 distinct persons by name
-IEnumerable<Person> persons = db.SelectMany(
+IEnumerable<dynamic> persons = db.SelectMany(
         dbo.Person.FirstName,
         dbo.Person.LastName
     )
@@ -56,13 +56,12 @@ IEnumerable<Person> persons = db.SelectMany(
 ```
 ```sql
 SELECT DISTINCT TOP(5)
-	[dbo].[Person].[FirstName],
-	[dbo].[Person].[LastName]
+    [t0].[FirstName],
+    [t0].[LastName]
 FROM
-	[dbo].[Person]
+    [dbo].[Person] AS [t0]
 ORDER BY
-	[dbo].[Person].[LastName] ASC,
-	[dbo].[Person].[FirstName] ASC
-;
+    [t0].[LastName] ASC,
+    [t0].[FirstName] ASC;
 ```
 {% /code-example %}

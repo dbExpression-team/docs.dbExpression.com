@@ -123,7 +123,7 @@ Use the `Cast` function to change the database type of an expression to a differ
 Select the cast of total purchase amount to a varchar(20).
 {% code-example %}
 ```csharp
-string result = db.SelectOne(
+string? result = db.SelectOne(
         db.fx.Cast(dbo.Purchase.TotalPurchaseAmount).AsVarChar(20)
     )
     .From(dbo.Purchase)
@@ -131,9 +131,9 @@ string result = db.SelectOne(
 ```
 ```sql
 SELECT TOP(1)
-	CAST([dbo].[Purchase].[TotalPurchaseAmount] AS VarChar(20))
+    CAST([t0].[TotalPurchaseAmount] AS VarChar(20))
 FROM
-	[dbo].[Purchase];
+    [dbo].[Purchase] AS [t0];
 ```
 {% /code-example %}
 
@@ -150,11 +150,11 @@ int cast = db.SelectOne(
 ```
 ```sql
 SELECT TOP(1)
-	CAST([dbo].[Address].[Zip] AS Int)
+    CAST([t0].[Zip] AS Int)
 FROM
-	[dbo].[Address]
+    [dbo].[Address] AS [t0]
 ORDER BY
-	CAST([dbo].[Address].[Zip] AS Int) DESC;
+    CAST([t0].[Zip] AS Int) DESC;
 ```
 {% /code-example %}
 
@@ -176,13 +176,13 @@ IEnumerable<dynamic> values = db.SelectMany(
 ```
 ```sql
 SELECT
-	[dbo].[Product].[ProductCategoryType],
-	CAST([dbo].[Product].[Quantity] AS BigInt) AS [Quantity]
+    [t0].[ProductCategoryType],
+    CAST([t0].[Quantity] AS BigInt) AS [Quantity]
 FROM
-	[dbo].[Product]
+    [dbo].[Product] AS [t0]
 GROUP BY
-	[dbo].[Product].[ProductCategoryType],
-	CAST([dbo].[Product].[Quantity] AS BigInt);
+    [t0].[ProductCategoryType],
+    CAST([t0].[Quantity] AS BigInt);
 ```
 {% /code-example %}
 
@@ -205,14 +205,14 @@ IEnumerable<dynamic> values = db.SelectMany(
 ```
 ```sql
 exec sp_executesql N'SELECT
-	[dbo].[Product].[ProductCategoryType],
-	CAST([dbo].[Product].[Quantity] AS BigInt) AS [Quantity]
+    [t0].[ProductCategoryType],
+    CAST([t0].[Quantity] AS BigInt) AS [Quantity]
 FROM
-	[dbo].[Product]
+    [dbo].[Product] AS [t0]
 GROUP BY
-	[dbo].[Product].[ProductCategoryType],
-	[dbo].[Product].[Quantity]
+    [t0].[ProductCategoryType],
+    [t0].[Quantity]
 HAVING
-	CAST([dbo].[Product].[Quantity] AS BigInt) <= @P1;',N'@P1 bigint',@P1=1000000
+    CAST([t0].[Quantity] AS BigInt) <= @P1;',N'@P1 bigint',@P1=1000000
 ```
 {% /code-example %}

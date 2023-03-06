@@ -29,19 +29,19 @@ IEnumerable<Address> billing_addresses = db.SelectMany<Address>()
 ```
 ```sql
 exec sp_executesql N'SELECT
-	[dbo].[Address].[Id],
-	[dbo].[Address].[AddressType],
-	[dbo].[Address].[Line1],
-	[dbo].[Address].[Line2],
-	[dbo].[Address].[City],
-	[dbo].[Address].[State],
-	[dbo].[Address].[Zip],
-	[dbo].[Address].[DateCreated],
-	[dbo].[Address].[DateUpdated]
+	[t0].[Id],
+	[t0].[AddressType],
+	[t0].[Line1],
+	[t0].[Line2],
+	[t0].[City],
+	[t0].[State],
+	[t0].[Zip],
+	[t0].[DateCreated],
+	[t0].[DateUpdated]
 FROM
-	[dbo].[Address]
+	[dbo].[Address] AS [t0]
 WHERE
-	[dbo].[Address].[AddressType] = @P1;',N'@P1 int',@P1=2
+	[t0].[AddressType] = @P1;',N'@P1 int',@P1=2
 ```
 {% /code-example %}
 
@@ -57,19 +57,19 @@ IEnumerable<Address> billing_and_mailing_addresses = db.SelectMany<Address>()
 ```
 ```sql
 exec sp_executesql N'SELECT
-	[dbo].[Address].[Id],
-	[dbo].[Address].[AddressType],
-	[dbo].[Address].[Line1],
-	[dbo].[Address].[Line2],
-	[dbo].[Address].[City],
-	[dbo].[Address].[State],
-	[dbo].[Address].[Zip],
-	[dbo].[Address].[DateCreated],
-	[dbo].[Address].[DateUpdated]
+	[t0].[Id],
+	[t0].[AddressType],
+	[t0].[Line1],
+	[t0].[Line2],
+	[t0].[City],
+	[t0].[State],
+	[t0].[Zip],
+	[t0].[DateCreated],
+	[t0].[DateUpdated]
 FROM
-	[dbo].[Address]
+	[dbo].[Address] AS [t0]
 WHERE
-	[dbo].[Address].[AddressType] IN (@P1,@P2);',N'@P1 int,@P2 int',@P1=2,@P2=1
+	[t0].[AddressType] IN (@P1,@P2);',N'@P1 int,@P2 int',@P1=2,@P2=1
 ```
 {% /code-example %}
 
@@ -86,12 +86,12 @@ IEnumerable<dynamic> count_by_address_type = db.SelectMany(
 ```
 ```sql
 SELECT
-	[dbo].[Address].[AddressType]
-	,COUNT([dbo].[Address].[Id]) AS [AddressCount]
+	[t0].[AddressType],
+	COUNT([t0].[Id]) AS [AddressCount]
 FROM
-	[dbo].[Address]
+	[dbo].[Address] AS [t0]
 GROUP BY
-	[dbo].[Address].[AddressType];
+	[t0].[AddressType];
 ```
 {% /code-example %}
 
@@ -106,9 +106,9 @@ IEnumerable<AddressType> address_types = db.SelectMany(
 ```
 ```sql
 exec sp_executesql N'SELECT
-	ISNULL([dbo].[Address].[AddressType], @P1)
+	ISNULL([t0].[AddressType], @P1)
 FROM
-	[dbo].[Address];',N'@P1 int',@P1=2
+	[dbo].[Address] AS [t0];',N'@P1 int',@P1=2
 ```
 {% /code-example %}
 
@@ -124,13 +124,13 @@ db.Update(
 ```                
 ```sql
 exec sp_executesql N'UPDATE
-	[dbo].[Address]
+	[t0]
 SET
-	[AddressType] = @P1
+	[t0].[AddressType] = @P1
 FROM
-	[dbo].[Address]
+	[dbo].[Address] AS [t0]
 WHERE
-	[dbo].[Address].[AddressType] IS NULL;
+	[t0].[AddressType] IS NULL;
 SELECT @@ROWCOUNT;',N'@P1 int',@P1=1
 ```
 {% /code-example %}
@@ -160,23 +160,23 @@ IEnumerable<Purchase> credit_card_purchases = db.SelectMany<Purchase>()
 ```
 ```sql
 exec sp_executesql N'SELECT
-	[dbo].[Purchase].[Id],
-	[dbo].[Purchase].[PersonId],
-	[dbo].[Purchase].[OrderNumber],
-	[dbo].[Purchase].[TotalPurchaseQuantity],
-	[dbo].[Purchase].[TotalPurchaseAmount],
-	[dbo].[Purchase].[PurchaseDate],
-	[dbo].[Purchase].[ShipDate],
-	[dbo].[Purchase].[ExpectedDeliveryDate],
-	[dbo].[Purchase].[TrackingIdentifier],
-	[dbo].[Purchase].[PaymentMethodType],
-	[dbo].[Purchase].[PaymentSourceType],
-	[dbo].[Purchase].[DateCreated],
-	[dbo].[Purchase].[DateUpdated]
+	[t0].[Id],
+	[t0].[PersonId],
+	[t0].[OrderNumber],
+	[t0].[TotalPurchaseQuantity],
+	[t0].[TotalPurchaseAmount],
+	[t0].[PurchaseDate],
+	[t0].[ShipDate],
+	[t0].[ExpectedDeliveryDate],
+	[t0].[TrackingIdentifier],
+	[t0].[PaymentMethodType],
+	[t0].[PaymentSourceType],
+	[t0].[DateCreated],
+	[t0].[DateUpdated]
 FROM
-	[dbo].[Purchase]
+	[dbo].[Purchase] AS [t0]
 WHERE
-	[dbo].[Purchase].[PaymentMethodType] = @P1;',N'@P1 varchar(20)',@P1='CreditCard'
+	[t0].[PaymentMethodType] = @P1;',N'@P1 varchar(20)',@P1='CreditCard'
 ```
 {% /code-example %}
 

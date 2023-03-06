@@ -34,25 +34,25 @@ IEnumerable<dynamic> vips = db.SelectMany(
 ```
 ```sql
 exec sp_executesql N'SELECT
-	[dbo].[Person].[Id],
-	[dbo].[Person].[FirstName],
-	[dbo].[Person].[LastName],
+	[t0].[Id],
+	[t0].[FirstName],
+	[t0].[LastName],
 	[t0].[TotalPurchase]
 FROM
-	[dbo].[Person]
+	[dbo].[Person] AS [t0]
 	INNER JOIN (
 		SELECT TOP(100)
-			[dbo].[Purchase].[PersonId],
-			SUM([dbo].[Purchase].[TotalPurchaseAmount]) AS [TotalPurchase]
+			[t1].[PersonId],
+			SUM([t1].[TotalPurchaseAmount]) AS [TotalPurchase]
 		FROM
-			[dbo].[Purchase]
+			[dbo].[Purchase] AS [t1]
 		GROUP BY
-			[dbo].[Purchase].[PersonId]
+			[t1].[PersonId]
 		HAVING
-			SUM([dbo].[Purchase].[TotalPurchaseAmount]) > @P1
+			SUM([t1].[TotalPurchaseAmount]) > @P1
 		ORDER BY
-			SUM([dbo].[Purchase].[TotalPurchaseAmount]) DESC
-	) AS [t0] ON [t0].[PersonId] = [dbo].[Person].[Id];',N'@P1 float',@P1=25
+			SUM([t1].[TotalPurchaseAmount]) DESC
+	) AS [t0] ON [t0].[PersonId] = [t0].[Id];',N'@P1 float',@P1=25
 ```
 {% /code-example %}
 

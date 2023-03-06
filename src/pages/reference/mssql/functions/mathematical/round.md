@@ -197,20 +197,20 @@ db.fx.Round({expression}, {length} [,{function}])
 
 ## Examples
 ### Select Statement
-Round of total purchase amount for all purchases.
+Round of total purchase amount for all purchases to the nearest dollar.
 {% code-example %}
 ```csharp
 IEnumerable<double> value = db.SelectMany(
-        db.fx.Round(dbo.Purchase.TotalPurchaseAmount)
+        db.fx.Round(dbo.Purchase.TotalPurchaseAmount, 0)
     )
     .From(dbo.Purchase)
     .Execute();
 ```
 ```sql
 SELECT
-	ROUND([dbo].[Purchase].[TotalPurchaseAmount])
+    ROUND([t0].[TotalPurchaseAmount], @P1)
 FROM
-	[dbo].[Purchase];
+    [dbo].[Purchase] AS [t0];
 ```
 {% /code-example %}
 
@@ -227,11 +227,11 @@ IEnumerable<int> value = db.SelectMany(
 ```
 ```sql
 exec sp_executesql N'SELECT
-	[dbo].[Purchase].[Id]
+    [t0].[Id]
 FROM
-	[dbo].[Purchase]
+    [dbo].[Purchase] AS [t0]
 WHERE
-	ROUND([dbo].[Purchase].[TotalPurchaseAmount], @P1) = @P2;',N'@P1 int,@P2 float',@P1=-1,@P2=100
+    ROUND([t0].[TotalPurchaseAmount], @P1) = @P2;',N'@P1 int,@P2 float',@P1=-1,@P2=100
 ```
 {% /code-example %}
 
@@ -248,11 +248,11 @@ IEnumerable<double> value = db.SelectMany(
 ```
 ```sql
 exec sp_executesql N'SELECT
-	[dbo].[Purchase].[TotalPurchaseAmount]
+    [t0].[TotalPurchaseAmount]
 FROM
-	[dbo].[Purchase]
+    [dbo].[Purchase] AS [t0]
 ORDER BY
-	ROUND([dbo].[Purchase].[TotalPurchaseAmount], @P1) DESC;',N'@P1 int',@P1=1
+    ROUND([t0].[TotalPurchaseAmount], @P1) DESC;',N'@P1 int',@P1=1
 ```
 {% /code-example %}
 
@@ -273,13 +273,13 @@ IEnumerable<dynamic> values = db.SelectMany(
 ```
 ```sql
 exec sp_executesql N'SELECT
-	[dbo].[Purchase].[PaymentMethodType],
-	ROUND([dbo].[Purchase].[TotalPurchaseAmount], @P1) AS [TotalPurchaseAmount]
+    [t0].[PaymentMethodType],
+    ROUND([t0].[TotalPurchaseAmount], @P1) AS [TotalPurchaseAmount]
 FROM
-	[dbo].[Purchase]
+    [dbo].[Purchase] AS [t0]
 GROUP BY
-	[dbo].[Purchase].[PaymentMethodType],
-	ROUND([dbo].[Purchase].[TotalPurchaseAmount], @P1);',N'@P1 int',@P1=2
+    [t0].[PaymentMethodType],
+    ROUND([t0].[TotalPurchaseAmount], @P1);',N'@P1 int',@P1=2
 ```
 {% /code-example %}
 
@@ -302,14 +302,14 @@ IEnumerable<dynamic> values = db.SelectMany(
 ```
 ```sql
 exec sp_executesql N'SELECT
-	[dbo].[Purchase].[PaymentMethodType],
-	[dbo].[Purchase].[TotalPurchaseAmount]
+    [t0].[PaymentMethodType],
+    [t0].[TotalPurchaseAmount]
 FROM
-	[dbo].[Purchase]
+    [dbo].[Purchase] AS [t0]
 GROUP BY
-	[dbo].[Purchase].[PaymentMethodType],
-	[dbo].[Purchase].[TotalPurchaseAmount]
+    [t0].[PaymentMethodType],
+    [t0].[TotalPurchaseAmount]
 HAVING
-	ROUND([dbo].[Purchase].[TotalPurchaseAmount], @P1) > @P2;',N'@P1 int,@P2 float',@P1=2,@P2=10
+    ROUND([t0].[TotalPurchaseAmount], @P1) > @P2;',N'@P1 int,@P2 float',@P1=2,@P2=10
 ```
 {% /code-example %}

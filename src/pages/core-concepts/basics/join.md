@@ -26,22 +26,22 @@ IEnumerable<Person> people = db.SelectMany<Person>()
 ```
 ```sql
 SELECT
-    [dbo].[Person].[Id],
-    [dbo].[Person].[FirstName],
-    [dbo].[Person].[LastName],
-    [dbo].[Person].[BirthDate],
-    [dbo].[Person].[GenderType],
-    [dbo].[Person].[CreditLimit],
-    [dbo].[Person].[YearOfLastCreditLimitReview],
-    [dbo].[Person].[RegistrationDate],
-    [dbo].[Person].[LastLoginDate],
-    [dbo].[Person].[DateCreated],
-    [dbo].[Person].[DateUpdated]
+    [t0].[Id],
+    [t0].[FirstName],
+    [t0].[LastName],
+    [t0].[BirthDate],
+    [t0].[GenderType],
+    [t0].[CreditLimit],
+    [t0].[YearOfLastCreditLimitReview],
+    [t0].[RegistrationDate],
+    [t0].[LastLoginDate],
+    [t0].[DateCreated],
+    [t0].[DateUpdated]
 FROM
-    [dbo].[Person]
-    LEFT JOIN [dbo].[Person_Address] ON [dbo].[Person_Address].[PersonId] = [dbo].[Person].[Id]
+    [dbo].[Person] AS [t0]
+    LEFT JOIN [dbo].[Person_Address] AS [t1] ON [t1].[PersonId] = [t0].[Id]
 WHERE
-    [dbo].[Person_Address].[Id] IS NULL;
+    [t1].[Id] IS NULL;
 ```
 {% /code-example %}
 
@@ -60,24 +60,24 @@ IEnumerable<dynamic> info = db.SelectMany(
     .From(dbo.Address)
     .RightJoin(dbo.PersonAddress).On(dbo.PersonAddress.AddressId == dbo.Address.Id)
     .RightJoin(dbo.Person).On(dbo.Person.Id == dbo.PersonAddress.PersonId)
-    .Where(dbo.Address.Zip == zip & dbo.Address.AddressType == AddressType.Billing)
+    .Where(dbo.Address.Zip == "94043" & dbo.Address.AddressType == AddressType.Billing)
     .Execute();
 ```
 ```sql
 exec sp_executesql N'SELECT
-    [dbo].[Person].[Id],
-    [dbo].[Person].[FirstName],
-    [dbo].[Person].[LastName],
-    [dbo].[Person].[CreditLimit],
-    [dbo].[Person].[YearOfLastCreditLimitReview]
+    [t0].[Id],
+    [t0].[FirstName],
+    [t0].[LastName],
+    [t0].[CreditLimit],
+    [t0].[YearOfLastCreditLimitReview]
 FROM
-    [dbo].[Address]
-    RIGHT JOIN [dbo].[Person_Address] ON [dbo].[Person_Address].[AddressId] = [dbo].[Address].[Id]
-    RIGHT JOIN [dbo].[Person] ON [dbo].[Person].[Id] = [dbo].[Person_Address].[PersonId]
+    [dbo].[Address] AS [t1]
+    RIGHT JOIN [dbo].[Person_Address] AS [t2] ON [t2].[AddressId] = [t1].[Id]
+    RIGHT JOIN [dbo].[Person] AS [t0] ON [t0].[Id] = [t2].[PersonId]
 WHERE
-    [dbo].[Address].[Zip] = @P1
+    [t1].[Zip] = @P1
     AND
-    [dbo].[Address].[AddressType] = @P2;',N'@P1 varchar(10),@P2 int',@P1='94043',@P2=2
+    [t1].[AddressType] = @P2;',N'@P1 varchar(10),@P2 int',@P1='94043',@P2=2
 ```
 {% /code-example %}
 
@@ -94,20 +94,20 @@ IEnumerable<Address> addresses = db.SelectMany<Address>()
 ```
 ```sql
 exec sp_executesql N'SELECT
-	[dbo].[Address].[Id],
-	[dbo].[Address].[AddressType],
-	[dbo].[Address].[Line1],
-	[dbo].[Address].[Line2],
-	[dbo].[Address].[City],
-	[dbo].[Address].[State],
-	[dbo].[Address].[Zip],
-	[dbo].[Address].[DateCreated],
-	[dbo].[Address].[DateUpdated]
+    [t0].[Id],
+    [t0].[AddressType],
+    [t0].[Line1],
+    [t0].[Line2],
+    [t0].[City],
+    [t0].[State],
+    [t0].[Zip],
+    [t0].[DateCreated],
+    [t0].[DateUpdated]
 FROM
-	[dbo].[Address]
-	INNER JOIN [dbo].[Person_Address] ON [dbo].[Person_Address].[AddressId] = [dbo].[Address].[Id]
+    [dbo].[Address] AS [t0]
+    INNER JOIN [dbo].[Person_Address] AS [t1] ON [t1].[AddressId] = [t0].[Id]
 WHERE
-	[dbo].[Person_Address].[PersonId] = @P1;',N'@P1 int',@P1=1
+    [t1].[PersonId] = @P1;',N'@P1 int',@P1=1
 ```
 {% /code-example %}
 
@@ -120,8 +120,7 @@ IEnumerable<dynamic> purchases = db.SelectMany(
         dbo.Person.Id,
         dbo.Person.FirstName,
         dbo.Person.LastName,
-        dbo.Purchase.OrderNumber,
-        db.fx.IsNull(dbo.Purchase.TotalPurchaseAmount, 0.0).As("TotalPurchaseAmount")
+        dbo.Purchase.OrderNumber
     )
     .From(dbo.Person)
     .FullJoin(dbo.Purchase).On(dbo.Purchase.PersonId == dbo.Person.Id)
@@ -129,14 +128,13 @@ IEnumerable<dynamic> purchases = db.SelectMany(
 ```
 ```sql
 exec sp_executesql N'SELECT
-    [dbo].[Person].[Id],
-    [dbo].[Person].[FirstName],
-    [dbo].[Person].[LastName],
-    [dbo].[Purchase].[OrderNumber],
-    ISNULL([dbo].[Purchase].[TotalPurchaseAmount], @P1) AS [PurchaseAmount]
+    [t0].[Id],
+    [t0].[FirstName],
+    [t0].[LastName],
+    [t1].[OrderNumber]
 FROM
-    [dbo].[Person]
-    FULL JOIN [dbo].[Purchase] ON [dbo].[Purchase].[PersonId] = [dbo].[Person].[Id];',N'@P1 float',@P1=0
+    [dbo].[Person] AS [t0]
+    FULL JOIN [dbo].[Purchase] AS [t1] ON [t1].[PersonId] = [t0].[Id];',N'@P1 float',@P1=0
 ```
 {% /code-example %}
 

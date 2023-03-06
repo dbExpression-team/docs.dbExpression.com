@@ -95,12 +95,12 @@ This stored procedure can be executed with a mapping delegate to read the values
 
 {% code-example %}
 ```csharp
-Person person = db.sp.dbo.GetPersonById(1).GetValue(
+Person? person = db.sp.dbo.GetPersonById(1).GetValue(
     row => new Person 
     { 
-        Id = row.ReadField().GetValue<int>(),
-        FirstName = row.ReadField().GetValue<string>(),
-        LastName = row.ReadField().GetValue<string>()
+        Id = row.ReadField()!.GetValue<int>(),
+        FirstName = row.ReadField()!.GetValue<string>(),
+        LastName = row.ReadField()!.GetValue<string>()
     }).Execute();
 ```
 ```sql
@@ -129,9 +129,9 @@ AS
 IEnumerable<Person> persons = db.sp.dbo.GetPersonById(1).GetValues(
     row => new Person 
     { 
-        Id = row.ReadField().GetValue<int>(),
-        FirstName = row.ReadField().GetValue<string>(),
-        LastName = row.ReadField().GetValue<string>()
+        Id = row.ReadField()!.GetValue<int>(),
+        FirstName = row.ReadField()!.GetValue<string>(),
+        LastName = row.ReadField()!.GetValue<string>()
     }).Execute();
 ```
 ```sql
@@ -219,9 +219,9 @@ var persons = new Dictionary<int,string>();
 db.sp.dbo.GetPersonsWithCreditLimitLessThan(20000).MapValues(
     row =>
     {
-        var id = row.ReadField().GetValue<int>();
-        var firstName = row.ReadField().GetValue<string>();
-        var lastName = row.ReadField().GetValue<string>();
+        var id = row.ReadField()!.GetValue<int>();
+        var firstName = row.ReadField()!.GetValue<string>();
+        var lastName = row.ReadField()!.GetValue<string>();
         persons.Add(id, $"{firstName} {lastName}");
     }
 ).Execute();

@@ -15,21 +15,21 @@ IEnumerable<Person> people = db.SelectMany<Person>()
 ```
 ```sql
 SELECT
-    [dbo].[Person].[Id],
-    [dbo].[Person].[FirstName],
-    [dbo].[Person].[LastName],
-    [dbo].[Person].[BirthDate],
-    [dbo].[Person].[GenderType],
-    [dbo].[Person].[CreditLimit],
-    [dbo].[Person].[YearOfLastCreditLimitReview],
-    [dbo].[Person].[RegistrationDate],
-    [dbo].[Person].[LastLoginDate],
-    [dbo].[Person].[DateCreated],
-    [dbo].[Person].[DateUpdated]
+    [t0].[Id],
+    [t0].[FirstName],
+    [t0].[LastName],
+    [t0].[BirthDate],
+    [t0].[GenderType],
+    [t0].[CreditLimit],
+    [t0].[YearOfLastCreditLimitReview],
+    [t0].[RegistrationDate],
+    [t0].[LastLoginDate],
+    [t0].[DateCreated],
+    [t0].[DateUpdated]
 FROM
-    [dbo].[Person]
+    [dbo].[Person] AS [t0]
 ORDER BY
-    [dbo].[Person].[LastName] DESC;
+    [t0].[LastName] DESC;
 ```
 {% /code-example %}
 
@@ -46,21 +46,21 @@ IEnumerable<Person> people = db.SelectMany<Person>()
 ```
 ```sql
 SELECT
-    [dbo].[Person].[Id],
-    [dbo].[Person].[FirstName],
-    [dbo].[Person].[LastName],
-    [dbo].[Person].[BirthDate],
-    [dbo].[Person].[GenderType],
-    [dbo].[Person].[CreditLimit],
-    [dbo].[Person].[YearOfLastCreditLimitReview],
-    [dbo].[Person].[RegistrationDate],
-    [dbo].[Person].[LastLoginDate],
-    [dbo].[Person].[DateCreated],
-    [dbo].[Person].[DateUpdated]
+    [t0].[Id],
+    [t0].[FirstName],
+    [t0].[LastName],
+    [t0].[BirthDate],
+    [t0].[GenderType],
+    [t0].[CreditLimit],
+    [t0].[YearOfLastCreditLimitReview],
+    [t0].[RegistrationDate],
+    [t0].[LastLoginDate],
+    [t0].[DateCreated],
+    [t0].[DateUpdated]
 FROM
-    [dbo].[Person]
+    [dbo].[Person] AS [t0]
 ORDER BY
-    [dbo].[Person].[GenderType] ASC,
-    [dbo].[Person].[LastName] ASC;
+    [t0].[GenderType] ASC,
+    [t0].[LastName] ASC;
 ```
 {% /code-example %}

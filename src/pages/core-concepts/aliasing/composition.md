@@ -40,25 +40,24 @@ IEnumerable<dynamic> address_stats = db.SelectMany(
 ```
 ```sql
 exec sp_executesql N'SELECT
-	[dbo].[Person].[FirstName],
-	[dbo].[Person].[LastName],
-	ISNULL([Address].[Type], @P1) AS [AddressType],
-	[Address].[Count]
+	[t0].[FirstName],
+	[t0].[LastName],
+	ISNULL([t1].[Type], @P1) AS [AddressType],
+	[t1].[Count]
 FROM
-	[dbo].[Person]
+	[dbo].[Person] AS [t0]
 	INNER JOIN (
 		SELECT
-			[dbo].[Person_Address].[PersonId],
-			[dbo].[Address].[AddressType] AS [Type],
-			COUNT(@P2) AS [Count]
+			[t2].[PersonId],
+			[t1].[AddressType] AS [Type],
+			COUNT(*) AS [Count]
 		FROM
-			[dbo].[Address]
-			INNER JOIN [dbo].[Person_Address] ON [dbo].[Address].[Id] = [dbo].[Person_Address].[AddressId]
+			[dbo].[Address] AS [t1]
+			INNER JOIN [dbo].[Person_Address] AS [t2] ON [t1].[Id] = [t2].[AddressId]
 		GROUP BY
-			[dbo].[Person_Address].[PersonId],
-			[dbo].[Address].[AddressType]
-	) AS [Address] ON [dbo].[Person].[Id] = [Address].[PersonId];',N'@P1 bigint,@P2 char(1)',@P1=0,@P2='*'
-
+			[t2].[PersonId],
+			[t1].[AddressType]
+	) AS [t1] ON [t0].[Id] = [t1].[PersonId];',N'@P1 bigint',@P1=0
 ```
 {% /code-example %}
 

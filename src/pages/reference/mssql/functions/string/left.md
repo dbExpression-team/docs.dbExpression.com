@@ -66,9 +66,9 @@ IEnumerable<string> result = db.SelectMany(
 ```
 ```sql
 exec sp_executesql N'SELECT
-	LEFT([dbo].[Address].[City], @P1)
+    LEFT([t0].[City], @P1)
 FROM
-	[dbo].[Address];',N'@P1 int',@P1=1
+    [dbo].[Address] AS [t0];',N'@P1 int',@P1=1
 ```
 {% /code-example %}
 
@@ -85,11 +85,11 @@ IEnumerable<int> result = db.SelectMany(
 ```
 ```sql
 exec sp_executesql N'SELECT
-	[dbo].[Address].[Id]
+    [t0].[Id]
 FROM
-	[dbo].[Address]
+    [dbo].[Address] AS [t0]
 WHERE
-	LEFT([dbo].[Address].[City], @P1) = @P2;',N'@P1 int,@P2 char(1)',@P1=1,@P2='D'
+    LEFT([t0].[City], @P1) = @P2;',N'@P1 int,@P2 char(1)',@P1=1,@P2='D'
 ```
 {% /code-example %}
 
@@ -107,22 +107,22 @@ IEnumerable<Person> persons = db.SelectMany<Person>()
 ```
 ```sql
 exec sp_executesql N'SELECT
-	[dbo].[Person].[Id],
-	[dbo].[Person].[FirstName],
-	[dbo].[Person].[LastName],
-	[dbo].[Person].[BirthDate],
-	[dbo].[Person].[GenderType],
-	[dbo].[Person].[CreditLimit],
-	[dbo].[Person].[YearOfLastCreditLimitReview],
-	[dbo].[Person].[RegistrationDate],
-	[dbo].[Person].[LastLoginDate],
-	[dbo].[Person].[DateCreated],
-	[dbo].[Person].[DateUpdated]
+    [t0].[Id],
+    [t0].[FirstName],
+    [t0].[LastName],
+    [t0].[BirthDate],
+    [t0].[GenderType],
+    [t0].[CreditLimit],
+    [t0].[YearOfLastCreditLimitReview],
+    [t0].[RegistrationDate],
+    [t0].[LastLoginDate],
+    [t0].[DateCreated],
+    [t0].[DateUpdated]
 FROM
-	[dbo].[Person]
+    [dbo].[Person] AS [t0]
 ORDER BY
-	LEFT([dbo].[Person].[FirstName], @P1) ASC,
-	LEFT([dbo].[Person].[LastName], @P2) ASC;',N'@P1 int,@P2 int',@P1=1,@P2=1
+    LEFT([t0].[FirstName], @P1) ASC,
+    LEFT([t0].[LastName], @P2) ASC;',N'@P1 int,@P2 int',@P1=1,@P2=1
 ```
 {% /code-example %}
 
@@ -144,14 +144,14 @@ IEnumerable<dynamic> values = db.SelectMany(
 ```
 ```sql
 exec sp_executesql N'SELECT
-	COUNT(@P1) AS [count],
-	[dbo].[Person].[YearOfLastCreditLimitReview],
-	LEFT([dbo].[Person].[LastName], @P2) AS [last_initial]
+	COUNT(*) AS [count],
+	[t0].[YearOfLastCreditLimitReview],
+	LEFT([t0].[LastName], @P1) AS [last_initial]
 FROM
-	[dbo].[Person]
+	[dbo].[Person] AS [t0]
 GROUP BY
-	[dbo].[Person].[YearOfLastCreditLimitReview],
-	LEFT([dbo].[Person].[LastName], @P2);',N'@P1 nchar(1),@P2 int',@P1=N'*',@P2=1
+	[t0].[YearOfLastCreditLimitReview],
+	LEFT([t0].[LastName], @P1);',N'@P1 int',@P1=1
 ```
 {% /code-example %}
 
@@ -176,16 +176,16 @@ IEnumerable<dynamic> addresses = db.SelectMany(
 ```
 ```sql
 exec sp_executesql N'SELECT
-	COUNT(@P1) AS [count],
-	[dbo].[Person].[YearOfLastCreditLimitReview],
-	LEFT([dbo].[Person].[LastName], @P2) AS [last_initial]
+	COUNT(*) AS [count],
+	[t0].[YearOfLastCreditLimitReview],
+	LEFT([t0].[LastName], @P1) AS [last_initial]
 FROM
-	[dbo].[Person]
+	[dbo].[Person] AS [t0]
 GROUP BY
-	[dbo].[Person].[YearOfLastCreditLimitReview],
-	LEFT([dbo].[Person].[LastName], @P2)
+	[t0].[YearOfLastCreditLimitReview],
+	LEFT([t0].[LastName], @P1)
 HAVING
-	LEFT([dbo].[Person].[LastName], @P2) > @P3;',N'@P1 nchar(1),@P2 int,@P3 char(1)',@P1=N'*',@P2=1,@P3='M'
+	LEFT([t0].[LastName], @P1) > @P2;',N'@P1 int,@P2 varchar(1)',@P1=1,@P2='M'
 ```
 {% /code-example %}
 

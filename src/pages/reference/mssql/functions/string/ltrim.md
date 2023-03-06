@@ -39,7 +39,7 @@ Use the `LTrim` function to remove leading spaces from a string expression.
 Select the a person's last name, with leading spaces removed.
 {% code-example %}
 ```csharp
-IEnumerable<long> result = db.SelectMany(
+IEnumerable<string> result = db.SelectMany(
 		db.fx.LTrim(dbo.Person.LastName)
 	)
 	.From(dbo.Person)
@@ -64,21 +64,21 @@ IEnumerable<Person> result = db.SelectMany<Person>()
 ```
 ```sql
 SELECT
-	[dbo].[Person].[Id],
-	[dbo].[Person].[FirstName],
-	[dbo].[Person].[LastName],
-	[dbo].[Person].[BirthDate],
-	[dbo].[Person].[GenderType],
-	[dbo].[Person].[CreditLimit],
-	[dbo].[Person].[YearOfLastCreditLimitReview],
-	[dbo].[Person].[RegistrationDate],
-	[dbo].[Person].[LastLoginDate],
-	[dbo].[Person].[DateCreated],
-	[dbo].[Person].[DateUpdated]
+	[t0].[Id],
+	[t0].[FirstName],
+	[t0].[LastName],
+	[t0].[BirthDate],
+	[t0].[GenderType],
+	[t0].[CreditLimit],
+	[t0].[YearOfLastCreditLimitReview],
+	[t0].[RegistrationDate],
+	[t0].[LastLoginDate],
+	[t0].[DateCreated],
+	[t0].[DateUpdated]
 FROM
-	[dbo].[Person]
+	[dbo].[Person] AS [t0]
 WHERE
-	LTRIM([dbo].[Person].[LastName]) <> [dbo].[Person].[LastName];
+	LTRIM([t0].[LastName]) <> [t0].[LastName];
 ```
 {% /code-example %}
 
@@ -93,21 +93,21 @@ IEnumerable<Person> result = db.SelectMany<Person>()
 ```
 ```sql
 SELECT
-	[dbo].[Person].[Id],
-	[dbo].[Person].[FirstName],
-	[dbo].[Person].[LastName],
-	[dbo].[Person].[BirthDate],
-	[dbo].[Person].[GenderType],
-	[dbo].[Person].[CreditLimit],
-	[dbo].[Person].[YearOfLastCreditLimitReview],
-	[dbo].[Person].[RegistrationDate],
-	[dbo].[Person].[LastLoginDate],
-	[dbo].[Person].[DateCreated],
-	[dbo].[Person].[DateUpdated]
+	[t0].[Id],
+	[t0].[FirstName],
+	[t0].[LastName],
+	[t0].[BirthDate],
+	[t0].[GenderType],
+	[t0].[CreditLimit],
+	[t0].[YearOfLastCreditLimitReview],
+	[t0].[RegistrationDate],
+	[t0].[LastLoginDate],
+	[t0].[DateCreated],
+	[t0].[DateUpdated]
 FROM
-	[dbo].[Person]
+	[dbo].[Person] AS [t0]
 ORDER BY
-	LTRIM([dbo].[Person].[LastName]) ASC;
+	LTRIM([t0].[LastName]) ASC;
 ```
 {% /code-example %}
 
@@ -128,13 +128,13 @@ IEnumerable<dynamic> values = db.SelectMany(
 ```
 ```sql
 SELECT
-	[dbo].[Address].[AddressType],
-	LTRIM([dbo].[Address].[City]) AS [city]
+	[t0].[AddressType],
+	LTRIM([t0].[City]) AS [city]
 FROM
-	[dbo].[Address]
+	[dbo].[Address] AS [t0]
 GROUP BY
-	[dbo].[Address].[AddressType],
-	LTRIM([dbo].[Address].[City]);
+	[t0].[AddressType],
+	LTRIM([t0].[City]);
 ```
 {% /code-example %}
 
@@ -160,14 +160,14 @@ IEnumerable<dynamic> addresses = db.SelectMany(
 ```sql
 exec sp_executesql N'SELECT
 	COUNT(*) AS [count],
-	LTRIM([dbo].[Address].[City])
+	[t0].[AddressType]
 FROM
-	[dbo].[Address]
+	[dbo].[Address] AS [t0]
 GROUP BY
-	[dbo].[Address].[AddressType],
-	LTRIM([dbo].[Address].[City])
+	[t0].[AddressType],
+	[t0].[City]
 HAVING
-	LTRIM([dbo].[Address].[City]) = @P2;',N'@P1 nchar(1),@P2 char(7)',@P1=N'*',@P2='Chicago'
+	LTRIM([t0].[City]) = @P1;',N'@P1 varchar(7)',@P1='Chicago'
 ```
 {% /code-example %}
 

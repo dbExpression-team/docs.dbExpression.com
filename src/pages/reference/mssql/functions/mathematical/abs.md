@@ -45,9 +45,9 @@ IEnumerable<double> value = db.SelectMany(
 ```
 ```sql
 SELECT
-	ABS([dbo].[Purchase].[TotalPurchaseAmount])
+    ABS([t0].[TotalPurchaseAmount])
 FROM
-	[dbo].[Purchase];
+    [dbo].[Purchase] AS [t0];
 ```
 {% /code-example %}
 
@@ -67,11 +67,11 @@ IEnumerable<int> value = db.SelectMany(
 ```
 ```sql
 SELECT
-	[dbo].[Purchase].[Id]
+    [t0].[Id]
 FROM
-	[dbo].[Purchase]
+    [dbo].[Purchase] AS [t0]
 WHERE
-	ABS([dbo].[Purchase].[TotalPurchaseAmount]) <> [dbo].[Purchase].[TotalPurchaseAmount];
+    ABS([t0].[TotalPurchaseAmount]) <> [t0].[TotalPurchaseAmount];
 ```
 {% /code-example %}
 
@@ -88,11 +88,11 @@ IEnumerable<double> value = db.SelectMany(
 ```
 ```sql
 SELECT
-	ABS([dbo].[Purchase].[TotalPurchaseAmount])
+    ABS([t0].[TotalPurchaseAmount])
 FROM
-	[dbo].[Purchase]
+    [dbo].[Purchase] AS [t0]
 ORDER BY
-	ABS([dbo].[Purchase].[TotalPurchaseAmount]) DESC;
+    ABS([t0].[TotalPurchaseAmount]) DESC;
 ```
 {% /code-example %}
 
@@ -114,15 +114,15 @@ IEnumerable<dynamic> values = db.SelectMany(
 ```
 ```sql
 SELECT
-	[dbo].[Purchase].[PaymentMethodType],
-	ABS([dbo].[Purchase].[TotalPurchaseAmount]) AS [TotalPurchaseAmount]
+    [t0].[PaymentMethodType],
+    ABS([t0].[TotalPurchaseAmount]) AS [TotalPurchaseAmount]
 FROM
-	[dbo].[Purchase]
+    [dbo].[Purchase] AS [t0]
 GROUP BY
-	[dbo].[Purchase].[PaymentMethodType],
-	ABS([dbo].[Purchase].[TotalPurchaseAmount])
+    [t0].[PaymentMethodType],
+    ABS([t0].[TotalPurchaseAmount])
 ORDER BY
-	ABS([dbo].[Purchase].[TotalPurchaseAmount]) ASC;
+    ABS([t0].[TotalPurchaseAmount]) ASC;
 ```
 {% /code-example %}
 
@@ -146,16 +146,16 @@ IEnumerable<dynamic> values = db.SelectMany(
 ```
 ```sql
 exec sp_executesql N'SELECT
-	[dbo].[Purchase].[PaymentMethodType],
-	ABS([dbo].[Purchase].[TotalPurchaseAmount]) AS [TotalPurchaseAmount]
+    [t0].[PaymentMethodType],
+    ABS([t0].[TotalPurchaseAmount]) AS [TotalPurchaseAmount]
 FROM
-	[dbo].[Purchase]
+    [dbo].[Purchase] AS [t0]
 GROUP BY
-	[dbo].[Purchase].[PaymentMethodType],
-	ABS([dbo].[Purchase].[TotalPurchaseAmount])
+    [t0].[PaymentMethodType],
+    ABS([t0].[TotalPurchaseAmount])
 HAVING
-	ABS([dbo].[Purchase].[TotalPurchaseAmount]) > @P1
+    ABS([t0].[TotalPurchaseAmount]) > @P1
 ORDER BY
-	ABS([dbo].[Purchase].[TotalPurchaseAmount]) ASC;',N'@P1 float',@P1=10
+    ABS([t0].[TotalPurchaseAmount]) ASC;',N'@P1 float',@P1=10
 ```
 {% /code-example %}

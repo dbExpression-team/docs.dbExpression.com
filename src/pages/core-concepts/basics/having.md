@@ -28,21 +28,21 @@ IEnumerable<dynamic> maxPurchases = db.SelectMany(
 ```
 ```sql
 exec sp_executesql N'SELECT
-    [dbo].[Person].[Id],
-    [dbo].[Person].[FirstName],
-    [dbo].[Person].[LastName],
-    MAX([dbo].[Purchase].[TotalPurchaseAmount]) AS [MaxPurchaseAmt]
+    [t0].[Id],
+    [t0].[FirstName],
+    [t0].[LastName],
+    MAX([t1].[TotalPurchaseAmount]) AS [MaxPurchaseAmt]
 FROM
-    [dbo].[Person]
-    INNER JOIN [dbo].[Purchase] ON [dbo].[Purchase].[PersonId] = [dbo].[Person].[Id]
+    [dbo].[Person] AS [t0]
+    INNER JOIN [dbo].[Purchase] AS [t1] ON [t1].[PersonId] = [t0].[Id]
 GROUP BY
-    [dbo].[Person].[Id],
-    [dbo].[Person].[FirstName],
-    [dbo].[Person].[LastName]
+    [t0].[Id],
+    [t0].[FirstName],
+    [t0].[LastName]
 HAVING
-    MAX([dbo].[Purchase].[TotalPurchaseAmount]) >= @P1
+    MAX([t1].[TotalPurchaseAmount]) >= @P1
 ORDER BY
-    [dbo].[Person].[LastName] ASC;',N'@P1 float',@P1=18
+    [t0].[LastName] ASC;',N'@P1 float',@P1=18
 ```
 {% /code-example %}
 

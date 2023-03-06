@@ -10,25 +10,25 @@ This example selects records where a person's first name is `David` and the last
 ```csharp
 IEnumerable<Person> persons = db.SelectMany<Person>()
 	.From(dbo.Person)
-	.Where((dbo.Person.FirstName + " " + dbo.Person.LastName).Like("David W%"));
+	.Where((dbo.Person.FirstName + " " + dbo.Person.LastName).Like("David W%"))
     .Execute();
 ```
 ```sql
 exec sp_executesql N'SELECT
-	[dbo].[Person].[Id],
-	[dbo].[Person].[FirstName],
-	[dbo].[Person].[LastName],
-	[dbo].[Person].[BirthDate],
-	[dbo].[Person].[GenderType],
-	[dbo].[Person].[CreditLimit],
-	[dbo].[Person].[YearOfLastCreditLimitReview],
-	[dbo].[Person].[RegistrationDate],
-	[dbo].[Person].[LastLoginDate],
-	[dbo].[Person].[DateCreated],
-	[dbo].[Person].[DateUpdated]
+	[t0].[Id],
+	[t0].[FirstName],
+	[t0].[LastName],
+	[t0].[BirthDate],
+	[t0].[GenderType],
+	[t0].[CreditLimit],
+	[t0].[YearOfLastCreditLimitReview],
+	[t0].[RegistrationDate],
+	[t0].[LastLoginDate],
+	[t0].[DateCreated],
+	[t0].[DateUpdated]
 FROM
-	[dbo].[Person]
+	[dbo].[Person] AS [t0]
 WHERE
-	([dbo].[Person].[FirstName] + @P1 + [dbo].[Person].[LastName]) LIKE @P2;',N'@P1 char(1),@P2 char(8)',@P1=' ',@P2='David W%'
+	([t0].[FirstName] + @P1 + [t0].[LastName]) LIKE @P2;',N'@P1 char(1),@P2 char(8)',@P1=' ',@P2='David W%'
 ```
 {% /code-example %}

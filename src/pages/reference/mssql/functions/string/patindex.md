@@ -72,32 +72,32 @@ IEnumerable<long> result = db.SelectMany(
 ```
 ```sql
 exec sp_executesql N'SELECT
-	PATINDEX((@P1 + [dbo].[Address].[State] + @P2), [dbo].[Address].[City])
+	PATINDEX(@P1, [t0].[City])
 FROM
-	[dbo].[Address];',N'@P1 char(1),@P2 char(1)',@P1='%',@P2='%'
+	[dbo].[Address] AS [t0];',N'@P1 char(1),@P2 char(1)',@P1='%',@P2='%'
 ```
 {% /code-example %}
 
 ### Where Clause
-Select a list of address ids where the value of city is equal to the value of state
-(a wildcard token has not been added to the beginning or the end of 'dbo.Address.State',
-so PatIndex will return 1 only if the city exactly matches the state).
+Select a list of address ids where the value of city is equal to the value of line 1
+(a wildcard token has not been added to the beginning or the end of 'dbo.Address.Line1',
+so PatIndex will return 1 only if the city exactly matches the line 1 of address).
 {% code-example %}
 ```csharp
 IEnumerable<int> result = db.SelectMany(
 		dbo.Address.Id
 	)
 	.From(dbo.Address)
-	.Where(db.fx.PatIndex(dbo.Address.State, dbo.Address.City) == 1)
+	.Where(db.fx.PatIndex(dbo.Address.Line1, dbo.Address.City) == 1)
 	.Execute();
 ```
 ```sql
 exec sp_executesql N'SELECT
-	[dbo].[Address].[Id]
+	[t0].[Id]
 FROM
-	[dbo].[Address]
+	[dbo].[Address] AS [t0]
 WHERE
-	PATINDEX([dbo].[Address].[State], [dbo].[Address].[City]) = @P1;',N'@P1 bigint',@P1=1
+	PATINDEX([t0].[Line1], [t0].[City]) = @P1;',N'@P1 bigint',@P1=1
 ```
 {% /code-example %}
 
@@ -112,19 +112,19 @@ IEnumerable<Address> addresses = db.SelectMany<Address>()
 ```
 ```sql
 exec sp_executesql N'SELECT
-	[dbo].[Address].[Id],
-	[dbo].[Address].[AddressType],
-	[dbo].[Address].[Line1],
-	[dbo].[Address].[Line2],
-	[dbo].[Address].[City],
-	[dbo].[Address].[State],
-	[dbo].[Address].[Zip],
-	[dbo].[Address].[DateCreated],
-	[dbo].[Address].[DateUpdated]
+	[t0].[Id],
+	[t0].[AddressType],
+	[t0].[Line1],
+	[t0].[Line2],
+	[t0].[City],
+	[t0].[State],
+	[t0].[Zip],
+	[t0].[DateCreated],
+	[t0].[DateUpdated]
 FROM
-	[dbo].[Address]
+	[dbo].[Address] AS [t0]
 ORDER BY
-	PATINDEX((@P1 + [dbo].[Address].[State] + @P2), [dbo].[Address].[City]) ASC;',N'@P1 char(1),@P2 char(1)',@P1='%',@P2='%'
+	PATINDEX(@P1, [t0].[City]) ASC;',N'@P1 char(1),@P2 char(1)',@P1='%',@P2='%'
 ```
 {% /code-example %}
 
@@ -146,12 +146,12 @@ IEnumerable<dynamic> values = db.SelectMany(
 ```sql
 exec sp_executesql N'SELECT
 	COUNT(@P1) AS [count],
-	[dbo].[Address].[AddressType]
+	[t0].[AddressType]
 FROM
-	[dbo].[Address]
+	[dbo].[Address] AS [t0]
 GROUP BY
-	[dbo].[Address].[AddressType],
-	PATINDEX((@P2 + [dbo].[Address].[State] + @P2), [dbo].[Address].[City]);',N'@P1 nchar(1),@P2 char(1)',@P1=N'*',@P2='%'
+	[t0].[AddressType],
+	PATINDEX(@P2, [t0].[City]);',N'@P1 nchar(1),@P2 char(1)',@P1=N'*',@P2='%'
 ```
 {% /code-example %}
 
@@ -175,15 +175,15 @@ IEnumerable<dynamic> values = db.SelectMany(
 ```
 ```sql
 exec sp_executesql N'SELECT
-	COUNT(@P1) AS [count],
-	[dbo].[Address].[AddressType]
+	COUNT(*) AS [count],
+	[t0].[AddressType]
 FROM
-	[dbo].[Address]
+	[dbo].[Address] AS [t0]
 GROUP BY
-	[dbo].[Address].[AddressType],
-	PATINDEX((@P2 + [dbo].[Address].[State] + @P2), [dbo].[Address].[Line1])
+	[t0].[AddressType],
+	PATINDEX(@P1, [t0].[Line1])
 HAVING
-	PATINDEX((@P2 + [dbo].[Address].[State] + @P2), [dbo].[Address].[Line1]) > @P3;',N'@P1 nchar(1),@P2 char(1),@P3 bigint',@P1=N'*',@P2='%',@P3=0
+	PATINDEX(@P1, [t0].[Line1]) > @P2;',N'@P1 varchar(7),@P2 int',@P1='%State%',@P2=0
 ```
 {% /code-example %}
 

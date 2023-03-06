@@ -73,9 +73,9 @@ float? result = db.SelectOne(
 ```
 ```sql
 SELECT TOP(1)
-	RAND([dbo].[Product].[Height])
+    RAND()
 FROM
-	[dbo].[Product];
+    [dbo].[Product] AS [t0];
 ```
 {% /code-example %}
 
@@ -91,8 +91,8 @@ IEnumerable<float> results = db.SelectMany(
 ```
 ```sql
 SELECT
-	RAND([dbo].[Product].[Id])
+    RAND([t0].[Id])
 FROM
-	[dbo].[Product]
+    [dbo].[Product] AS [t0]
 ```
 {% /code-example %}

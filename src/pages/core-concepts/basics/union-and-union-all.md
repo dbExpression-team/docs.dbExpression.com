@@ -9,66 +9,68 @@ multiple select statements and return a single rowset.
 {% code-example %}
 ```csharp
 IEnumerable<dynamic> results = db.SelectMany(
-            dbo.Person.Id,
-            dbo.Person.FirstName,
-            dbo.Person.LastName
-        )
-        .From(dbo.Person)
-        .Union()
-        .SelectMany(
-            dbo.Address.Id,
-            dbo.Address.Line1,
-            dbo.Address.Line2
-        )
-        .From(dbo.Address);
+        dbo.Person.Id,
+        dbo.Person.FirstName,
+        dbo.Person.LastName
+    )
+    .From(dbo.Person)
+    .Union()
+    .SelectMany(
+        dbo.Address.Id,
+        dbo.Address.Line1,
+        dbo.Address.Line2
+    )
+    .From(dbo.Address)
+    .Execute();
 ```
 ```sql
 SELECT
-	[dbo].[Person].[Id],
-	[dbo].[Person].[FirstName],
-	[dbo].[Person].[LastName]
+    [t0].[Id],
+    [t0].[FirstName],
+    [t0].[LastName]
 FROM
-	[dbo].[Person]
+    [dbo].[Person] AS [t0]
 UNION
 SELECT
-	[dbo].[Address].[Id],
-	[dbo].[Address].[Line1],
-	[dbo].[Address].[Line2]
+    [t1].[Id],
+    [t1].[Line1],
+    [t1].[Line2]
 FROM
-	[dbo].[Address];
+    [dbo].[Address] AS [t1];
 ```
 {% /code-example %}
 
 {% code-example %}
 ```csharp
 IEnumerable<dynamic> results = db.SelectMany(
-            dbo.Person.Id,
-            dbo.Person.FirstName,
-            dbo.Person.LastName
-        )
-        .From(dbo.Person)
-        .UnionAll()
-        .SelectMany(
-            dbo.Address.Id,
-            dbo.Address.Line1,
-            dbo.Address.Line2
-        )
-        .From(dbo.Address);
+        dbo.Person.Id,
+        dbo.Person.FirstName,
+        dbo.Person.LastName
+    )
+    .From(dbo.Person)
+    .UnionAll()
+    .SelectMany(
+        dbo.Address.Id,
+        dbo.Address.Line1,
+        dbo.Address.Line2
+    )
+    .From(dbo.Address)
+    .Execute();
 ```
 ```sql
 SELECT
-	[dbo].[Person].[Id],
-	[dbo].[Person].[FirstName],
-	[dbo].[Person].[LastName]
+    [t0].[Id],
+    [t0].[FirstName],
+    [t0].[LastName]
 FROM
-	[dbo].[Person]
+    [dbo].[Person] AS [t0]
 UNION ALL
 SELECT
-	[dbo].[Address].[Id],
-	[dbo].[Address].[Line1],
-	[dbo].[Address].[Line2]
+    [t1].[Id],
+    [t1].[Line1],
+    [t1].[Line2]
 FROM
-	[dbo].[Address];
+    [dbo].[Address] AS [t1];
 ```
 {% /code-example %}
 
@@ -79,89 +81,90 @@ know there's a better way):
 {% code-example %}
 ```csharp
 IEnumerable<dynamic> results = db.SelectMany(
-            dbex.Alias<string>("Pivot", "State"),
-            db.fx.Sum(("Pivot", "ShippingCount")).As("Shipping"),
-            db.fx.Sum(("Pivot", "MailingCount")).As("Mailing"),
-            db.fx.Sum(("Pivot", "BillingCount")).As("Billing")
-        ).From(
-            db.SelectMany(
-                dbo.Address.State,
-                db.fx.Count().As("ShippingCount"),
-                dbex.Null.As("MailingCount"),
-                dbex.Null.As("BillingCount")
-            ).From(dbo.Address)
-            .Where(dbo.Address.AddressType == AddressType.Shipping)
-            .GroupBy(dbo.Address.State)
-            .UnionAll()
-            .SelectMany(
-                dbo.Address.State,
-                dbex.Null,
-                db.fx.Count(),
-                dbex.Null
-            ).From(dbo.Address)
-            .Where(dbo.Address.AddressType == AddressType.Mailing)
-            .GroupBy(dbo.Address.State)
-            .UnionAll()
-            .SelectMany(
-                dbo.Address.State,
-                dbex.Null,                        
-                dbex.Null,
-                db.fx.Count()
-            ).From(dbo.Address)
-            .Where(dbo.Address.AddressType == AddressType.Billing)
-            .GroupBy(dbo.Address.State)
-        ).As("Pivot")
-        .GroupBy(("Pivot", "State"))
-        .OrderBy(("Pivot", "State"));
+        dbex.Alias<string>("Pivot", "State"),
+        db.fx.Sum(("Pivot", "ShippingCount")).As("Shipping"),
+        db.fx.Sum(("Pivot", "MailingCount")).As("Mailing"),
+        db.fx.Sum(("Pivot", "BillingCount")).As("Billing")
+    ).From(
+        db.SelectMany(
+            dbo.Address.State,
+            db.fx.Count().As("ShippingCount"),
+            dbex.Null.As("MailingCount"),
+            dbex.Null.As("BillingCount")
+        ).From(dbo.Address)
+        .Where(dbo.Address.AddressType == AddressType.Shipping)
+        .GroupBy(dbo.Address.State)
+        .UnionAll()
+        .SelectMany(
+            dbo.Address.State,
+            dbex.Null,
+            db.fx.Count(),
+            dbex.Null
+        ).From(dbo.Address)
+        .Where(dbo.Address.AddressType == AddressType.Mailing)
+        .GroupBy(dbo.Address.State)
+        .UnionAll()
+        .SelectMany(
+            dbo.Address.State,
+            dbex.Null,                        
+            dbex.Null,
+            db.fx.Count()
+        ).From(dbo.Address)
+        .Where(dbo.Address.AddressType == AddressType.Billing)
+        .GroupBy(dbo.Address.State)
+    ).As("Pivot")
+    .GroupBy(("Pivot", "State"))
+    .OrderBy(("Pivot", "State"))
+    .Execute();
 ```
 ```sql
 exec sp_executesql N'SELECT
-	[Pivot].[State],
-	SUM([Pivot].[ShippingCount]) AS [Shipping],
-	SUM([Pivot].[MailingCount]) AS [Mailing],
-	SUM([Pivot].[BillingCount]) AS [Billing]
+	[t0].[State],
+	SUM([t0].[ShippingCount]) AS [Shipping],
+	SUM([t0].[MailingCount]) AS [Mailing],
+	SUM([t0].[BillingCount]) AS [Billing]
 FROM
 (
 	SELECT
-		[dbo].[Address].[State],
-		COUNT(@P1) AS [ShippingCount],
+		[t1].[State],
+		COUNT(*) AS [ShippingCount],
 		NULL AS [MailingCount],
 		NULL AS [BillingCount]
 	FROM
-		[dbo].[Address]
+		[dbo].[Address] AS [t1]
 	WHERE
-		[dbo].[Address].[AddressType] = @P2
+		[t1].[AddressType] = @P1
 	GROUP BY
-		[dbo].[Address].[State]
+		[t1].[State]
 	UNION ALL
 	SELECT
-		[dbo].[Address].[State],
+		[t1].[State],
 		NULL,
-		COUNT(@P3),
+		COUNT(*),
 		NULL
 	FROM
-		[dbo].[Address]
+		[dbo].[Address] AS [t1]
 	WHERE
-		[dbo].[Address].[AddressType] = @P4
+		[t1].[AddressType] = @P2
 	GROUP BY
-		[dbo].[Address].[State]
+		[t1].[State]
 	UNION ALL
 	SELECT
-		[dbo].[Address].[State],
+		[t1].[State],
 		NULL,
 		NULL,
-		COUNT(@P5)
+		COUNT(*)
 	FROM
-		[dbo].[Address]
+		[dbo].[Address] AS [t1]
 	WHERE
-		[dbo].[Address].[AddressType] = @P6
+		[t1].[AddressType] = @P3
 	GROUP BY
-		[dbo].[Address].[State]
-) AS [Pivot]
+		[t1].[State]
+) AS [t0]
 GROUP BY
-	[Pivot].[State]
+	[t0].[State]
 ORDER BY
-	[Pivot].[State] ASC;',N'@P1 nchar(1),@P2 int,@P3 nchar(1),@P4 int,@P5 nchar(1),@P6 int',@P1=N'*',@P2=0,@P3=N'*',@P4=1,@P5=N'*',@P6=2
+	[t0].[State] ASC;',N'@P1 int,@P2 int,@P3 int',@P1=0,@P2=1,@P3=2
 ```
 {% /code-example %}
 

@@ -62,16 +62,16 @@ Select the concatenation of city and state for addresses
 {% code-example %}
 ```csharp
 IEnumerable<string> result = db.SelectMany(
-		db.fx.Concat(dbo.Address.City, ", ", dbo.Address.State)
+		db.fx.Concat(dbo.Address.City, ", ", db.fx.Cast(dbo.Address.State).AsVarChar(2))
 	)
 	.From(dbo.Address)
 	.Execute();
 ```
 ```sql
 exec sp_executesql N'SELECT
-	CONCAT([dbo].[Address].[City], @P1, [dbo].[Address].[State])
+    CONCAT([t0].[City], @P1, CAST([t0].[State] AS VarChar(2)))
 FROM
-	[dbo].[Address];',N'@P1 char(2)',@P1=', '
+    [dbo].[Address] AS [t0];',N'@P1 char(2)',@P1=', '
 ```
 {% /code-example %}
 
@@ -87,12 +87,12 @@ IEnumerable<int> result = db.SelectMany(
 	.Execute();
 ```
 ```sql
-SELECT
-	[dbo].[Address].[Id]
+SSELECT
+    [t0].[Id]
 FROM
-	[dbo].[Address]
+    [dbo].[Address] AS [t0]
 WHERE
-	CONCAT([dbo].[Address].[Line1], [dbo].[Address].[Line2]) <> [dbo].[Address].[Line1];
+    CONCAT([t0].[Line1], [t0].[Line2]) <> [t0].[Line1];
 ```
 {% /code-example %}
 
@@ -102,24 +102,24 @@ Select a list of addresses, ordered by the concatenation of city and state.
 ```csharp
 IEnumerable<Address> addresses = db.SelectMany<Address>()
     .From(dbo.Address)
-    .OrderBy(db.fx.Concat(dbo.Address.City, ", ", dbo.Address.State))
+    .OrderBy(db.fx.Concat(dbo.Address.City, ", ", db.fx.Cast(dbo.Address.State).AsVarChar(2)))
     .Execute();
 ```
 ```sql
 exec sp_executesql N'SELECT
-	[dbo].[Address].[Id],
-	[dbo].[Address].[AddressType],
-	[dbo].[Address].[Line1],
-	[dbo].[Address].[Line2],
-	[dbo].[Address].[City],
-	[dbo].[Address].[State],
-	[dbo].[Address].[Zip],
-	[dbo].[Address].[DateCreated],
-	[dbo].[Address].[DateUpdated]
+    [t0].[Id],
+    [t0].[AddressType],
+    [t0].[Line1],
+    [t0].[Line2],
+    [t0].[City],
+    [t0].[State],
+    [t0].[Zip],
+    [t0].[DateCreated],
+    [t0].[DateUpdated]
 FROM
-	[dbo].[Address]
+    [dbo].[Address] AS [t0]
 ORDER BY
-	CONCAT([dbo].[Address].[City], @P1, [dbo].[Address].[State]) ASC;',N'@P1 char(2)',@P1=', '
+    CONCAT([t0].[City], @P1, CAST([t0].[State] AS VarChar(2))) ASC;',N'@P1 char(2)',@P1=', '
 ```
 {% /code-example %}
 
@@ -129,24 +129,24 @@ Select a list of address values grouped by address type and the concatenation of
 ```csharp
 IEnumerable<dynamic> values = db.SelectMany(
         dbo.Address.AddressType,
-        db.fx.Concat(dbo.Address.City, ", ", dbo.Address.State).As("formatted_city_state")
+        db.fx.Concat(dbo.Address.City, ", ", db.fx.Cast(dbo.Address.State).AsVarChar(2)).As("formatted_city_state")
     )
     .From(dbo.Address)
     .GroupBy(
         dbo.Address.AddressType,
-        db.fx.Concat(dbo.Address.City, ", ", dbo.Address.State)
+        db.fx.Concat(dbo.Address.City, ", ", db.fx.Cast(dbo.Address.State).AsVarChar(2))
     )
     .Execute();
 ```
 ```sql
 exec sp_executesql N'SELECT
-	[dbo].[Address].[AddressType],
-	CONCAT([dbo].[Address].[City], @P1, [dbo].[Address].[State]) AS [formatted_city_state]
+    [t0].[AddressType],
+    CONCAT([t0].[City], @P1, CAST([t0].[State] AS VarChar(2))) AS [formatted_city_state]
 FROM
-	[dbo].[Address]
+    [dbo].[Address] AS [t0]
 GROUP BY
-	[dbo].[Address].[AddressType],
-	CONCAT([dbo].[Address].[City], @P1, [dbo].[Address].[State]);',N'@P1 char(2)',@P1=', '
+    [t0].[AddressType],
+    CONCAT([t0].[City], @P1, CAST([t0].[State] AS VarChar(2)));',N'@P1 char(2)',@P1=', '
 ```
 {% /code-example %}
 
@@ -162,24 +162,24 @@ IEnumerable<dynamic> values = db.SelectMany(
     .From(dbo.Address)
     .GroupBy(
         dbo.Address.AddressType,
-        db.fx.Concat(dbo.Address.City, ", ", dbo.Address.State)
+        db.fx.Concat(dbo.Address.City, ", ", db.fx.Cast(dbo.Address.State).AsVarChar(2))
     )
     .Having(
-        db.fx.Concat(dbo.Address.City, ", ", dbo.Address.State).Like("%y, A%")
+        db.fx.Concat(dbo.Address.City, ", ", db.fx.Cast(dbo.Address.State).AsVarChar(2)).Like("%y, A%")
     )
     .Execute();
 ```
 ```sql
 exec sp_executesql N'SELECT
-	COUNT(@P1) AS [count],
-	[dbo].[Address].[AddressType]
+	COUNT(*) AS [count],
+	[t0].[AddressType]
 FROM
-	[dbo].[Address]
+	[dbo].[Address] AS [t0]
 GROUP BY
-	[dbo].[Address].[AddressType],
-	PATINDEX((@P2 + [dbo].[Address].[State] + @P2), [dbo].[Address].[Line1])
+	[t0].[AddressType],
+	CONCAT([t0].[City], @P1, CAST([t0].[State] AS VarChar(2)))
 HAVING
-	PATINDEX((@P2 + [dbo].[Address].[State] + @P2), [dbo].[Address].[Line1]) > @P3;',N'@P1 nchar(1),@P2 char(1),@P3 bigint',@P1=N'*',@P2='%',@P3=0
+	CONCAT([t0].[City], @P1, CAST([t0].[State] AS VarChar(2))) LIKE @P2;',N'@P1 varchar(2),@P2 varchar(6)',@P1=', ',@P2='%y, A%'
 ```
 {% /code-example %}
 

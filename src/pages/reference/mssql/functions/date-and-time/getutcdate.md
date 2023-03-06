@@ -36,8 +36,8 @@ DateTime current = db.SelectOne(
 ```
 ```sql
 SELECT TOP(1)
-	GETUTCDATE()
+    GETUTCDATE()
 FROM
-	[dbo].[Purchase];
+    [dbo].[Purchase] AS [t0];
 ```
 {% /code-example %}

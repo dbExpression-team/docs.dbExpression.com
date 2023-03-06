@@ -73,21 +73,21 @@ IEnumerable<Person> persons = db.SelectMany<Person>()
 ```
 ```sql
 exec sp_executesql N'SELECT
-	[dbo].[Person].[Id],
-	[dbo].[Person].[FirstName],
-	[dbo].[Person].[LastName],
-	[dbo].[Person].[BirthDate],
-	[dbo].[Person].[GenderType],
-	[dbo].[Person].[CreditLimit],
-	[dbo].[Person].[YearOfLastCreditLimitReview],
-	[dbo].[Person].[RegistrationDate],
-	[dbo].[Person].[LastLoginDate],
-	[dbo].[Person].[DateCreated],
-	[dbo].[Person].[DateUpdated]
+	[t0].[Id],
+	[t0].[FirstName],
+	[t0].[LastName],
+	[t0].[BirthDate],
+	[t0].[GenderType],
+	[t0].[CreditLimit],
+	[t0].[YearOfLastCreditLimitReview],
+	[t0].[RegistrationDate],
+	[t0].[LastLoginDate],
+	[t0].[DateCreated],
+	[t0].[DateUpdated]
 FROM
-	[dbo].[Person]
+	[dbo].[Person] AS [t0]
 WHERE
-	[dbo].[Person].[FirstName] LIKE @P1;',N'@P1 char(2)',@P1='J%'
+	[t0].[FirstName] LIKE @P1;',N'@P1 char(2)',@P1='J%'
 ```
 {% /code-example %}
 
@@ -101,21 +101,21 @@ IEnumerable<Person> persons = db.SelectMany<Person>()
 ```
 ```sql
 exec sp_executesql N'SELECT
-	[dbo].[Person].[Id],
-	[dbo].[Person].[FirstName],
-	[dbo].[Person].[LastName],
-	[dbo].[Person].[BirthDate],
-	[dbo].[Person].[GenderType],
-	[dbo].[Person].[CreditLimit],
-	[dbo].[Person].[YearOfLastCreditLimitReview],
-	[dbo].[Person].[RegistrationDate],
-	[dbo].[Person].[LastLoginDate],
-	[dbo].[Person].[DateCreated],
-	[dbo].[Person].[DateUpdated]
+	[t0].[Id],
+	[t0].[FirstName],
+	[t0].[LastName],
+	[t0].[BirthDate],
+	[t0].[GenderType],
+	[t0].[CreditLimit],
+	[t0].[YearOfLastCreditLimitReview],
+	[t0].[RegistrationDate],
+	[t0].[LastLoginDate],
+	[t0].[DateCreated],
+	[t0].[DateUpdated]
 FROM
-	[dbo].[Person]
+	[dbo].[Person] AS [t0]
 WHERE
-	NOT ([dbo].[Person].[FirstName] LIKE @P1);',N'@P1 char(2)',@P1='J%'
+	NOT ([t0].[FirstName] LIKE @P1);',N'@P1 char(2)',@P1='J%'
 ```
 {% /code-example %}
 
@@ -134,13 +134,13 @@ IEnumerable<string> product_counts = db.SelectMany(
 ```
 ```sql
 exec sp_executesql N'SELECT
-	[dbo].[Product].[Name]
+	[t0].[Name]
 FROM
-	[dbo].[Product]
+	[dbo].[Product] AS [t0]
 GROUP BY
-	[dbo].[Product].[Name]
+	[t0].[Name]
 HAVING
-	[dbo].[Product].[Name] LIKE @P1;',N'@P1 char(6)',@P1='%Book%'
+	[t0].[Name] LIKE @P1;',N'@P1 char(6)',@P1='%Book%'
 ```
 {% /code-example %}
 
@@ -161,23 +161,23 @@ IEnumerable<Person> persons = db.SelectMany<Person>()
 ```
 ```sql
 exec sp_executesql N'SELECT
-	[dbo].[Person].[Id],
-	[dbo].[Person].[FirstName],
-	[dbo].[Person].[LastName],
-	[dbo].[Person].[BirthDate],
-	[dbo].[Person].[GenderType],
-	[dbo].[Person].[CreditLimit],
-	[dbo].[Person].[YearOfLastCreditLimitReview],
-	[dbo].[Person].[RegistrationDate],
-	[dbo].[Person].[LastLoginDate],
-	[dbo].[Person].[DateCreated],
-	[dbo].[Person].[DateUpdated]
+	[t0].[Id],
+	[t0].[FirstName],
+	[t0].[LastName],
+	[t0].[BirthDate],
+	[t0].[GenderType],
+	[t0].[CreditLimit],
+	[t0].[YearOfLastCreditLimitReview],
+	[t0].[RegistrationDate],
+	[t0].[LastLoginDate],
+	[t0].[DateCreated],
+	[t0].[DateUpdated]
 FROM
-	[dbo].[Person]
-	INNER JOIN [dbo].[Person_Address] ON [dbo].[Person].[Id] = [dbo].[Person_Address].[PersonId]
-	INNER JOIN [dbo].[Address] ON [dbo].[Address].[Zip] LIKE @P1
+	[dbo].[Person] AS [t0]
+	INNER JOIN [dbo].[Person_Address] AS [t1] ON [t0].[Id] = [t1].[PersonId]
+	INNER JOIN [dbo].[Address] AS [t2] ON [t2].[Zip] LIKE @P1
 	AND
-	[dbo].[Person_Address].[AddressId] = [dbo].[Address].[Id];',N'@P1 char(3)',@P1='80%'
+	[t1].[AddressId] = [t2].[Id];',N'@P1 char(3)',@P1='80%'
 ```
 {% /code-example %}
 
@@ -196,23 +196,23 @@ IEnumerable<Person> persons = db.SelectMany<Person>()
 ```
 ```sql
 exec sp_executesql N'SELECT
-	[dbo].[Person].[Id],
-	[dbo].[Person].[FirstName],
-	[dbo].[Person].[LastName],
-	[dbo].[Person].[BirthDate],
-	[dbo].[Person].[GenderType],
-	[dbo].[Person].[CreditLimit],
-	[dbo].[Person].[YearOfLastCreditLimitReview],
-	[dbo].[Person].[RegistrationDate],
-	[dbo].[Person].[LastLoginDate],
-	[dbo].[Person].[DateCreated],
-	[dbo].[Person].[DateUpdated]
+	[t0].[Id],
+	[t0].[FirstName],
+	[t0].[LastName],
+	[t0].[BirthDate],
+	[t0].[GenderType],
+	[t0].[CreditLimit],
+	[t0].[YearOfLastCreditLimitReview],
+	[t0].[RegistrationDate],
+	[t0].[LastLoginDate],
+	[t0].[DateCreated],
+	[t0].[DateUpdated]
 FROM
-	[dbo].[Person]
-	INNER JOIN [dbo].[Person_Address] ON [dbo].[Person].[Id] = [dbo].[Person_Address].[PersonId]
-	INNER JOIN [dbo].[Address] ON NOT ([dbo].[Address].[Zip] LIKE @P1)
+	[dbo].[Person] AS [t0]
+	INNER JOIN [dbo].[Person_Address] AS [t1] ON [t0].[Id] = [t1].[PersonId]
+	INNER JOIN [dbo].[Address] AS [t2] ON NOT ([t2].[Zip] LIKE @P1)
 	AND
-	[dbo].[Person_Address].[AddressId] = [dbo].[Address].[Id];',N'@P1 char(3)',@P1='80%'
+	[t1].[AddressId] = [t2].[Id];',N'@P1 char(3)',@P1='80%'
 ```
 {% /code-example %}
 

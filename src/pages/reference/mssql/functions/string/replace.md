@@ -76,9 +76,9 @@ IEnumerable<string> result = db.SelectMany(
 ```
 ```sql
 exec sp_executesql N'SELECT
-	REPLACE([dbo].[Address].[Line1], @P1, @P2)
+    REPLACE([t0].[Line1], @P1, @P2)
 FROM
-	[dbo].[Address];',N'@P1 char(3),@P2 char(4)',@P1='St.',@P2='Ave.'
+    [dbo].[Address] AS [t0];',N'@P1 char(3),@P2 char(4)',@P1='St.',@P2='Ave.'
 ```
 {% /code-example %}
 
@@ -96,12 +96,12 @@ IEnumerable<dynamic> result = db.SelectMany(
 ```
 ```sql
 exec sp_executesql N'SELECT
-	[dbo].[Product].[Id],
-	[dbo].[Product].[Name]
+    [t0].[Id],
+    [t0].[Name]
 FROM
-	[dbo].[Product]
+    [dbo].[Product] AS [t0]
 WHERE
-	REPLACE([dbo].[Product].[Name], @P1, @P2) <> [dbo].[Product].[Name];',N'@P1 char(6),@P2 char(4)',@P1='Player',@P2='Play'
+    REPLACE([t0].[Name], @P1, @P2) <> [t0].[Name];',N'@P1 char(6),@P2 char(4)',@P1='Player',@P2='Play'
 ```
 {% /code-example %}
 
@@ -116,21 +116,21 @@ IEnumerable<Person> persons = db.SelectMany<Person>()
 ```
 ```sql
 exec sp_executesql N'SELECT
-	[dbo].[Person].[Id],
-	[dbo].[Person].[FirstName],
-	[dbo].[Person].[LastName],
-	[dbo].[Person].[BirthDate],
-	[dbo].[Person].[GenderType],
-	[dbo].[Person].[CreditLimit],
-	[dbo].[Person].[YearOfLastCreditLimitReview],
-	[dbo].[Person].[RegistrationDate],
-	[dbo].[Person].[LastLoginDate],
-	[dbo].[Person].[DateCreated],
-	[dbo].[Person].[DateUpdated]
+    [t0].[Id],
+    [t0].[FirstName],
+    [t0].[LastName],
+    [t0].[BirthDate],
+    [t0].[GenderType],
+    [t0].[CreditLimit],
+    [t0].[YearOfLastCreditLimitReview],
+    [t0].[RegistrationDate],
+    [t0].[LastLoginDate],
+    [t0].[DateCreated],
+    [t0].[DateUpdated]
 FROM
-	[dbo].[Person]
+    [dbo].[Person] AS [t0]
 ORDER BY
-	REPLACE([dbo].[Person].[LastName], @P1, @P2) ASC;',N'@P1 char(4),@P2 varchar(1)',@P1='Mr. ',@P2=''
+    REPLACE([t0].[LastName], @P1, @P2) ASC;',N'@P1 char(4),@P2 varchar(1)',@P1='Mr. ',@P2=''
 ```
 {% /code-example %}
 
@@ -151,13 +151,13 @@ IEnumerable<dynamic> values = db.SelectMany(
 ```
 ```sql
 exec sp_executesql N'SELECT
-	COUNT(@P1) AS [count],
-	[dbo].[Product].[Name]
+	COUNT(*) AS [count],
+	[t0].[Name]
 FROM
-	[dbo].[Product]
+	[dbo].[Product] AS [t0]
 GROUP BY
-	[dbo].[Product].[Name],
-	REPLACE([dbo].[Product].[Name], @P2, @P3);',N'@P1 nchar(1),@P2 char(6),@P3 char(4)',@P1=N'*',@P2='Player',@P3='Play'
+	[t0].[Name],
+	REPLACE([t0].[Name], @P1, @P2);',N'@P1 varchar(6),@P2 varchar(4)',@P1='Player',@P2='Play'
 ```
 {% /code-example %}
 
@@ -178,13 +178,13 @@ IEnumerable<dynamic> values = db.SelectMany(
 ```
 ```sql
 exec sp_executesql N'SELECT
-	COUNT(@P1) AS [count],
-	[dbo].[Product].[Name]
+	COUNT(*) AS [count],
+	[t0].[Name]
 FROM
-	[dbo].[Product]
+	[dbo].[Product] AS [t0]
 GROUP BY
-	[dbo].[Product].[Name]
+	[t0].[Name]
 HAVING
-	REPLACE([dbo].[Product].[Name], @P2, @P3) <> [dbo].[Product].[Name];',N'@P1 nchar(1),@P2 char(4),@P3 char(6)',@P1=N'*',@P2='Play',@P3='Player'
+	REPLACE([t0].[Name], @P1, @P2) <> [t0].[Name];',N'@P1 varchar(4),@P2 varchar(6)',@P1='Play',@P2='Player'
 ```
 {% /code-example %}

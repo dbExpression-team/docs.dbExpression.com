@@ -42,20 +42,20 @@ db.SelectOne<Person>()
 ```
 ```sql
 SELECT TOP(1)
-	[dbo].[Person].[Id],
-	[dbo].[Person].[FirstName],
-	[dbo].[Person].[LastName],
-	[dbo].[Person].[BirthDate],
-	[dbo].[Person].[GenderType],
-	[dbo].[Person].[CreditLimit],
-	[dbo].[Person].[YearOfLastCreditLimitReview],
-	[dbo].[Person].[RegistrationDate],
-	[dbo].[Person].[LastLoginDate],
-	[dbo].[Person].[DateCreated],
-	[dbo].[Person].[DateUpdated]
+	[t0].[Id],
+	[t0].[FirstName],
+	[t0].[LastName],
+	[t0].[BirthDate],
+	[t0].[GenderType],
+	[t0].[CreditLimit],
+	[t0].[YearOfLastCreditLimitReview],
+	[t0].[RegistrationDate],
+	[t0].[LastLoginDate],
+	[t0].[DateCreated],
+	[t0].[DateUpdated]
 FROM
-	[dbo].[Person]
+	[dbo].[Person] AS [t0]
 WHERE
-	[dbo].[Person].[LastLoginDate] IS NULL;
+	[t0].[LastLoginDate] IS NULL;
 ```
 {% /code-example %}

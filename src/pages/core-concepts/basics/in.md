@@ -21,24 +21,23 @@ IEnumerable<Purchase> purchases = db.SelectMany<Purchase>()
 ```
 ```sql
 exec sp_executesql N'SELECT
-	[dbo].[Purchase].[Id],
-	[dbo].[Purchase].[PersonId],
-	[dbo].[Purchase].[OrderNumber],
-	[dbo].[Purchase].[TotalPurchaseQuantity],
-	[dbo].[Purchase].[TotalPurchaseAmount],
-	[dbo].[Purchase].[PurchaseDate],
-	[dbo].[Purchase].[ShipDate],
-	[dbo].[Purchase].[ExpectedDeliveryDate],
-	[dbo].[Purchase].[TrackingIdentifier],
-	[dbo].[Purchase].[PaymentMethodType],
-	[dbo].[Purchase].[PaymentSourceType],
-	[dbo].[Purchase].[DateCreated],
-	[dbo].[Purchase].[DateUpdated]
+	[t0].[Id],
+	[t0].[PersonId],
+	[t0].[OrderNumber],
+	[t0].[TotalPurchaseQuantity],
+	[t0].[TotalPurchaseAmount],
+	[t0].[PurchaseDate],
+	[t0].[ShipDate],
+	[t0].[ExpectedDeliveryDate],
+	[t0].[TrackingIdentifier],
+	[t0].[PaymentMethodType],
+	[t0].[PaymentSourceType],
+	[t0].[DateCreated],
+	[t0].[DateUpdated]
 FROM
-	[dbo].[Purchase]
+	[dbo].[Purchase] AS [t0]
 WHERE
-	[dbo].[Purchase].[PaymentMethodType] IN (@P1,@P2,@P3)
-;',N'@P1 varchar(20),@P2 varchar(20),@P3 varchar(20)',@P1='CreditCard',@P2='ACH',@P3='PayPal'
+	[t0].[PaymentMethodType] IN (@P1,@P2,@P3);',N'@P1 varchar(20),@P2 varchar(20),@P3 varchar(20)',@P1='CreditCard',@P2='ACH',@P3='PayPal'
 ```
 Note the above sql statement uses the string values of the enum values.  This is due to the settings provided in startup configuration that indicated the type `PaymentMethodType` should be persisted as it's string value (see [Enums](enums) for more detail).
 {% /code-example %}

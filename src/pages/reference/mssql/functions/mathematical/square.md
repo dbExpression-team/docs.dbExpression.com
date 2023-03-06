@@ -46,13 +46,9 @@ float? result = db.SelectOne(
 ```
 ```sql
 exec sp_executesql N'SELECT TOP(1)
-	SQUARE([dbo].[Product].[Height])
+    SQUARE([t0].[Height])
 FROM
-	[dbo].[Product]
-WHERE
-	[dbo].[Product].[Height] > @P1
-	AND
-	[dbo].[Product].[Height] < @P2;',N'@P1 decimal(4,1),@P2 decimal(4,1)',@P1=0.0,@P2=1.0
+    [dbo].[Product] AS [t0];',N'@P1 decimal(4,1),@P2 decimal(4,1)',@P1=0.0,@P2=1.0
 ```
 {% /code-example %}
 
@@ -68,14 +64,14 @@ IEnumerable<int> results = db.SelectMany(
     .Execute();
 ```
 ```sql
-exec sp_executesql N'SELECT TOP(1)
-	[dbo].[Product].[Id]
+exec sp_executesql N'SELECT
+    [t0].[Id]
 FROM
-	[dbo].[Product]
+    [dbo].[Product] AS [t0]
 WHERE
-	[dbo].[Product].[Depth] > @P1
-	AND
-	[dbo].[Product].[Depth] < @P2;',N'@P1 decimal(4,1),@P2 decimal(4,1)',@P1=0.0,@P2=1.0
+    SQUARE([t0].[Depth]) > @P1
+    AND
+    SQUARE([t0].[Depth]) < @P2;',N'@P1 decimal(4,1),@P2 decimal(4,1)',@P1=0.0,@P2=1.0
 ```
 {% /code-example %}
 
@@ -90,27 +86,27 @@ IEnumerable<Product> result = db.SelectMany<Product>()
 ```
 ```sql
 SELECT
-	[dbo].[Product].[Id],
-	[dbo].[Product].[ProductCategoryType],
-	[dbo].[Product].[Name],
-	[dbo].[Product].[Description],
-	[dbo].[Product].[ListPrice],
-	[dbo].[Product].[Price],
-	[dbo].[Product].[Quantity],
-	[dbo].[Product].[Image],
-	[dbo].[Product].[Height],
-	[dbo].[Product].[Width],
-	[dbo].[Product].[Depth],
-	[dbo].[Product].[Height],
-	[dbo].[Product].[ShippingHeight],
-	[dbo].[Product].[ValidStartTimeOfDayForPurchase],
-	[dbo].[Product].[ValidEndTimeOfDayForPurchase],
-	[dbo].[Product].[DateCreated],
-	[dbo].[Product].[DateUpdated]
+    [t0].[Id],
+    [t0].[ProductCategoryType],
+    [t0].[Name],
+    [t0].[Description],
+    [t0].[ListPrice],
+    [t0].[Price],
+    [t0].[Quantity],
+    [t0].[Image],
+    [t0].[Height],
+    [t0].[Width],
+    [t0].[Depth],
+    [t0].[Weight],
+    [t0].[ShippingWeight],
+    [t0].[ValidStartTimeOfDayForPurchase],
+    [t0].[ValidEndTimeOfDayForPurchase],
+    [t0].[DateCreated],
+    [t0].[DateUpdated]
 FROM
-	[dbo].[Product]
+    [dbo].[Product] AS [t0]
 ORDER BY
-	SQUARE([dbo].[Product].[Depth]) DESC;
+    SQUARE([t0].[Depth]) DESC;
 ```
 {% /code-example %}
 
@@ -132,13 +128,13 @@ IEnumerable<dynamic> results = db.SelectMany(
 ```
 ```sql
 SELECT
-	[dbo].[Product].[ProductCategoryType],
-	SQUARE([dbo].[Product].[Depth]) AS [calculated_value]
+    [t0].[ProductCategoryType],
+    SQUARE([t0].[Depth]) AS [calculated_value]
 FROM
-	[dbo].[Product]
+    [dbo].[Product] AS [t0]
 GROUP BY
-	[dbo].[Product].[ProductCategoryType],
-	SQUARE([dbo].[Product].[Depth]);
+    [t0].[ProductCategoryType],
+    SQUARE([t0].[Depth]);
 ```
 {% /code-example %}
 
@@ -162,13 +158,13 @@ IEnumerable<ProductCategoryType?> results = db.SelectMany(
 ```
 ```sql
 exec sp_executesql N'SELECT
-	[dbo].[Product].[ProductCategoryType]
+    [t0].[ProductCategoryType]
 FROM
-	[dbo].[Product]
+    [dbo].[Product] AS [t0]
 GROUP BY
-	[dbo].[Product].[ProductCategoryType],
-	SQUARE([dbo].[Product].[Height])
+    [t0].[ProductCategoryType],
+    SQUARE([t0].[Height])
 HAVING
-	SQUARE([dbo].[Product].[Height]) < @P3;',N'@P1 decimal(4,1),@P2 decimal(4,1),@P3 real',@P1=0.0,@P2=1.0,@P3=0.5
+    SQUARE([t0].[Height]) < @P1;',N'@P1 decimal(4,1),@P2 decimal(4,1),@P3 real',@P1=0.0,@P2=1.0,@P3=0.5
 ```
 {% /code-example %}

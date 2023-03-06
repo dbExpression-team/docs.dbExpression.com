@@ -151,9 +151,9 @@ IEnumerable<int?> result = db.SelectMany(
 ```
 ```sql
 SELECT
-	DATEDIFF(day, [dbo].[Purchase].[PurchaseDate], [dbo].[Purchase].[ShipDate])
+    DATEDIFF(day, [t0].[PurchaseDate], [t0].[ShipDate])
 FROM
-	[dbo].[Purchase];
+    [dbo].[Purchase] AS [t0];
 ```
 {% /code-example %}
 
@@ -170,11 +170,11 @@ IEnumerable<int> result = db.SelectMany(
 ```
 ```sql
 exec sp_executesql N'SELECT
-	[dbo].[Purchase].[Id]
+    [t0].[Id]
 FROM
-	[dbo].[Purchase]
+    [dbo].[Purchase] AS [t0]
 WHERE
-	DATEDIFF(day, [dbo].[Purchase].[PurchaseDate], [dbo].[Purchase].[ShipDate]) < @P1;',N'@P1 int',@P1=7
+    DATEDIFF(day, [t0].[PurchaseDate], [t0].[ShipDate]) < @P1;',N'@P1 int',@P1=7
 ```
 {% /code-example %}
 
@@ -189,23 +189,23 @@ IEnumerable<Purchase> result = db.SelectMany<Purchase>()
 ```
 ```sql
 SELECT
-	[dbo].[Purchase].[Id],
-	[dbo].[Purchase].[PersonId],
-	[dbo].[Purchase].[OrderNumber],
-	[dbo].[Purchase].[TotalPurchaseQuantity],
-	[dbo].[Purchase].[TotalPurchaseAmount],
-	[dbo].[Purchase].[PurchaseDate],
-	[dbo].[Purchase].[ShipDate],
-	[dbo].[Purchase].[ExpectedDeliveryDate],
-	[dbo].[Purchase].[TrackingIdentifier],
-	[dbo].[Purchase].[PaymentMethodType],
-	[dbo].[Purchase].[PaymentSourceType],
-	[dbo].[Purchase].[DateCreated],
-	[dbo].[Purchase].[DateUpdated]
+    [t0].[Id],
+    [t0].[PersonId],
+    [t0].[OrderNumber],
+    [t0].[TotalPurchaseQuantity],
+    [t0].[TotalPurchaseAmount],
+    [t0].[PurchaseDate],
+    [t0].[ShipDate],
+    [t0].[ExpectedDeliveryDate],
+    [t0].[TrackingIdentifier],
+    [t0].[PaymentMethodType],
+    [t0].[PaymentSourceType],
+    [t0].[DateCreated],
+    [t0].[DateUpdated]
 FROM
-	[dbo].[Purchase]
+    [dbo].[Purchase] AS [t0]
 ORDER BY
-	DATEDIFF(week, [dbo].[Purchase].[PurchaseDate], [dbo].[Purchase].[ShipDate]) ASC;
+    DATEDIFF(week, [t0].[PurchaseDate], [t0].[ShipDate]) ASC;
 ```
 {% /code-example %}
 
@@ -227,13 +227,13 @@ IEnumerable<dynamic> results = db.SelectMany(
 ```
 ```sql
 SELECT
-	[dbo].[Purchase].[PaymentMethodType],
-	DATEDIFF(week, [dbo].[Purchase].[PurchaseDate], [dbo].[Purchase].[ShipDate]) AS [WeeksBetween]
+    [t0].[PaymentMethodType],
+    DATEDIFF(week, [t0].[PurchaseDate], [t0].[ShipDate]) AS [WeeksBetween]
 FROM
-	[dbo].[Purchase]
+    [dbo].[Purchase] AS [t0]
 GROUP BY
-	[dbo].[Purchase].[PaymentMethodType],
-	DATEDIFF(week, [dbo].[Purchase].[PurchaseDate], [dbo].[Purchase].[ShipDate]);
+    [t0].[PaymentMethodType],
+    DATEDIFF(week, [t0].[PurchaseDate], [t0].[ShipDate]);
 ```
 {% /code-example %}
 
@@ -257,14 +257,14 @@ IEnumerable<dynamic> results = db.SelectMany(
 ```
 ```sql
 exec sp_executesql N'SELECT
-	[dbo].[Purchase].[PaymentMethodType],
-	DATEDIFF(day, [dbo].[Purchase].[PurchaseDate], [dbo].[Purchase].[ShipDate]) AS [DaysBetween]
+    [t0].[PaymentMethodType],
+    DATEDIFF(day, [t0].[PurchaseDate], [t0].[ShipDate]) AS [DaysBetween]
 FROM
-	[dbo].[Purchase]
+    [dbo].[Purchase] AS [t0]
 GROUP BY
-	[dbo].[Purchase].[PaymentMethodType],
-	DATEDIFF(day, [dbo].[Purchase].[PurchaseDate], [dbo].[Purchase].[ShipDate])
+    [t0].[PaymentMethodType],
+    DATEDIFF(day, [t0].[PurchaseDate], [t0].[ShipDate])
 HAVING
-	DATEDIFF(day, [dbo].[Purchase].[PurchaseDate], [dbo].[Purchase].[ShipDate]) < @P1;',N'@P1 int',@P1=7
+    DATEDIFF(day, [t0].[PurchaseDate], [t0].[ShipDate]) < @P1;',N'@P1 int',@P1=7
 ```
 {% /code-example %}

@@ -51,9 +51,9 @@ int count = db.SelectOne(
 ```
 ```sql
 SELECT TOP(1)
-	COUNT([dbo].[Purchase].[TotalPurchaseAmount])
+    COUNT([t0].[TotalPurchaseAmount])
 FROM
-	[dbo].[Purchase];
+    [dbo].[Purchase] AS [t0];
 ```
 {% /code-example %}
 
@@ -70,11 +70,11 @@ int count = db.SelectOne(
 ```
 ```sql
 SELECT TOP(1)
-	COUNT([dbo].[Purchase].[TotalPurchaseAmount])
+    COUNT([t0].[TotalPurchaseAmount])
 FROM
-	[dbo].[Purchase]
+    [dbo].[Purchase] AS [t0]
 ORDER BY
-	COUNT([dbo].[Purchase].[TotalPurchaseAmount]) DESC;
+    COUNT([t0].[TotalPurchaseAmount]) DESC;
 ```
 {% /code-example %}
 
@@ -93,12 +93,12 @@ IEnumerable<int> counts = db.SelectMany(
 ```
 ```sql
 exec sp_executesql N'SELECT
-	COUNT(@P1)
+	COUNT(*)
 FROM
-	[dbo].[Purchase]
+	[dbo].[Purchase] AS [t0]
 GROUP BY
-	[dbo].[Purchase].[PaymentMethodType]
+	[t0].[PaymentMethodType]
 HAVING
-	COUNT(@P2) > @P3;',N'@P1 nchar(1),@P2 nchar(1),@P3 int',@P1=N'*',@P2=N'*',@P3=10
+	COUNT(*) > @P1;',N'@P1 int',@P1=10
 ```
 {% /code-example %}

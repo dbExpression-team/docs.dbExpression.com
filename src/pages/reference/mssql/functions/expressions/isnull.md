@@ -61,9 +61,9 @@ IEnumerable<DateTime?> result = db.SelectMany(
 ```
 ```sql
 SELECT
-	ISNULL([dbo].[Purchase].[ExpectedDeliveryDate], [dbo].[Purchase].[ShipDate]) AS [latest_date]
+    ISNULL([t0].[ExpectedDeliveryDate], [t0].[ShipDate]) AS [latest_date]
 FROM
-	[dbo].[Purchase];
+    [dbo].[Purchase] AS [t0];
 ```
 {% /code-example %}
 
@@ -78,9 +78,9 @@ IEnumerable<DateTime> result = db.SelectMany(
 ```
 ```sql
 exec sp_executesql N'SELECT
-	ISNULL([dbo].[Purchase].[ExpectedDeliveryDate], @P1) AS [latest_date]
+    ISNULL([t0].[ExpectedDeliveryDate], @P1) AS [latest_date]
 FROM
-	[dbo].[Purchase];',N'@P1 datetime',@P1='2022-09-26 16:51:30.997'
+    [dbo].[Purchase] AS [t0];',N'@P1 datetime',@P1='2022-09-26 16:51:30.997'
 ```
 {% /code-example %}
 
@@ -97,23 +97,23 @@ IEnumerable<Purchase> purchases = db.SelectMany<Purchase>()
 ```
 ```sql
 exec sp_executesql N'SELECT
-	[dbo].[Purchase].[Id],
-	[dbo].[Purchase].[PersonId],
-	[dbo].[Purchase].[OrderNumber],
-	[dbo].[Purchase].[TotalPurchaseQuantity],
-	[dbo].[Purchase].[TotalPurchaseAmount],
-	[dbo].[Purchase].[PurchaseDate],
-	[dbo].[Purchase].[ShipDate],
-	[dbo].[Purchase].[ExpectedDeliveryDate],
-	[dbo].[Purchase].[TrackingIdentifier],
-	[dbo].[Purchase].[PaymentMethodType],
-	[dbo].[Purchase].[PaymentSourceType],
-	[dbo].[Purchase].[DateCreated],
-	[dbo].[Purchase].[DateUpdated]
+    [t0].[Id],
+    [t0].[PersonId],
+    [t0].[OrderNumber],
+    [t0].[TotalPurchaseQuantity],
+    [t0].[TotalPurchaseAmount],
+    [t0].[PurchaseDate],
+    [t0].[ShipDate],
+    [t0].[ExpectedDeliveryDate],
+    [t0].[TrackingIdentifier],
+    [t0].[PaymentMethodType],
+    [t0].[PaymentSourceType],
+    [t0].[DateCreated],
+    [t0].[DateUpdated]
 FROM
-	[dbo].[Purchase]
+    [dbo].[Purchase] AS [t0]
 WHERE
-	ISNULL([dbo].[Purchase].[ExpectedDeliveryDate], [dbo].[Purchase].[ShipDate]) < @P1;',N'@P1 datetime',@P1='2022-09-20 16:44:07.717'
+    ISNULL([t0].[ExpectedDeliveryDate], [t0].[ShipDate]) < @P1;',N'@P1 datetime',@P1='2022-09-20 16:44:07.717'
 ```
 {% /code-example %}
 
@@ -128,23 +128,23 @@ IEnumerable<Purchase> products = db.SelectMany<Purchase>()
 ```
 ```sql
 SELECT
-	[dbo].[Purchase].[Id],
-	[dbo].[Purchase].[PersonId],
-	[dbo].[Purchase].[OrderNumber],
-	[dbo].[Purchase].[TotalPurchaseQuantity],
-	[dbo].[Purchase].[TotalPurchaseAmount],
-	[dbo].[Purchase].[PurchaseDate],
-	[dbo].[Purchase].[ShipDate],
-	[dbo].[Purchase].[ExpectedDeliveryDate],
-	[dbo].[Purchase].[TrackingIdentifier],
-	[dbo].[Purchase].[PaymentMethodType],
-	[dbo].[Purchase].[PaymentSourceType],
-	[dbo].[Purchase].[DateCreated],
-	[dbo].[Purchase].[DateUpdated]
+    [t0].[Id],
+    [t0].[PersonId],
+    [t0].[OrderNumber],
+    [t0].[TotalPurchaseQuantity],
+    [t0].[TotalPurchaseAmount],
+    [t0].[PurchaseDate],
+    [t0].[ShipDate],
+    [t0].[ExpectedDeliveryDate],
+    [t0].[TrackingIdentifier],
+    [t0].[PaymentMethodType],
+    [t0].[PaymentSourceType],
+    [t0].[DateCreated],
+    [t0].[DateUpdated]
 FROM
-	[dbo].[Purchase]
+    [dbo].[Purchase] AS [t0]
 ORDER BY
-	ISNULL([dbo].[Purchase].[ExpectedDeliveryDate], [dbo].[Purchase].[ShipDate]) DESC;
+    ISNULL([t0].[ExpectedDeliveryDate], [t0].[ShipDate]) DESC;
 ```
 {% /code-example %}
 
@@ -166,13 +166,13 @@ IEnumerable<dynamic> values = db.SelectMany(
 ```
 ```sql
 SELECT
-	[dbo].[Purchase].[PaymentMethodType],
-	ISNULL([dbo].[Purchase].[ExpectedDeliveryDate], [dbo].[Purchase].[ShipDate]) AS [relevant_date]
+    [t0].[PaymentMethodType],
+    ISNULL([t0].[ExpectedDeliveryDate], [t0].[ShipDate]) AS [relevant_date]
 FROM
-	[dbo].[Purchase]
+    [dbo].[Purchase] AS [t0]
 GROUP BY
-	[dbo].[Purchase].[PaymentMethodType],
-	ISNULL([dbo].[Purchase].[ExpectedDeliveryDate], [dbo].[Purchase].[ShipDate]);
+    [t0].[PaymentMethodType],
+    ISNULL([t0].[ExpectedDeliveryDate], [t0].[ShipDate]);
 ```
 {% /code-example %}
 
@@ -197,16 +197,16 @@ IEnumerable<dynamic> values = db.SelectMany(
 ```
 ```sql
 exec sp_executesql N'SELECT
-	[dbo].[Purchase].[PaymentMethodType],
-	ISNULL([dbo].[Purchase].[ExpectedDeliveryDate], [dbo].[Purchase].[ShipDate]) AS [relevant_date]
+    [t0].[PaymentMethodType],
+    ISNULL([t0].[ExpectedDeliveryDate], [t0].[ShipDate]) AS [relevant_date]
 FROM
-	[dbo].[Purchase]
+    [dbo].[Purchase] AS [t0]
 GROUP BY
-	[dbo].[Purchase].[PaymentMethodType],
-	[dbo].[Purchase].[ExpectedDeliveryDate],
-	[dbo].[Purchase].[ShipDate]
+    [t0].[PaymentMethodType],
+    [t0].[ExpectedDeliveryDate],
+    [t0].[ShipDate]
 HAVING
-	ISNULL([dbo].[Purchase].[ExpectedDeliveryDate], [dbo].[Purchase].[ShipDate]) < @P1;',N'@P1 datetime',@P1='2022-09-19 00:00:00'
+    ISNULL([t0].[ExpectedDeliveryDate], [t0].[ShipDate]) < @P1;',N'@P1 datetime',@P1='2022-09-19 00:00:00'
 ```
 {% /code-example %}
 

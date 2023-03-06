@@ -46,9 +46,9 @@ IEnumerable<double> value = db.SelectMany(
 ```
 ```sql
 SELECT
-	CEILING([dbo].[Purchase].[TotalPurchaseAmount])
+    CEILING([t0].[TotalPurchaseAmount])
 FROM
-	[dbo].[Purchase];
+    [dbo].[Purchase] AS [t0];
 ```
 {% /code-example %}
 
@@ -65,11 +65,11 @@ IEnumerable<int> value = db.SelectMany(
 ```
 ```sql
 exec sp_executesql N'SELECT
-	[dbo].[Purchase].[Id]
+    [t0].[Id]
 FROM
-	[dbo].[Purchase]
+    [dbo].[Purchase] AS [t0]
 WHERE
-	CEILING([dbo].[Purchase].[TotalPurchaseAmount]) <= @P1;',N'@P1 float',@P1=100
+    CEILING([t0].[TotalPurchaseAmount]) <= @P1;',N'@P1 float',@P1=100
 ```
 {% /code-example %}
 
@@ -86,11 +86,11 @@ IEnumerable<double> value = db.SelectMany(
 ```
 ```sql
 SELECT
-	[dbo].[Purchase].[TotalPurchaseAmount]
+    [t0].[TotalPurchaseAmount]
 FROM
-	[dbo].[Purchase]
+    [dbo].[Purchase] AS [t0]
 ORDER BY
-	CEILING([dbo].[Purchase].[TotalPurchaseAmount]) DESC;
+    CEILING([t0].[TotalPurchaseAmount]) DESC;
 ```
 {% /code-example %}
 
@@ -112,15 +112,15 @@ IEnumerable<dynamic> values = db.SelectMany(
 ```
 ```sql
 SELECT
-	[dbo].[Purchase].[PaymentMethodType],
-	CEILING([dbo].[Purchase].[TotalPurchaseAmount]) AS [TotalPurchaseAmount]
+    [t0].[PaymentMethodType],
+    CEILING([t0].[TotalPurchaseAmount]) AS [TotalPurchaseAmount]
 FROM
-	[dbo].[Purchase]
+    [dbo].[Purchase] AS [t0]
 GROUP BY
-	[dbo].[Purchase].[PaymentMethodType],
-	CEILING([dbo].[Purchase].[TotalPurchaseAmount])
+    [t0].[PaymentMethodType],
+    CEILING([t0].[TotalPurchaseAmount])
 ORDER BY
-	CEILING([dbo].[Purchase].[TotalPurchaseAmount]) ASC;
+    CEILING([t0].[TotalPurchaseAmount]) ASC
 ```
 {% /code-example %}
 
@@ -144,16 +144,16 @@ IEnumerable<dynamic> values = db.SelectMany(
 ```
 ```sql
 exec sp_executesql N'SELECT
-	[dbo].[Purchase].[PaymentMethodType],
-	CEILING([dbo].[Purchase].[TotalPurchaseAmount]) AS [TotalPurchaseAmount]
+    [t0].[PaymentMethodType],
+    CEILING([t0].[TotalPurchaseAmount]) AS [TotalPurchaseAmount]
 FROM
-	[dbo].[Purchase]
+    [dbo].[Purchase] AS [t0]
 GROUP BY
-	[dbo].[Purchase].[PaymentMethodType],
-	CEILING([dbo].[Purchase].[TotalPurchaseAmount])
+    [t0].[PaymentMethodType],
+    CEILING([t0].[TotalPurchaseAmount])
 HAVING
-	CEILING([dbo].[Purchase].[TotalPurchaseAmount]) > @P1
+    CEILING([t0].[TotalPurchaseAmount]) > @P1
 ORDER BY
-	CEILING([dbo].[Purchase].[TotalPurchaseAmount]) ASC;',N'@P1 float',@P1=10
+    CEILING([t0].[TotalPurchaseAmount]) ASC;',N'@P1 float',@P1=10
 ```
 {% /code-example %}

@@ -39,28 +39,24 @@ IEnumerable<dynamic> purchases_shipped_by_year = await db.SelectMany(
 And here's the SQL statement dbExpression assembled and executed against the database:
 ```sql
 exec sp_executesql N'SELECT
-	[dbo].[Person].[Id],
-	([dbo].[Person].[FirstName] + @P1 + [dbo].[Person].[LastName]) AS [CustomerName],
-	COUNT([dbo].[Purchase].[ShipDate]) AS [ShippedCount],
-	DATEPART(year, [dbo].[Purchase].[ShipDate]) AS [ShippedYear]
+	[t0].[Id],
+	([t0].[FirstName] + @P1 + [t0].[LastName]) AS [CustomerName],
+	COUNT([t1].[ShipDate]) AS [ShippedCount],
+	DATEPART(year, [t1].[ShipDate]) AS [ShippedYear]
 FROM
-	[dbo].[Purchase]
-	INNER JOIN [dbo].[Person] ON [dbo].[Purchase].[PersonId] = [dbo].[Person].[Id]
+	[dbo].[Purchase] AS [t1]
+	INNER JOIN [dbo].[Person] AS [t0] ON [t1].[PersonId] = [t0].[Id]
 WHERE
-	[dbo].[Purchase].[ShipDate] IS NOT NULL
+	[t1].[ShipDate] IS NOT NULL
 GROUP BY
-	[dbo].[Person].[Id],
-	[dbo].[Person].[FirstName],
-	[dbo].[Person].[LastName],
-	DATEPART(year, [dbo].[Purchase].[ShipDate])
-;',N'@P1 char(1)',@P1=' '
+	[t0].[Id],
+	[t0].[FirstName],
+	[t0].[LastName],
+	DATEPART(year, [t1].[ShipDate]);',N'@P1 varchar(1)',@P1=' '
 ```
 
 dbExpression was designed to work statically or with dependency injection.  The decision for which to use is typically based on the type of project, 
 the team environment, and just what works best for you - it's your choice!
-* Statically using a static database accessor to fluently build and execute queries.  This is great for environments or projects where this works best.
-* Instance based via dependency injection where an instance of the database accessor is used to fluently build and execute queries.  Perfect for environments 
-that use dependency injection.
 
 dbExpression is quick and easy to get up and running using two packages available on NuGet:
 1) [dbExpression Microsoft SQL Server package](https://www.nuget.org/packages/HatTrick.DbEx.MsSql/)

@@ -36,8 +36,8 @@ DateTime current = db.SelectOne(
 ```
 ```sql
 SELECT TOP(1)
-	CURRENT_TIMESTAMP
+    CURRENT_TIMESTAMP
 FROM
-	[dbo].[Purchase];
+    [dbo].[Purchase] AS [t0];
 ```
 {% /code-example %}

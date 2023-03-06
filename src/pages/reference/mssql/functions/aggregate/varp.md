@@ -51,9 +51,9 @@ float result = db.SelectOne(
 ```
 ```sql
 SELECT TOP(1)
-	VARP([dbo].[Product].[ShippingWeight])
+    VARP([t0].[ShippingWeight])
 FROM
-	[dbo].[Product];
+    [dbo].[Product] AS [t0];
 ```
 {% /code-example %}
 
@@ -70,11 +70,11 @@ float result = db.SelectOne(
 ```
 ```sql
 SELECT TOP(1)
-	VARP([dbo].[Product].[ShippingWeight])
+    VARP([t0].[ShippingWeight])
 FROM
-	[dbo].[Product]
+    [dbo].[Product] AS [t0]
 ORDER BY
-	VARP([dbo].[Product].[ShippingWeight]) DESC;
+    VARP([t0].[ShippingWeight]) DESC;
 ```
 {% /code-example %}
 
@@ -93,12 +93,12 @@ IEnumerable<float> results = db.SelectMany(
 ```
 ```sql
 exec sp_executesql N'SELECT
-	VARP([dbo].[Product].[ShippingWeight])
+    VARP([t0].[ShippingWeight])
 FROM
-	[dbo].[Product]
+    [dbo].[Product] AS [t0]
 GROUP BY
-	[dbo].[Product].[ProductCategoryType]
+    [t0].[ProductCategoryType]
 HAVING
-	VARP([dbo].[Product].[ShippingWeight]) > @P1;',N'@P1 real',@P1=1
+    VARP([t0].[ShippingWeight]) > @P1;',N'@P1 real',@P1=1
 ```
 {% /code-example %}

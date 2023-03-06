@@ -46,9 +46,9 @@ float? result = db.SelectOne(
 ```
 ```sql
 SELECT TOP(1)
-	EXP([dbo].[Product].[Weight])
+    EXP([t0].[Weight])
 FROM
-	[dbo].[Product];
+    [dbo].[Product] AS [t0];
 ```
 {% /code-example %}
 
@@ -64,9 +64,9 @@ float? result = db.SelectOne(
 ```
 ```sql
 SELECT TOP(1)
-	EXP([dbo].[Product].[Depth])
+    EXP([t0].[Depth])
 FROM
-	[dbo].[Product];
+    [dbo].[Product] AS [t0];
 ```
 {% /code-example %}
 
@@ -76,36 +76,32 @@ Select and order by the exponential of a product's depth.
 ```csharp
 IEnumerable<Product> result = db.SelectMany<Product>()
     .From(dbo.Product)
-    .OrderBy(db.fx.Exp(dbo.Product.Depth).Desc)()
+    .OrderBy(db.fx.Exp(dbo.Product.Depth).Desc())
     .Execute();
 ```
 ```sql
 SELECT
-	[dbo].[Product].[Id],
-	[dbo].[Product].[ProductCategoryType],
-	[dbo].[Product].[Name],
-	[dbo].[Product].[Description],
-	[dbo].[Product].[ListPrice],
-	[dbo].[Product].[Price],
-	[dbo].[Product].[Quantity],
-	[dbo].[Product].[Image],
-	[dbo].[Product].[Height],
-	[dbo].[Product].[Width],
-	[dbo].[Product].[Depth],
-	[dbo].[Product].[Weight],
-	[dbo].[Product].[ShippingWeight],
-	[dbo].[Product].[ValidStartTimeOfDayForPurchase],
-	[dbo].[Product].[ValidEndTimeOfDayForPurchase],
-	[dbo].[Product].[DateCreated],
-	[dbo].[Product].[DateUpdated]
+    [t0].[Id],
+    [t0].[ProductCategoryType],
+    [t0].[Name],
+    [t0].[Description],
+    [t0].[ListPrice],
+    [t0].[Price],
+    [t0].[Quantity],
+    [t0].[Image],
+    [t0].[Height],
+    [t0].[Width],
+    [t0].[Depth],
+    [t0].[Weight],
+    [t0].[ShippingWeight],
+    [t0].[ValidStartTimeOfDayForPurchase],
+    [t0].[ValidEndTimeOfDayForPurchase],
+    [t0].[DateCreated],
+    [t0].[DateUpdated]
 FROM
-	[dbo].[Product]
-WHERE
-	[dbo].[Product].[Depth] > @P1
-	AND
-	[dbo].[Product].[Depth] < @P2
+    [dbo].[Product] AS [t0]
 ORDER BY
-	EXP([dbo].[Product].[Depth]) DESC;
+    EXP([t0].[Depth]) DESC;
 ```
 {% /code-example %}
 
@@ -127,13 +123,13 @@ IEnumerable<dynamic> results = db.SelectMany(
 ```
 ```sql
 SELECT
-	[dbo].[Product].[ProductCategoryType],
-	EXP([dbo].[Product].[Depth]) AS [calculated_value]
+    [t0].[ProductCategoryType],
+    EXP([t0].[Depth]) AS [calculated_value]
 FROM
-	[dbo].[Product]
+    [dbo].[Product] AS [t0]
 GROUP BY
-	[dbo].[Product].[ProductCategoryType],
-	EXP([dbo].[Product].[Depth]);
+    [t0].[ProductCategoryType],
+    EXP([t0].[Depth]);
 ```
 {% /code-example %}
 
@@ -149,7 +145,8 @@ IEnumerable<ProductCategoryType?> results = db.SelectMany(
     .From(dbo.Product)
     .GroupBy(
         dbo.Product.ProductCategoryType,
-        db.fx.Exp(dbo.Product.Height)
+        db.fx.Exp(dbo.Product.Height),
+        dbo.Product.Width
     )
     .Having(
         db.fx.Exp(dbo.Product.Height) > dbo.Product.Width
@@ -158,13 +155,14 @@ IEnumerable<ProductCategoryType?> results = db.SelectMany(
 ```
 ```sql
 SELECT
-	[dbo].[Product].[ProductCategoryType]
+    [t0].[ProductCategoryType]
 FROM
-	[dbo].[Product]
+    [dbo].[Product] AS [t0]
 GROUP BY
-	[dbo].[Product].[ProductCategoryType],
-	EXP([dbo].[Product].[Height])
+    [t0].[ProductCategoryType],
+    EXP([t0].[Height]),
+    [t0].[Width]
 HAVING
-	EXP([dbo].[Product].[Height]) > [dbo].[Product].[Width];
+    EXP([t0].[Height]) > [t0].[Width];
 ```
 {% /code-example %}

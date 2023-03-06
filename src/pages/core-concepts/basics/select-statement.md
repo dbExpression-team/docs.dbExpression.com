@@ -33,21 +33,21 @@ Person? person = db.SelectOne<Person>()
 ```
 ```sql
 exec sp_executesql N'SELECT TOP(1)
-    [dbo].[Person].[Id],
-    [dbo].[Person].[FirstName],
-    [dbo].[Person].[LastName],
-    [dbo].[Person].[BirthDate],
-    [dbo].[Person].[GenderType],
-    [dbo].[Person].[CreditLimit],
-    [dbo].[Person].[YearOfLastCreditLimitReview],
-    [dbo].[Person].[RegistrationDate],
-    [dbo].[Person].[LastLoginDate],
-    [dbo].[Person].[DateCreated],
-    [dbo].[Person].[DateUpdated]
+	[t0].[Id],
+	[t0].[FirstName],
+	[t0].[LastName],
+	[t0].[BirthDate],
+	[t0].[GenderType],
+	[t0].[CreditLimit],
+	[t0].[YearOfLastCreditLimitReview],
+	[t0].[RegistrationDate],
+	[t0].[LastLoginDate],
+	[t0].[DateCreated],
+	[t0].[DateUpdated]
 FROM
-    [dbo].[Person]
+	[dbo].[Person] AS [t0]
 WHERE
-    [dbo].[Person].[Id] = @P1;',N'@P1 int',@P1=1
+	[t0].[Id] = @P1;',N'@P1 int',@P1=1
 ```
 {% /code-example %}
 
@@ -64,21 +64,21 @@ IEnumerable<Person> people = db.SelectMany<Person>()
 ```
 ```sql
 exec sp_executesql N'SELECT
-    [dbo].[Person].[Id],
-    [dbo].[Person].[FirstName],
-    [dbo].[Person].[LastName],
-    [dbo].[Person].[BirthDate],
-    [dbo].[Person].[GenderType],
-    [dbo].[Person].[CreditLimit],
-    [dbo].[Person].[YearOfLastCreditLimitReview],
-    [dbo].[Person].[RegistrationDate],
-    [dbo].[Person].[LastLoginDate],
-    [dbo].[Person].[DateCreated],
-    [dbo].[Person].[DateUpdated]
+    [t0].[Id],
+    [t0].[FirstName],
+    [t0].[LastName],
+    [t0].[BirthDate],
+    [t0].[GenderType],
+    [t0].[CreditLimit],
+    [t0].[YearOfLastCreditLimitReview],
+    [t0].[RegistrationDate],
+    [t0].[LastLoginDate],
+    [t0].[DateCreated],
+    [t0].[DateUpdated]
 FROM
-    [dbo].[Person]
+    [dbo].[Person] AS [t0]
 WHERE
-    [dbo].[Person].[LastName] = @P1;',N'@P1 varchar(20)',@P1='Cartman'
+    [t0].[LastName] = @P1;',N'@P1 varchar(20)',@P1='Cartman'
 ```
 {% /code-example %}
 
@@ -97,11 +97,11 @@ string? firstName = db.SelectOne(dbo.Person.FirstName)
 ```
 ```sql
 exec sp_executesql N'SELECT TOP(1)
-    [dbo].[Person].[FirstName]
+    [t0].[FirstName]
 FROM
-    [dbo].[Person]
+    [dbo].[Person] AS [t0]
 WHERE
-    [dbo].[Person].[Id] = @P1;',N'@P1 int',@P1=1
+    [t0].[Id] = @P1;',N'@P1 int',@P1=1
 ```
 {% /code-example %}
 
@@ -116,11 +116,11 @@ IEnumerable<string> firstNames = db.SelectMany(dbo.Person.FirstName)
 ```
 ```sql
 exec sp_executesql N'SELECT
-    [dbo].[Person].[FirstName]
+    [t0].[FirstName]
 FROM
-    [dbo].[Person]
+    [dbo].[Person] AS [t0]
 WHERE
-    [dbo].[Person].[LastName] = @P1;',N'@P1 varchar(20)',@P1='Cartman'
+    [t0].[LastName] = @P1;',N'@P1 varchar(20)',@P1='Cartman'
 ```
 {% /code-example %}
 
@@ -147,13 +147,13 @@ dynamic? record = db.SelectOne(
 ```
 ```sql
 exec sp_executesql N'SELECT TOP(1)
-    [dbo].[Person].[Id],
-    [dbo].[Person].[FirstName],
-    [dbo].[Person].[LastName]
+    [t0].[Id],
+    [t0].[FirstName],
+    [t0].[LastName]
 FROM
-    [dbo].[Person]
+    [dbo].[Person] AS [t0]
 WHERE
-    [dbo].[Person].[Id] = @P1;',N'@P1 int',@P1=1
+    [t0].[Id] = @P1;',N'@P1 int',@P1=1
 ```
 {% /code-example %}
 
@@ -174,12 +174,12 @@ IEnumerable<dynamic> records = db.SelectMany(
 ```
 ```sql
 exec sp_executesql N'SELECT
-    [dbo].[Person].[Id],
-    [dbo].[Person].[FirstName],
-    [dbo].[Person].[LastName]
+    [t0].[Id],
+    [t0].[FirstName],
+    [t0].[LastName]
 FROM
-    [dbo].[Person]
+    [dbo].[Person] AS [t0]
 WHERE
-    [dbo].[Person].[LastName] = @P1;',N'@P1 varchar(20)',@P1='Cartman'
+    [t0].[LastName] = @P1;',N'@P1 varchar(20)',@P1='Cartman'
 ```
 {% /code-example %}

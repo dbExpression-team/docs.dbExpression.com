@@ -68,17 +68,17 @@ Use the `Max` function to return the maximum value from a set of values.
 Select the maximum of total purchase amount for all purchases.
 {% code-example %}
 ```csharp
-double minSales = db.SelectMany(
+double minSales = db.SelectOne(
         db.fx.Max(dbo.Purchase.TotalPurchaseAmount)
     )
     .From(dbo.Purchase)
     .Execute();
 ```
 ```sql
-SELECT
-	MAX([dbo].[Purchase].[TotalPurchaseAmount])
+SELECT TOP(1)
+    MAX([t0].[TotalPurchaseAmount])
 FROM
-	[dbo].[Purchase];
+    [dbo].[Purchase] AS [t0];
 ```
 {% /code-example %}
 
@@ -95,11 +95,11 @@ IEnumerable<double> minSales = db.SelectMany(
 ```
 ```sql
 SELECT
-	MAX([dbo].[Purchase].[TotalPurchaseAmount])
+    MAX([t0].[TotalPurchaseAmount])
 FROM
-	[dbo].[Purchase]
+    [dbo].[Purchase] AS [t0]
 ORDER BY
-	MAX([dbo].[Purchase].[TotalPurchaseAmount]) DESC;
+    MAX([t0].[TotalPurchaseAmount]) DESC;
 ```
 {% /code-example %}
 
@@ -119,14 +119,14 @@ IEnumerable<double> minSales = db.SelectMany(
 ```
 ```sql
 exec sp_executesql N'SELECT
-	MAX([dbo].[Purchase].[TotalPurchaseAmount])
+    MAX([t0].[TotalPurchaseAmount])
 FROM
-	[dbo].[Purchase]
+    [dbo].[Purchase] AS [t0]
 GROUP BY
-	[dbo].[Purchase].[PaymentMethodType]
+    [t0].[PaymentMethodType]
 HAVING
-	MAX([dbo].[Purchase].[TotalPurchaseAmount]) > @P1
+    MAX([t0].[TotalPurchaseAmount]) > @P1
 ORDER BY
-	MAX([dbo].[Purchase].[TotalPurchaseAmount]) ASC;',N'@P1 float',@P1=10
+    MAX([t0].[TotalPurchaseAmount]) ASC;',N'@P1 float',@P1=10
 ```
 {% /code-example %}

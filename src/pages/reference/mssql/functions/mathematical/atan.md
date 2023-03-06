@@ -47,9 +47,13 @@ float? result = db.SelectOne(
 ```
 ```sql
 SELECT TOP(1)
-	ATAN([dbo].[Product].[Weight])
+    ATAN([t0].[Weight])
 FROM
-	[dbo].[Product];
+    [dbo].[Product] AS [t0]
+WHERE
+    [t0].[Weight] > @P1
+    AND
+    [t0].[Weight] < @P2;
 ```
 {% /code-example %}
 
@@ -66,13 +70,13 @@ float? result = db.SelectOne(
 ```
 ```sql
 exec sp_executesql N'SELECT TOP(1)
-	ATAN([dbo].[Product].[Depth])
+    ATAN([t0].[Depth])
 FROM
-	[dbo].[Product]
+    [dbo].[Product] AS [t0]
 WHERE
-	[dbo].[Product].[Depth] > @P1
-	AND
-	[dbo].[Product].[Depth] < @P2;',N'@P1 decimal(4,1),@P2 decimal(4,1)',@P1=0.0,@P2=1.0
+    [t0].[Depth] > @P1
+    AND
+    [t0].[Depth] < @P2;',N'@P1 decimal(4,1),@P2 decimal(4,1)',@P1=0.0,@P2=1.0
 ```
 {% /code-example %}
 
@@ -86,28 +90,28 @@ IEnumerable<Product> result = db.SelectMany<Product>()
     .Execute();
 ```
 ```sql
-SELECT
-	[dbo].[Product].[Id],
-	[dbo].[Product].[ProductCategoryType],
-	[dbo].[Product].[Name],
-	[dbo].[Product].[Description],
-	[dbo].[Product].[ListPrice],
-	[dbo].[Product].[Price],
-	[dbo].[Product].[Quantity],
-	[dbo].[Product].[Image],
-	[dbo].[Product].[Height],
-	[dbo].[Product].[Width],
-	[dbo].[Product].[Depth],
-	[dbo].[Product].[Weight],
-	[dbo].[Product].[ShippingWeight],
-	[dbo].[Product].[ValidStartTimeOfDayForPurchase],
-	[dbo].[Product].[ValidEndTimeOfDayForPurchase],
-	[dbo].[Product].[DateCreated],
-	[dbo].[Product].[DateUpdated]
+ELECT
+    [t0].[Id],
+    [t0].[ProductCategoryType],
+    [t0].[Name],
+    [t0].[Description],
+    [t0].[ListPrice],
+    [t0].[Price],
+    [t0].[Quantity],
+    [t0].[Image],
+    [t0].[Height],
+    [t0].[Width],
+    [t0].[Depth],
+    [t0].[Weight],
+    [t0].[ShippingWeight],
+    [t0].[ValidStartTimeOfDayForPurchase],
+    [t0].[ValidEndTimeOfDayForPurchase],
+    [t0].[DateCreated],
+    [t0].[DateUpdated]
 FROM
-	[dbo].[Product]
+    [dbo].[Product] AS [t0]
 ORDER BY
-	ATAN([dbo].[Product].[Depth]) DESC;
+    ATAN([t0].[Depth]) DESC;
 ```
 {% /code-example %}
 
@@ -129,13 +133,13 @@ IEnumerable<dynamic> results = db.SelectMany(
 ```
 ```sql
 SELECT
-	[dbo].[Product].[ProductCategoryType],
-	ATAN([dbo].[Product].[Depth]) AS [calculated_value]
+    [t0].[ProductCategoryType],
+    ATAN([t0].[Depth]) AS [calculated_value]
 FROM
-	[dbo].[Product]
+    [dbo].[Product] AS [t0]
 GROUP BY
-	[dbo].[Product].[ProductCategoryType],
-	ATAN([dbo].[Product].[Depth]);
+    [t0].[ProductCategoryType],
+    ATAN([t0].[Depth]);
 ```
 {% /code-example %}
 
@@ -159,13 +163,13 @@ IEnumerable<ProductCategoryType?> results = db.SelectMany(
 ```
 ```sql
 exec sp_executesql N'SELECT
-	[dbo].[Product].[ProductCategoryType]
+    [t0].[ProductCategoryType]
 FROM
-	[dbo].[Product]
+    [dbo].[Product] AS [t0]
 GROUP BY
-	[dbo].[Product].[ProductCategoryType],
-	ATAN([dbo].[Product].[Depth])
+    [t0].[ProductCategoryType],
+    ATAN([t0].[Depth])
 HAVING
-	ATAN([dbo].[Product].[Depth]) < @P1;',N'@P1 decimal(4,1)',@P1=0.5
+    ATAN([t0].[Depth]) < @P1;',N'@P1 decimal(4,1)',@P1=0.5
 ```
 {% /code-example %}

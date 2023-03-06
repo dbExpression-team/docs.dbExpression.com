@@ -36,8 +36,8 @@ DateTimeOffset current = db.SelectOne(
 ```
 ```sql
 SELECT TOP(1)
-	SYSDATETIMEOFFSET()
+    SYSDATETIMEOFFSET()
 FROM
-	[dbo].[Purchase];
+    [dbo].[Purchase] AS [t0];
 ```
 {% /code-example %}

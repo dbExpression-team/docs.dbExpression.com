@@ -280,6 +280,7 @@ const navigation = [
                   { 'title': 'Right', 'href': '/reference/{current_language}/functions/string/right' },
                   { 'title': 'RTrim', 'href': '/reference/{current_language}/functions/string/rtrim' },
                   { 'title': 'Substring', 'href': '/reference/{current_language}/functions/string/substring' },
+                  { 'title': 'Soundex', 'href': '/reference/{current_language}/functions/string/soundex' },
                   { 'title': 'Trim', 'href': '/reference/{current_language}/functions/string/trim' }
                 ]
             },

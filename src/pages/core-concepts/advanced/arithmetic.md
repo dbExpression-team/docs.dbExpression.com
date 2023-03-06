@@ -55,13 +55,13 @@ IEnumerable<dynamic> inventoryStats = db.SelectMany(
 ```
 ```sql
 SELECT
-    [dbo].[Product].[Id],
-    [dbo].[Product].[Name],
-    [dbo].[Product].[Quantity] AS [QuantityOnHand],
-    ([dbo].[Product].[Quantity] * [dbo].[Product].[Price]) AS [InventoryCost],
-    (([dbo].[Product].[Quantity] * [dbo].[Product].[ListPrice]) - ([dbo].[Product].[Quantity] * [dbo].[Product].[Price])) AS [ProjectedMargin]
+    [t0].[Id],
+    [t0].[Name],
+    [t0].[Quantity] AS [QuantityOnHand],
+    ([t0].[Quantity] * [t0].[Price]) AS [InventoryCost],
+    (([t0].[Quantity] * [t0].[ListPrice]) - ([t0].[Quantity] * [t0].[Price])) AS [ProjectedMargin]
 FROM
-    [dbo].[Product];
+    [dbo].[Product] AS [t0];
 ```
 {% /code-example %}
 

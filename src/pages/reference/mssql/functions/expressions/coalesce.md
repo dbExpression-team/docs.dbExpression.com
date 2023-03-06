@@ -154,9 +154,9 @@ IEnumerable<object?> result = db.SelectMany(
 ```
 ```sql
 SELECT
-	COALESCE([dbo].[Purchase].[ExpectedDeliveryDate], [dbo].[Purchase].[ShipDate], [dbo].[Purchase].[PurchaseDate]) AS [latest_date]
+    COALESCE([t0].[ExpectedDeliveryDate], [t0].[ShipDate], [t0].[PurchaseDate]) AS [latest_date]
 FROM
-	[dbo].[Purchase];
+    [dbo].[Purchase] AS [t0];
 ```
 {% /code-example %}
 
@@ -173,9 +173,9 @@ IEnumerable<DateTime> result = db.SelectMany(
 ```
 ```sql
 SELECT
-	COALESCE([dbo].[Purchase].[ExpectedDeliveryDate], [dbo].[Purchase].[ShipDate], [dbo].[Purchase].[PurchaseDate]) AS [latest_date]
+    COALESCE([t0].[ExpectedDeliveryDate], [t0].[ShipDate], [t0].[PurchaseDate]) AS [latest_date]
 FROM
-	[dbo].[Purchase];
+    [dbo].[Purchase] AS [t0];
 ```
 {% /code-example %}
 
@@ -183,7 +183,7 @@ Try and select the first non-null item in a list of different data types.  This 
 {% code-example %}
 ```csharp
 object? result = db.SelectOne(
-        db.fx.Coalesce(dbo.Purchase.OrderNumber, dbo.Purchase.Id).As("relevant_identifier")
+        db.fx.Coalesce(db.fx.Cast(dbo.Purchase.OrderNumber).AsBigInt(), dbo.Purchase.Id).As("relevant_identifier")
     )
     .From(dbo.Purchase)
     .Execute();
@@ -192,9 +192,9 @@ object? result = db.SelectOne(
 ```
 ```sql
 SELECT TOP(1)
-	COALESCE([dbo].[Purchase].[OrderNumber], [dbo].[Purchase].[Id]) AS [relevant_identifier]
+    COALESCE(CAST([t0].[OrderNumber] AS BigInt), [t0].[Id]) AS [relevant_identifier]
 FROM
-	[dbo].[Purchase];
+    [dbo].[Purchase] AS [t0];
 ```
 {% /code-example %}
 
@@ -210,24 +210,24 @@ IEnumerable<Purchase> purchases = db.SelectMany<Purchase>()
     .Execute();
 ```
 ```sql
-exec sp_executesql N'SELECT
-	[dbo].[Purchase].[Id],
-	[dbo].[Purchase].[PersonId],
-	[dbo].[Purchase].[OrderNumber],
-	[dbo].[Purchase].[TotalPurchaseQuantity],
-	[dbo].[Purchase].[TotalPurchaseAmount],
-	[dbo].[Purchase].[PurchaseDate],
-	[dbo].[Purchase].[ShipDate],
-	[dbo].[Purchase].[ExpectedDeliveryDate],
-	[dbo].[Purchase].[TrackingIdentifier],
-	[dbo].[Purchase].[PaymentMethodType],
-	[dbo].[Purchase].[PaymentSourceType],
-	[dbo].[Purchase].[DateCreated],
-	[dbo].[Purchase].[DateUpdated]
+exec sp_executesql N'ELECT
+    [t0].[Id],
+    [t0].[PersonId],
+    [t0].[OrderNumber],
+    [t0].[TotalPurchaseQuantity],
+    [t0].[TotalPurchaseAmount],
+    [t0].[PurchaseDate],
+    [t0].[ShipDate],
+    [t0].[ExpectedDeliveryDate],
+    [t0].[TrackingIdentifier],
+    [t0].[PaymentMethodType],
+    [t0].[PaymentSourceType],
+    [t0].[DateCreated],
+    [t0].[DateUpdated]
 FROM
-	[dbo].[Purchase]
+    [dbo].[Purchase] AS [t0]
 WHERE
-	COALESCE([dbo].[Purchase].[ExpectedDeliveryDate], [dbo].[Purchase].[ShipDate], [dbo].[Purchase].[PurchaseDate]) < @P1;',N'@P1 datetime',@P1='2022-09-20 16:47:54.607'
+    COALESCE([t0].[ExpectedDeliveryDate], [t0].[ShipDate], [t0].[PurchaseDate]) < @P1;',N'@P1 datetime',@P1='2022-09-20 16:47:54.607'
 ```
 {% /code-example %}
 
@@ -242,23 +242,23 @@ IEnumerable<Purchase> products = db.SelectMany<Purchase>()
 ```
 ```sql
 SELECT
-	[dbo].[Purchase].[Id],
-	[dbo].[Purchase].[PersonId],
-	[dbo].[Purchase].[OrderNumber],
-	[dbo].[Purchase].[TotalPurchaseQuantity],
-	[dbo].[Purchase].[TotalPurchaseAmount],
-	[dbo].[Purchase].[PurchaseDate],
-	[dbo].[Purchase].[ShipDate],
-	[dbo].[Purchase].[ExpectedDeliveryDate],
-	[dbo].[Purchase].[TrackingIdentifier],
-	[dbo].[Purchase].[PaymentMethodType],
-	[dbo].[Purchase].[PaymentSourceType],
-	[dbo].[Purchase].[DateCreated],
-	[dbo].[Purchase].[DateUpdated]
+    [t0].[Id],
+    [t0].[PersonId],
+    [t0].[OrderNumber],
+    [t0].[TotalPurchaseQuantity],
+    [t0].[TotalPurchaseAmount],
+    [t0].[PurchaseDate],
+    [t0].[ShipDate],
+    [t0].[ExpectedDeliveryDate],
+    [t0].[TrackingIdentifier],
+    [t0].[PaymentMethodType],
+    [t0].[PaymentSourceType],
+    [t0].[DateCreated],
+    [t0].[DateUpdated]
 FROM
-	[dbo].[Purchase]
+    [dbo].[Purchase] AS [t0]
 ORDER BY
-	COALESCE([dbo].[Purchase].[ExpectedDeliveryDate], [dbo].[Purchase].[ShipDate], [dbo].[Purchase].[PurchaseDate]) DESC;
+    COALESCE([t0].[ExpectedDeliveryDate], [t0].[ShipDate], [t0].[PurchaseDate]) DESC;
 ```
 {% /code-example %}
 
@@ -280,13 +280,13 @@ IEnumerable<dynamic> values = db.SelectMany(
 ```
 ```sql
 SELECT
-	[dbo].[Purchase].[PaymentMethodType],
-	COALESCE([dbo].[Purchase].[ExpectedDeliveryDate], [dbo].[Purchase].[ShipDate], [dbo].[Purchase].[PurchaseDate]) AS [relevant_date]
+    [t0].[PaymentMethodType],
+    COALESCE([t0].[ExpectedDeliveryDate], [t0].[ShipDate], [t0].[PurchaseDate]) AS [relevant_date]
 FROM
-	[dbo].[Purchase]
+    [dbo].[Purchase] AS [t0]
 GROUP BY
-	[dbo].[Purchase].[PaymentMethodType],
-	COALESCE([dbo].[Purchase].[ExpectedDeliveryDate], [dbo].[Purchase].[ShipDate], [dbo].[Purchase].[PurchaseDate]);
+    [t0].[PaymentMethodType],
+    COALESCE([t0].[ExpectedDeliveryDate], [t0].[ShipDate], [t0].[PurchaseDate]);
 ```
 {% /code-example %}
 
@@ -312,17 +312,17 @@ IEnumerable<dynamic> values = db.SelectMany(
 ```
 ```sql
 exec sp_executesql N'SELECT
-	[dbo].[Purchase].[PaymentMethodType],
-	COALESCE([dbo].[Purchase].[ExpectedDeliveryDate], [dbo].[Purchase].[ShipDate], [dbo].[Purchase].[PurchaseDate]) AS [relevant_date]
+    [t0].[PaymentMethodType],
+    COALESCE([t0].[ExpectedDeliveryDate], [t0].[ShipDate], [t0].[PurchaseDate]) AS [relevant_date]
 FROM
-	[dbo].[Purchase]
+    [dbo].[Purchase] AS [t0]
 GROUP BY
-	[dbo].[Purchase].[PaymentMethodType],
-	[dbo].[Purchase].[ExpectedDeliveryDate],
-	[dbo].[Purchase].[ShipDate],
-	[dbo].[Purchase].[PurchaseDate]
+    [t0].[PaymentMethodType],
+    [t0].[ExpectedDeliveryDate],
+    [t0].[ShipDate],
+    [t0].[PurchaseDate]
 HAVING
-	COALESCE([dbo].[Purchase].[ExpectedDeliveryDate], [dbo].[Purchase].[ShipDate], [dbo].[Purchase].[PurchaseDate]) < @P1;',N'@P1 datetime',@P1='2022-09-19 00:00:00'
+    COALESCE([t0].[ExpectedDeliveryDate], [t0].[ShipDate], [t0].[PurchaseDate]) < @P1;',N'@P1 datetime',@P1='2022-09-19 00:00:00'
 ```
 {% /code-example %}
 

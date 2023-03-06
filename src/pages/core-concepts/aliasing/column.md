@@ -33,12 +33,12 @@ IEnumerable<dynamic> purchases = db.SelectMany(
 ```
 ```sql
 SELECT
-	[dbo].[Person].[Id] AS [PersonId],
-	[dbo].[Person].[LastName],
-	[dbo].[Purchase].[Id],
-	[dbo].[Purchase].[TotalPurchaseAmount]
+    [t0].[Id] AS [PersonId],
+    [t0].[LastName],
+    [t1].[Id],
+    [t1].[TotalPurchaseAmount]
 FROM
-	[dbo].[Purchase]
-	INNER JOIN [dbo].[Person] ON [dbo].[Purchase].[PersonId] = [dbo].[Person].[Id];
+    [dbo].[Purchase] AS [t1]
+    INNER JOIN [dbo].[Person] AS [t0] ON [t1].[PersonId] = [t0].[Id];
 ```
 {% /code-example %}

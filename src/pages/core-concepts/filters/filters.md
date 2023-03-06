@@ -100,11 +100,11 @@ DateTimeOffset registration = db.SelectOne(dbo.Person.RegistrationDate)
 ```
 ```sql
 exec sp_executesql N'SELECT TOP(1)
-	[dbo].[Person].[RegistrationDate]
+	[t0].[RegistrationDate]
 FROM
-	[dbo].[Person]
+	[dbo].[Person] AS [t0]
 WHERE
-	[dbo].[Person].[Id] = @P1;',N'@P1 int',@P1=1
+	[t0].[Id] = @P1;',N'@P1 int',@P1=1
 ```
 {% /code-example %}
 
@@ -120,21 +120,21 @@ IEnumerable<Person> people = db.SelectMany<Person>()
 ```
 ```sql
 exec sp_executesql N'SELECT
-	[dbo].[Person].[Id],
-	[dbo].[Person].[FirstName],
-	[dbo].[Person].[LastName],
-	[dbo].[Person].[BirthDate],
-	[dbo].[Person].[GenderType],
-	[dbo].[Person].[CreditLimit],
-	[dbo].[Person].[YearOfLastCreditLimitReview],
-	[dbo].[Person].[RegistrationDate],
-	[dbo].[Person].[LastLoginDate],
-	[dbo].[Person].[DateCreated],
-	[dbo].[Person].[DateUpdated]
+	[t0].[Id],
+	[t0].[FirstName],
+	[t0].[LastName],
+	[t0].[BirthDate],
+	[t0].[GenderType],
+	[t0].[CreditLimit],
+	[t0].[YearOfLastCreditLimitReview],
+	[t0].[RegistrationDate],
+	[t0].[LastLoginDate],
+	[t0].[DateCreated],
+	[t0].[DateUpdated]
 FROM
-	[dbo].[Person]
+	[dbo].[Person] AS [t0]
 WHERE
-	[dbo].[Person].[LastLoginDate] > @P1;',N'@P1 datetimeoffset(7)',@P1='2021-04-14 00:00:00 -05:00'
+	[t0].[LastLoginDate] > @P1;',N'@P1 datetimeoffset(7)',@P1='2021-04-14 00:00:00 -05:00'
 ```
 {% /code-example %}
 
@@ -149,21 +149,21 @@ IEnumerable<Person> people = db.SelectMany<Person>()
 ```
 ```sql
 exec sp_executesql N'SELECT
-	[dbo].[Person].[Id],
-	[dbo].[Person].[FirstName],
-	[dbo].[Person].[LastName],
-	[dbo].[Person].[BirthDate],
-	[dbo].[Person].[GenderType],
-	[dbo].[Person].[CreditLimit],
-	[dbo].[Person].[YearOfLastCreditLimitReview],
-	[dbo].[Person].[RegistrationDate],
-	[dbo].[Person].[LastLoginDate],
-	[dbo].[Person].[DateCreated],
-	[dbo].[Person].[DateUpdated]
+	[t0].[Id],
+	[t0].[FirstName],
+	[t0].[LastName],
+	[t0].[BirthDate],
+	[t0].[GenderType],
+	[t0].[CreditLimit],
+	[t0].[YearOfLastCreditLimitReview],
+	[t0].[RegistrationDate],
+	[t0].[LastLoginDate],
+	[t0].[DateCreated],
+	[t0].[DateUpdated]
 FROM
-	[dbo].[Person]
+	[dbo].[Person] AS [t0]
 WHERE
-	[dbo].[Person].[LastName] = @P1;',N'@P1 varchar(20)',@P1='Cartman'
+	[t0].[LastName] = @P1;',N'@P1 varchar(20)',@P1='Cartman'
 ```
 {% /code-example %}
 
@@ -178,21 +178,21 @@ IEnumerable<Person> people = db.SelectMany<Person>()
 ```
 ```sql
 SELECT
-	[dbo].[Person].[Id],
-	[dbo].[Person].[FirstName],
-	[dbo].[Person].[LastName],
-	[dbo].[Person].[BirthDate],
-	[dbo].[Person].[GenderType],
-	[dbo].[Person].[CreditLimit],
-	[dbo].[Person].[YearOfLastCreditLimitReview],
-	[dbo].[Person].[RegistrationDate],
-	[dbo].[Person].[LastLoginDate],
-	[dbo].[Person].[DateCreated],
-	[dbo].[Person].[DateUpdated]
+	[t0].[Id],
+	[t0].[FirstName],
+	[t0].[LastName],
+	[t0].[BirthDate],
+	[t0].[GenderType],
+	[t0].[CreditLimit],
+	[t0].[YearOfLastCreditLimitReview],
+	[t0].[RegistrationDate],
+	[t0].[LastLoginDate],
+	[t0].[DateCreated],
+	[t0].[DateUpdated]
 FROM
-	[dbo].[Person]
+	[dbo].[Person] AS [t0]
 WHERE
-	[dbo].[Person].[FirstName] = [dbo].[Person].[LastName];
+	[t0].[FirstName] = [t0].[LastName];
 ```
 {% /code-example %}
 
@@ -211,23 +211,23 @@ IEnumerable<Person> people = db.SelectMany<Person>()
 ```
 ```sql
 exec sp_executesql N'SELECT
-	[dbo].[Person].[Id],
-	[dbo].[Person].[FirstName],
-	[dbo].[Person].[LastName],
-	[dbo].[Person].[BirthDate],
-	[dbo].[Person].[GenderType],
-	[dbo].[Person].[CreditLimit],
-	[dbo].[Person].[YearOfLastCreditLimitReview],
-	[dbo].[Person].[RegistrationDate],
-	[dbo].[Person].[LastLoginDate],
-	[dbo].[Person].[DateCreated],
-	[dbo].[Person].[DateUpdated]
+	[t0].[Id],
+	[t0].[FirstName],
+	[t0].[LastName],
+	[t0].[BirthDate],
+	[t0].[GenderType],
+	[t0].[CreditLimit],
+	[t0].[YearOfLastCreditLimitReview],
+	[t0].[RegistrationDate],
+	[t0].[LastLoginDate],
+	[t0].[DateCreated],
+	[t0].[DateUpdated]
 FROM
-	[dbo].[Person]
+	[dbo].[Person] AS [t0]
 WHERE
-	[dbo].[Person].[YearOfLastCreditLimitReview] > @P1
+	[t0].[YearOfLastCreditLimitReview] > @P1
 	AND
-	[dbo].[Person].[CreditLimit] >= @P2;',N'@P1 int,@P2 int',@P1=2020,@P2=25000
+	[t0].[CreditLimit] >= @P2;',N'@P1 int,@P2 int',@P1=2020,@P2=25000
 ```
 {% /code-example %}
 
@@ -249,27 +249,25 @@ IEnumerable<Person> people = db.SelectMany<Person>()
 ```
 ```sql
 exec sp_executesql N'SELECT
-	[dbo].[Person].[Id],
-	[dbo].[Person].[FirstName],
-	[dbo].[Person].[LastName],
-	[dbo].[Person].[BirthDate],
-	[dbo].[Person].[GenderType],
-	[dbo].[Person].[CreditLimit],
-	[dbo].[Person].[YearOfLastCreditLimitReview],
-	[dbo].[Person].[RegistrationDate],
-	[dbo].[Person].[LastLoginDate],
-	[dbo].[Person].[DateCreated],
-	[dbo].[Person].[DateUpdated]
+	[t0].[Id],
+	[t0].[FirstName],
+	[t0].[LastName],
+	[t0].[BirthDate],
+	[t0].[GenderType],
+	[t0].[CreditLimit],
+	[t0].[YearOfLastCreditLimitReview],
+	[t0].[RegistrationDate],
+	[t0].[LastLoginDate],
+	[t0].[DateCreated],
+	[t0].[DateUpdated]
 FROM
-	[dbo].[Person]
+	[dbo].[Person] AS [t0]
 WHERE
-	(
-		[dbo].[Person].[LastName] = @P1
-		OR
-		[dbo].[Person].[LastName] = @P2
-	)
+	[t0].[LastName] = @P1
 	OR
-	[dbo].[Person].[LastName] = @P3;',N'@P1 varchar(20),@P2 varchar(20),@P3 varchar(20)',@P1='Broflovski',@P2='Cartman',@P3='McCormick'
+	[t0].[LastName] = @P2
+	OR
+	[t0].[LastName] = @P3;',N'@P1 varchar(20),@P2 varchar(20),@P3 varchar(20)',@P1='Broflovski',@P2='Cartman',@P3='McCormick'
 ```
 {% /code-example %}
 
@@ -288,13 +286,13 @@ IEnumerable<dynamic> person_totals = db.SelectMany(
 ```
 ```sql
 SELECT
-	[dbo].[Person].[Id],
-	SUM([dbo].[Purchase].[TotalPurchaseAmount]) AS [LifetimeValue]
+	[t0].[Id],
+	SUM([t1].[TotalPurchaseAmount]) AS [LifetimeValue]
 FROM
-	[dbo].[Person]
-	INNER JOIN [dbo].[Purchase] ON [dbo].[Person].[Id] = [dbo].[Purchase].[PersonId]
+	[dbo].[Person] AS [t0]
+	INNER JOIN [dbo].[Purchase] AS [t1] ON [t0].[Id] = [t1].[PersonId]
 GROUP BY
-	[dbo].[Person].[Id];
+	[t0].[Id];
 ```
 {% /code-example %}
 
@@ -317,14 +315,14 @@ IEnumerable<dynamic> person_zips = db.SelectMany(
 ```
 ```sql
 exec sp_executesql N'SELECT
-	[dbo].[Person].[Id],
-	[dbo].[Address].[Zip]
+	[t0].[Id],
+	[t1].[Zip]
 FROM
-	[dbo].[Person]
-	INNER JOIN [dbo].[Person_Address] ON [dbo].[Person].[Id] = [dbo].[Person_Address].[PersonId]
-	INNER JOIN [dbo].[Address] ON [dbo].[Person_Address].[AddressId] = [dbo].[Address].[Id]
+	[dbo].[Person] AS [t0]
+	INNER JOIN [dbo].[Person_Address] AS [t2] ON [t0].[Id] = [t2].[PersonId]
+	INNER JOIN [dbo].[Address] AS [t1] ON [t2].[AddressId] = [t1].[Id]
 	AND
-	[dbo].[Address].[AddressType] = @P1;',N'@P1 int',@P1=1
+	[t1].[AddressType] = @P1;',N'@P1 int',@P1=1
 ```
 {% /code-example %}
 
@@ -345,14 +343,14 @@ IEnumerable<dynamic> people = db.SelectMany(
 ```
 ```sql
 exec sp_executesql N'SELECT
-	[dbo].[Person].[LastName],
-	COUNT([dbo].[Person].[Id]) AS [LastNameCount]
+	[t0].[LastName],
+	COUNT([t0].[Id]) AS [LastNameCount]
 FROM
-	[dbo].[Person]
+	[dbo].[Person] AS [t0]
 GROUP BY
-	[dbo].[Person].[LastName]
+	[t0].[LastName]
 HAVING
-	COUNT([dbo].[Person].[Id]) > @P1;',N'@P1 int',@P1=1
+	COUNT([t0].[Id]) > @P1;',N'@P1 int',@P1=1
 ```
 {% /code-example %}
 
@@ -371,27 +369,27 @@ IEnumerable<Product> products = db.SelectMany<Product>()
 ```
 ```sql
 exec sp_executesql N'SELECT
-	[dbo].[Product].[Id],
-	[dbo].[Product].[ProductCategoryType],
-	[dbo].[Product].[Name],
-	[dbo].[Product].[Description],
-	[dbo].[Product].[ListPrice],
-	[dbo].[Product].[Price],
-	[dbo].[Product].[Quantity],
-	[dbo].[Product].[Image],
-	[dbo].[Product].[Height],
-	[dbo].[Product].[Width],
-	[dbo].[Product].[Depth],
-	[dbo].[Product].[Weight],
-	[dbo].[Product].[ShippingWeight],
-	[dbo].[Product].[ValidStartTimeOfDayForPurchase],
-	[dbo].[Product].[ValidEndTimeOfDayForPurchase],
-	[dbo].[Product].[DateCreated],
-	[dbo].[Product].[DateUpdated]
+	[t0].[Id],
+	[t0].[ProductCategoryType],
+	[t0].[Name],
+	[t0].[Description],
+	[t0].[ListPrice],
+	[t0].[Price],
+	[t0].[Quantity],
+	[t0].[Image],
+	[t0].[Height],
+	[t0].[Width],
+	[t0].[Depth],
+	[t0].[Weight],
+	[t0].[ShippingWeight],
+	[t0].[ValidStartTimeOfDayForPurchase],
+	[t0].[ValidEndTimeOfDayForPurchase],
+	[t0].[DateCreated],
+	[t0].[DateUpdated]
 FROM
-	[dbo].[Product]
+	[dbo].[Product] AS [t0]
 WHERE
-	(([dbo].[Product].[Quantity] * [dbo].[Product].[ListPrice]) - ([dbo].[Product].[Quantity] * [dbo].[Product].[Price])) > @P1;',N'@P1 float',@P1=1000
+	(([t0].[Quantity] * [t0].[ListPrice]) - ([t0].[Quantity] * [t0].[Price])) > @P1;',N'@P1 float',@P1=1000
 ```
 {% /code-example %}
 
@@ -409,14 +407,14 @@ IEnumerable<dynamic> purchases = db.SelectMany(
 ```
 ```sql
 exec sp_executesql N'SELECT
-	[dbo].[Purchase].[OrderNumber],
-	[dbo].[PurchaseLine].[PurchasePrice],
-	[dbo].[PurchaseLine].[Quantity]
+	[t0].[OrderNumber],
+	[t1].[PurchasePrice],
+	[t1].[Quantity]
 FROM
-	[dbo].[PurchaseLine]
-	INNER JOIN [dbo].[Purchase] ON [dbo].[PurchaseLine].[PurchaseId] = [dbo].[Purchase].[Id]
+	[dbo].[PurchaseLine] AS [t1]
+	INNER JOIN [dbo].[Purchase] AS [t0] ON [t1].[PurchaseId] = [t0].[Id]
 	AND
-	[dbo].[Purchase].[TotalPurchaseAmount] > @P1;',N'@P1 money',@P1=$100.0000
+	[t0].[TotalPurchaseAmount] > @P1;',N'@P1 money',@P1=$100.0000
 ```
 {% /code-example %}
 
@@ -435,14 +433,14 @@ IEnumerable<dynamic> purchases = db.SelectMany(
 ```
 ```sql
 exec sp_executesql N'SELECT
-	[dbo].[Purchase].[OrderNumber],
-	SUM([dbo].[PurchaseLine].[PurchasePrice])
+	[t0].[OrderNumber],
+	SUM([t1].[PurchasePrice])
 FROM
-	[dbo].[PurchaseLine]
-	INNER JOIN [dbo].[Purchase] ON [dbo].[PurchaseLine].[PurchaseId] = [dbo].[Purchase].[Id]
+	[dbo].[PurchaseLine] AS [t1]
+	INNER JOIN [dbo].[Purchase] AS [t0] ON [t1].[PurchaseId] = [t0].[Id]
 GROUP BY
-	[dbo].[Purchase].[OrderNumber]
+	[t0].[OrderNumber]
 HAVING
-	SUM([dbo].[PurchaseLine].[PurchasePrice]) > @P1;',N'@P1 decimal(3,0)',@P1=100
+	SUM([t1].[PurchasePrice]) > @P1;',N'@P1 decimal(3,0)',@P1=100
 ```
 {% /code-example %}

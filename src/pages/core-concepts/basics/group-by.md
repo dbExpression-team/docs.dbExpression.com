@@ -19,12 +19,12 @@ IEnumerable<dynamic> counts = db.SelectMany(
 ```
 ```sql
 SELECT
-	[dbo].[Person].[LastName],
-	COUNT([dbo].[Person].[LastName]) AS [LastNameCount]
+    [t0].[LastName],
+    COUNT([t0].[LastName]) AS [LastNameCount]
 FROM
-	[dbo].[Person]
+    [dbo].[Person] AS [t0]
 GROUP BY
-	[dbo].[Person].[LastName];
+    [t0].[LastName];
 ```
 {% /code-example %}
 
@@ -49,18 +49,18 @@ IEnumerable<dynamic> persons = db.SelectMany(
 ```
 ```sql
 SELECT
-	[dbo].[Person].[FirstName],
-	[dbo].[Person].[LastName],
-	COUNT([dbo].[Person_Address].[Id]) AS [Count]
+    [t0].[FirstName],
+    [t0].[LastName],
+    COUNT([t1].[Id]) AS [Count]
 FROM
-	[dbo].[Person]
-	INNER JOIN [dbo].[Person_Address] ON [dbo].[Person].[Id] = [dbo].[Person_Address].[PersonId]
+    [dbo].[Person] AS [t0]
+    INNER JOIN [dbo].[Person_Address] AS [t1] ON [t0].[Id] = [t1].[PersonId]
 GROUP BY
-	[dbo].[Person].[FirstName],
-	[dbo].[Person].[LastName]
+    [t0].[FirstName],
+    [t0].[LastName]
 ORDER BY
-	[dbo].[Person].[LastName] ASC,
-	[dbo].[Person].[FirstName] DESC;
+    [t0].[LastName] ASC,
+    [t0].[FirstName] DESC;
 ```
 {% /code-example %}
 
@@ -77,12 +77,12 @@ IEnumerable<string> uniqueLastNames = db.SelectMany(dbo.Person.LastName)
 ```
 ```sql
 SELECT
-    [dbo].[Person].[LastName]
+    [t0].[LastName]
 FROM
-    [dbo].[Person]
+    [dbo].[Person] AS [t0]
 GROUP BY
-    [dbo].[Person].[LastName]
+    [t0].[LastName]
 ORDER BY
-    [dbo].[Person].[LastName] ASC;
+    [t0].[LastName] ASC;
 ```
 {% /code-example %}

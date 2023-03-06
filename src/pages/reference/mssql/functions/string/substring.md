@@ -97,9 +97,9 @@ IEnumerable<string> result = db.SelectMany(
 ```
 ```sql
 exec sp_executesql N'SELECT
-	SUBSTRING([dbo].[Product].[Name], @P1, @P2)
+    SUBSTRING([t0].[Name], @P1, @P2)
 FROM
-	[dbo].[Product];',N'@P1 int,@P2 int',@P1=1,@P2=2
+    [dbo].[Product] AS [t0];',N'@P1 int,@P2 int',@P1=1,@P2=2
 ```
 {% /code-example %}
 
@@ -116,11 +116,11 @@ IEnumerable<int> result = db.SelectMany(
 ```
 ```sql
 exec sp_executesql N'SELECT
-	[dbo].[Product].[Id]
+    [t0].[Id]
 FROM
-	[dbo].[Product]
+    [dbo].[Product] AS [t0]
 WHERE
-	SUBSTRING([dbo].[Product].[Name], @P1, @P2) = @P3;',N'@P1 int,@P2 int,@P3 char(1)',@P1=2,@P2=1,@P3=' '
+    SUBSTRING([t0].[Name], @P1, @P2) = @P3;',N'@P1 int,@P2 int,@P3 char(1)',@P1=2,@P2=1,@P3=' '
 ```
 {% /code-example %}
 
@@ -135,61 +135,61 @@ IEnumerable<Product> products = db.SelectMany<Product>()
 ```
 ```sql
 exec sp_executesql N'SELECT
-	[dbo].[Product].[Id],
-	[dbo].[Product].[ProductCategoryType],
-	[dbo].[Product].[Name],
-	[dbo].[Product].[Description],
-	[dbo].[Product].[ListPrice],
-	[dbo].[Product].[Price],
-	[dbo].[Product].[Quantity],
-	[dbo].[Product].[Image],
-	[dbo].[Product].[Height],
-	[dbo].[Product].[Width],
-	[dbo].[Product].[Depth],
-	[dbo].[Product].[Weight],
-	[dbo].[Product].[ShippingWeight],
-	[dbo].[Product].[ValidStartTimeOfDayForPurchase],
-	[dbo].[Product].[ValidEndTimeOfDayForPurchase],
-	[dbo].[Product].[DateCreated],
-	[dbo].[Product].[DateUpdated]
+    [t0].[Id],
+    [t0].[ProductCategoryType],
+    [t0].[Name],
+    [t0].[Description],
+    [t0].[ListPrice],
+    [t0].[Price],
+    [t0].[Quantity],
+    [t0].[Image],
+    [t0].[Height],
+    [t0].[Width],
+    [t0].[Depth],
+    [t0].[Weight],
+    [t0].[ShippingWeight],
+    [t0].[ValidStartTimeOfDayForPurchase],
+    [t0].[ValidEndTimeOfDayForPurchase],
+    [t0].[DateCreated],
+    [t0].[DateUpdated]
 FROM
-	[dbo].[Product]
+    [dbo].[Product] AS [t0]
 ORDER BY
-	SUBSTRING([dbo].[Product].[Name], @P1, (LEN([dbo].[Product].[Name]) - @P2)) ASC;',N'@P1 bigint,@P2 int',@P1=2,@P2=1
+    SUBSTRING([t0].[Name], @P1, (LEN([t0].[Name]) - @P2)) ASC;',N'@P1 bigint,@P2 int',@P1=2,@P2=1
 ```
 {% /code-example %}
 
 ### Group By Clause
-Select a list of address values grouped by address type and the first character of state.
+Select a list of address values grouped by address type and the first character of city.
 {% code-example %}
 ```csharp
 IEnumerable<dynamic> values = db.SelectMany(
         db.fx.Count().As("count"),
         dbo.Address.AddressType,
-        db.fx.Substring(dbo.Address.State, 1, 1).As("ignore_first_character")
+        db.fx.Substring(dbo.Address.City, 2, 1).As("ignore_first_character")
     )
     .From(dbo.Address)
     .GroupBy(
         dbo.Address.AddressType,
-        db.fx.Substring(dbo.Address.State, 1, 1)
+        db.fx.Substring(dbo.Address.City, 2, 1)
     )
     .Execute();
 ```
 ```sql
 exec sp_executesql N'SELECT
-	COUNT(@P1) AS [count],
-	[dbo].[Address].[AddressType],
-	SUBSTRING([dbo].[Address].[State], @P2, @P3) AS [ignore_first_character]
+	COUNT(*) AS [count],
+	[t0].[AddressType],
+	SUBSTRING([t0].[City], @P1, @P2) AS [ignore_first_character]
 FROM
-	[dbo].[Address]
+	[dbo].[Address] AS [t0]
 GROUP BY
-	[dbo].[Address].[AddressType],
-	SUBSTRING([dbo].[Address].[State], @P2, @P3);',N'@P1 nchar(1),@P2 int,@P3 int',@P1=N'*',@P2=1,@P3=1
+	[t0].[AddressType],
+	SUBSTRING([t0].[City], @P1, @P2);',N'@P1 int,@P2 int',@P1=2,@P2=1
 ```
 {% /code-example %}
 
 ### Having Clause
-Select a count of addresses grouped by address type and the first character of state, having a first character in state in the last half of the alphabet.
+Select a count of addresses grouped by address type and the first character of city, having a first character in city in the last half of the alphabet.
 {% code-example %}
 ```csharp
 IEnumerable<dynamic> values = db.SelectMany(
@@ -199,24 +199,24 @@ IEnumerable<dynamic> values = db.SelectMany(
     .From(dbo.Address)
     .GroupBy(
         dbo.Address.AddressType,
-        db.fx.Substring(dbo.Address.State, 1, 1)
+        db.fx.Substring(dbo.Address.City, 1, 1)
     )
     .Having(
-        db.fx.Substring(dbo.Address.State, 1, 1) > "M"
+        db.fx.Substring(dbo.Address.City, 1, 1) > "M"
     )
     .Execute();
 ```
 ```sql
 exec sp_executesql N'SELECT
-	COUNT(@P1) AS [count],
-	[dbo].[Address].[AddressType]
+	COUNT(*) AS [count],
+	[t0].[AddressType]
 FROM
-	[dbo].[Address]
+	[dbo].[Address] AS [t0]
 GROUP BY
-	[dbo].[Address].[AddressType],
-	SUBSTRING([dbo].[Address].[State], @P2, @P2)
+	[t0].[AddressType],
+	SUBSTRING([t0].[City], @P1, @P1)
 HAVING
-	SUBSTRING([dbo].[Address].[State], @P2, @P2) > @P4;',N'@P1 nchar(1),@P2 int,@P3 int,@P4 char(1)',@P1=N'*',@P2=1,@P3=1,@P4='M'
+	SUBSTRING([t0].[City], @P1, @P1) > @P2;',N'@P1 int,@P2 varchar(1)',@P1=1,@P2='M'
 ```
 {% /code-example %}
 

@@ -233,14 +233,21 @@ You have successfully written and executed a couple of queries using dbExpressio
 
 ## Core Concepts
 
-We'll cover a couple of other high-level features of dbExpression, and then move to the next section of the docs which cover the core concepts 
-of dbExpression (with full examples).  To follow along and run the query examples on your own, 
-we'll assume the existence of scaffolding code generated with the dbExpression CLI tool.  To build a local copy of the database:
-* Create an empty database named *MsSqlDbExTest* (you can call it anything you like, just change the script file references) and build schema with the [script file in the GitHub repo](https://github.com/HatTrickLabs/dbExpression/blob/master/test/HatTrick.DbEx.MsSql.Test.Integration/schema.sql).
-* Load the database with data using the [script file in the GitHub repo](https://github.com/HatTrickLabs/dbExpression/blob/master/test/HatTrick.DbEx.MsSql.Test.Integration/data.sql). 
-* Add some images (binary data) to the database using the [script file in the GitHub repo](https://github.com/HatTrickLabs/dbExpression/blob/master/test/HatTrick.DbEx.MsSql.Test.Integration/images.sql).
+We'll cover a few other high-level features of dbExpression, and then move to the Core Concepts section of the docs to dive deeper into the main concepts 
+of dbExpression (with full examples).  To follow along and run the query examples on your own, you'll need to create a local copy of the database:
+* Create an empty database named *MsSqlDbExTest* (you can call it anything you like, just change script file references and connections strings) and build schema with the [script file to create database objects](https://github.com/HatTrickLabs/dbExpression/blob/master/test/HatTrick.DbEx.MsSql.Test.Integration/schema.sql).
+* Load the database with data using the [script with sample data](https://github.com/HatTrickLabs/dbExpression/blob/master/test/HatTrick.DbEx.MsSql.Test.Integration/data.sql). 
+* Add some images (binary data) to the database using the [script with sample images](https://github.com/HatTrickLabs/dbExpression/blob/master/test/HatTrick.DbEx.MsSql.Test.Integration/images.sql).
+
+And the example project with all of the samples in this documentation:
+* [Examples project](https://github.com/HatTrickLabs/dbExpression/tree/master/docs/mssql/DocumentationExamples)
+
+You'll also find a couple of other sample projects in GitHub:
+* [Blazor app](https://github.com/HatTrickLabs/dbExpression/tree/master/samples/mssql/ServerSideBlazorApp) - A web-based CRM using Blazor and dbExpression
+* [.NET Core console app](https://github.com/HatTrickLabs/dbExpression/tree/master/samples/mssql/NetCoreConsoleApp) - A simple console application with more examples
+
 
 If you download/clone the sample projects to run locally:
-* All projects target .NET 6.0
+* Sample projects target .NET 7.0 (the *Examples project* also targets .NET 6.0)
 * Visual Studio 2022 or higher is required
-* All projects are configured to opt-in to the nullable feature (although not required to use dbExpression)
+* The *Examples project* and the *Blazor app* are configured to opt-in to the nullable feature (although not required to use dbExpression)

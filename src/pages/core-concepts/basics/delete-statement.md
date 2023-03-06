@@ -21,11 +21,11 @@ int affected = db.Delete()
 ```
 ```sql
 exec sp_executesql N'DELETE
-    [dbo].[Product]
+    [t0]
 FROM
-    [dbo].[Product]
+    [dbo].[Product] AS [t0]
 WHERE
-    [dbo].[Product].[Id] = @P1;
+    [t0].[Id] = @P1;
 SELECT @@ROWCOUNT;',N'@P1 int',@P1=9
 ```
 {% /code-example %}

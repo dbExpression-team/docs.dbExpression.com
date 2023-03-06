@@ -108,9 +108,9 @@ IEnumerable<int?> result = db.SelectMany(
 ```
 ```sql
 SELECT
-	DATEPART(year, [dbo].[Purchase].[ShipDate])
+    DATEPART(year, [t0].[ShipDate])
 FROM
-	[dbo].[Purchase];
+    [dbo].[Purchase] AS [t0];
 ```
 {% /code-example %}
 
@@ -127,11 +127,11 @@ IEnumerable<int> purchase_ids = db.SelectMany(
 ```
 ```sql
 exec sp_executesql N'SELECT
-	[dbo].[Purchase].[Id]
+    [t0].[Id]
 FROM
-	[dbo].[Purchase]
+    [dbo].[Purchase] AS [t0]
 WHERE
-	DATEPART(weekday, [dbo].[Purchase].[ShipDate]) = @P1;',N'@P1 int',@P1=6
+    DATEPART(weekday, [t0].[ShipDate]) = @P1;',N'@P1 int',@P1=6
 ```
 {% /code-example %}
 
@@ -146,23 +146,23 @@ IEnumerable<Purchase> result = db.SelectMany<Purchase>()
 ```
 ```sql
 SELECT
-	[dbo].[Purchase].[Id],
-	[dbo].[Purchase].[PersonId],
-	[dbo].[Purchase].[OrderNumber],
-	[dbo].[Purchase].[TotalPurchaseQuantity],
-	[dbo].[Purchase].[TotalPurchaseAmount],
-	[dbo].[Purchase].[PurchaseDate],
-	[dbo].[Purchase].[ShipDate],
-	[dbo].[Purchase].[ExpectedDeliveryDate],
-	[dbo].[Purchase].[TrackingIdentifier],
-	[dbo].[Purchase].[PaymentMethodType],
-	[dbo].[Purchase].[PaymentSourceType],
-	[dbo].[Purchase].[DateCreated],
-	[dbo].[Purchase].[DateUpdated]
+    [t0].[Id],
+    [t0].[PersonId],
+    [t0].[OrderNumber],
+    [t0].[TotalPurchaseQuantity],
+    [t0].[TotalPurchaseAmount],
+    [t0].[PurchaseDate],
+    [t0].[ShipDate],
+    [t0].[ExpectedDeliveryDate],
+    [t0].[TrackingIdentifier],
+    [t0].[PaymentMethodType],
+    [t0].[PaymentSourceType],
+    [t0].[DateCreated],
+    [t0].[DateUpdated]
 FROM
-	[dbo].[Purchase]
+    [dbo].[Purchase] AS [t0]
 ORDER BY
-	DATEPART(week, [dbo].[Purchase].[ShipDate]) ASC;
+    DATEPART(week, [t0].[ShipDate]) ASC;
 ```
 {% /code-example %}
 
@@ -184,13 +184,13 @@ IEnumerable<dynamic> results = db.SelectMany(
 ```
 ```sql
 SELECT
-	[dbo].[Product].[ProductCategoryType],
-	DATEPART(week, [dbo].[Product].[DateCreated]) AS [Week]
+    [t0].[ProductCategoryType],
+    DATEPART(week, [t0].[DateCreated]) AS [Week]
 FROM
-	[dbo].[Product]
+    [dbo].[Product] AS [t0]
 GROUP BY
-	[dbo].[Product].[ProductCategoryType],
-	DATEPART(week, [dbo].[Product].[DateCreated]);
+    [t0].[ProductCategoryType],
+    DATEPART(week, [t0].[DateCreated]);
 ```
 {% /code-example %}
 
@@ -214,14 +214,14 @@ IEnumerable<dynamic> results = db.SelectMany(
 ```
 ```sql
 exec sp_executesql N'SELECT
-	[dbo].[Purchase].[PaymentMethodType],
-	[dbo].[Purchase].[ShipDate]
+    [t0].[PaymentMethodType],
+    [t0].[ShipDate]
 FROM
-	[dbo].[Purchase]
+    [dbo].[Purchase] AS [t0]
 GROUP BY
-	[dbo].[Purchase].[PaymentMethodType],
-	[dbo].[Purchase].[ShipDate]
+    [t0].[PaymentMethodType],
+    [t0].[ShipDate]
 HAVING
-	DATEPART(week, [dbo].[Purchase].[ShipDate]) = @P1;',N'@P1 int',@P1=1
+    DATEPART(week, [t0].[ShipDate]) = @P1;',N'@P1 int',@P1=1
 ```
 {% /code-example %}

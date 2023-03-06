@@ -22,13 +22,13 @@ int affected = db.Update(dbo.Person.CreditLimit.Set(25_000))
 ```
 ```sql
 exec sp_executesql N'UPDATE
-    [dbo].[Person]
+    [t0]
 SET
-    [CreditLimit] = @P1
+    [t0].[CreditLimit] = @P1
 FROM
-    [dbo].[Person]
+    [dbo].[Person] AS [t0]
 WHERE
-    [dbo].[Person].[Id] = @P2;
+    [t0].[Id] = @P2;
 SELECT @@ROWCOUNT;',N'@P1 int,@P2 int',@P1=25000,@P2=1
 ```
 {% /code-example %}
@@ -50,13 +50,13 @@ int affected = db.Update(
 ```
 ```sql
 exec sp_executesql N'UPDATE
-    [dbo].[Product]
+    [t0]
 SET
-    [ListPrice] = ([ListPrice] * @P1)
+    [t0].[ListPrice] = ([t0].[ListPrice] * @P1)
 FROM
-    [dbo].[Product]
+    [dbo].[Product] AS [t0]
 WHERE
-    [dbo].[Product].[ProductCategoryType] = @P2;
+    [t0].[ProductCategoryType] = @P2;
 SELECT @@ROWCOUNT;',N'@P1 float,@P2 int',@P1=1.1000000000000001,@P2=3
 ```
 {% /code-example %}
@@ -72,13 +72,13 @@ int affected = db.Update(dbo.Address.Line2.Set(dbex.Null))
 ```
 ```sql
 exec sp_executesql N'UPDATE
-    [dbo].[Address]
+    [t0]
 SET
-    [Line2] = NULL
+    [t0].[Line2] = NULL
 FROM
-    [dbo].[Address]
+    [dbo].[Address] AS [t0]
 WHERE
-    [dbo].[Address].[Id] = @P1;
+    [t0].[Id] = @P1;
 SELECT @@ROWCOUNT;',N'@P1 int',@P1=7
 ```
 {% /code-example %}
@@ -87,22 +87,23 @@ And of course, you can update multiple fields at once:
 {% code-example %}
 ```csharp
 int affected = db.Update(
-    dbo.Person.FirstName.Set("Jane"), 
-    dbo.Person.LastName.Set("Smith")
-)
-.From(dbo.Person)
-.Where(dbo.Person.Id == 12);
+        dbo.Person.FirstName.Set("Jane"), 
+        dbo.Person.LastName.Set("Smith")
+    )
+    .From(dbo.Person)
+    .Where(dbo.Person.Id == 12)
+    .Execute();
 ```
 ```sql
 exec sp_executesql N'UPDATE
-	[dbo].[Person]
+    [t0]
 SET
-	[FirstName] = @P1,
-	[LastName] = @P2
+    [t0].[FirstName] = @P1,
+    [t0].[LastName] = @P2
 FROM
-	[dbo].[Person]
+    [dbo].[Person] AS [t0]
 WHERE
-	[dbo].[Person].[Id] = @P3;
+    [t0].[Id] = @P3;
 SELECT @@ROWCOUNT;',N'@P1 varchar(20),@P2 varchar(20),@P3 int',@P1='Jane',@P2='Smith',@P3=1
 ```
 {% /code-example %}

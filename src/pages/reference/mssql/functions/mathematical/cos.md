@@ -46,9 +46,9 @@ float? result = db.SelectOne(
 ```
 ```sql
 SELECT TOP(1)
-	COS([dbo].[Product].[Weight])
+    COS([t0].[Weight])
 FROM
-	[dbo].[Product];
+    [dbo].[Product] AS [t0];
 ```
 {% /code-example %}
 
@@ -64,9 +64,9 @@ float? result = db.SelectOne(
 ```
 ```sql
 SELECT TOP(1)
-	COS([dbo].[Product].[Depth])
+    COS([t0].[Depth])
 FROM
-	[dbo].[Product];
+    [dbo].[Product] AS [t0];
 ```
 {% /code-example %}
 
@@ -81,31 +81,27 @@ IEnumerable<Product> result = db.SelectMany<Product>()
 ```
 ```sql
 SELECT
-	[dbo].[Product].[Id],
-	[dbo].[Product].[ProductCategoryType],
-	[dbo].[Product].[Name],
-	[dbo].[Product].[Description],
-	[dbo].[Product].[ListPrice],
-	[dbo].[Product].[Price],
-	[dbo].[Product].[Quantity],
-	[dbo].[Product].[Image],
-	[dbo].[Product].[Height],
-	[dbo].[Product].[Width],
-	[dbo].[Product].[Depth],
-	[dbo].[Product].[Weight],
-	[dbo].[Product].[ShippingWeight],
-	[dbo].[Product].[ValidStartTimeOfDayForPurchase],
-	[dbo].[Product].[ValidEndTimeOfDayForPurchase],
-	[dbo].[Product].[DateCreated],
-	[dbo].[Product].[DateUpdated]
+    [t0].[Id],
+    [t0].[ProductCategoryType],
+    [t0].[Name],
+    [t0].[Description],
+    [t0].[ListPrice],
+    [t0].[Price],
+    [t0].[Quantity],
+    [t0].[Image],
+    [t0].[Height],
+    [t0].[Width],
+    [t0].[Depth],
+    [t0].[Weight],
+    [t0].[ShippingWeight],
+    [t0].[ValidStartTimeOfDayForPurchase],
+    [t0].[ValidEndTimeOfDayForPurchase],
+    [t0].[DateCreated],
+    [t0].[DateUpdated]
 FROM
-	[dbo].[Product]
-WHERE
-	[dbo].[Product].[Depth] > @P1
-	AND
-	[dbo].[Product].[Depth] < @P2
+    [dbo].[Product] AS [t0]
 ORDER BY
-	COS([dbo].[Product].[Depth]) DESC;
+    COS([t0].[Depth]) DESC;
 ```
 {% /code-example %}
 
@@ -127,13 +123,13 @@ IEnumerable<dynamic> results = db.SelectMany(
 ```
 ```sql
 SELECT
-	[dbo].[Product].[ProductCategoryType],
-	COS([dbo].[Product].[Depth]) AS [calculated_value]
+    [t0].[ProductCategoryType],
+    COS([t0].[Depth]) AS [calculated_value]
 FROM
-	[dbo].[Product]
+    [dbo].[Product] AS [t0]
 GROUP BY
-	[dbo].[Product].[ProductCategoryType],
-	COS([dbo].[Product].[Depth]);
+    [t0].[ProductCategoryType],
+    COS([t0].[Depth]);
 ```
 {% /code-example %}
 
@@ -149,7 +145,8 @@ IEnumerable<ProductCategoryType?> results = db.SelectMany(
     .From(dbo.Product)
     .GroupBy(
         dbo.Product.ProductCategoryType,
-        db.fx.Cos(dbo.Product.Height)
+        db.fx.Cos(dbo.Product.Height),
+        dbo.Product.Width
     )
     .Having(
         db.fx.Cos(dbo.Product.Height) > dbo.Product.Width
@@ -158,13 +155,14 @@ IEnumerable<ProductCategoryType?> results = db.SelectMany(
 ```
 ```sql
 SELECT
-	[dbo].[Product].[ProductCategoryType]
+    [t0].[ProductCategoryType]
 FROM
-	[dbo].[Product]
+    [dbo].[Product] AS [t0]
 GROUP BY
-	[dbo].[Product].[ProductCategoryType],
-	COS([dbo].[Product].[Height])
+    [t0].[ProductCategoryType],
+    COS([t0].[Height]),
+    [t0].[Width]
 HAVING
-	COS([dbo].[Product].[Height]) > [dbo].[Product].[Width];
+    COS([t0].[Height]) > [t0].[Width];
 ```
 {% /code-example %}

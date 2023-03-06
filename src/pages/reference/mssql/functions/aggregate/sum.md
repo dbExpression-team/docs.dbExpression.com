@@ -88,17 +88,17 @@ Use the `Sum` function to return the sum of a set of values.
 Select the sum of total purchase amount for all purchases.
 {% code-example %}
 ```csharp
-double minSales = db.SelectMany(
+double minSales = db.SelectOne(
         db.fx.Sum(dbo.Purchase.TotalPurchaseAmount)
     )
     .From(dbo.Purchase)
     .Execute();
 ```
 ```sql
-SELECT
-	SUM([dbo].[Purchase].[TotalPurchaseAmount])
+SELECT TOP(1)
+    SUM([t0].[TotalPurchaseAmount])
 FROM
-	[dbo].[Purchase];
+    [dbo].[Purchase] AS [t0];
 ```
 {% /code-example %}
 
@@ -115,11 +115,11 @@ IEnumerable<double> minSales = db.SelectMany(
 ```
 ```sql
 SELECT
-	SUM([dbo].[Purchase].[TotalPurchaseAmount])
+    SUM([t0].[TotalPurchaseAmount])
 FROM
-	[dbo].[Purchase]
+    [dbo].[Purchase] AS [t0]
 ORDER BY
-	SUM([dbo].[Purchase].[TotalPurchaseAmount]) DESC;
+    SUM([t0].[TotalPurchaseAmount]) DESC;
 ```
 {% /code-example %}
 
@@ -139,14 +139,14 @@ IEnumerable<double> minSales = db.SelectMany(
 ```
 ```sql
 exec sp_executesql N'SELECT
-	SUM([dbo].[Purchase].[TotalPurchaseAmount])
+    SUM([t0].[TotalPurchaseAmount])
 FROM
-	[dbo].[Purchase]
+    [dbo].[Purchase] AS [t0]
 GROUP BY
-	[dbo].[Purchase].[PaymentMethodType]
+    [t0].[PaymentMethodType]
 HAVING
-	SUM([dbo].[Purchase].[TotalPurchaseAmount]) > @P1
+    SUM([t0].[TotalPurchaseAmount]) > @P1
 ORDER BY
-	SUM([dbo].[Purchase].[TotalPurchaseAmount]) ASC;',N'@P1 float',@P1=10
+    SUM([t0].[TotalPurchaseAmount]) ASC;',N'@P1 float',@P1=10
 ```
 {% /code-example %}

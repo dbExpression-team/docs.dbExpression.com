@@ -51,9 +51,9 @@ float result = db.SelectOne(
 ```
 ```sql
 SELECT TOP(1)
-	STDEVP([dbo].[Product].[ShippingWeight])
+    VAR([t0].[ShippingWeight])
 FROM
-	[dbo].[Product];
+    [dbo].[Product] AS [t0];
 ```
 {% /code-example %}
 
@@ -70,21 +70,21 @@ float result = db.SelectOne(
 ```
 ```sql
 SELECT TOP(1)
-	STDEVP([dbo].[Product].[ShippingWeight])
+    VAR([t0].[ShippingWeight])
 FROM
-	[dbo].[Product]
+    [dbo].[Product] AS [t0]
 ORDER BY
-	STDEVP([dbo].[Product].[ShippingWeight]) DESC;
+    VAR([t0].[ShippingWeight]) DESC;
 ```
 {% /code-example %}
 
 ### Having Clause
-Select the ids of all products, grouped by product
+Select the product categories of all products, grouped by product
 category type having an variance greater than 1.
 {% code-example %}
 ```csharp
-IEnumerable<int> results = db.SelectMany(
-        dbo.Product.Id
+IEnumerable<ProductCategoryType?> results = db.SelectMany(
+        dbo.Product.ProductCategoryType
     )
     .From(dbo.Product)
     .GroupBy(dbo.Product.ProductCategoryType)
@@ -93,12 +93,12 @@ IEnumerable<int> results = db.SelectMany(
 ```
 ```sql
 exec sp_executesql N'SELECT
-	[dbo].[Product].[Id]
+    [t0].[ProductCategoryType]
 FROM
-	[dbo].[Product]
+    [dbo].[Product] AS [t0]
 GROUP BY
-	[dbo].[Product].[ProductCategoryType]
+    [t0].[ProductCategoryType]
 HAVING
-	STDEVP([dbo].[Product].[ShippingWeight]) > @P1;',N'@P1 real',@P1=1
+    VAR([t0].[ShippingWeight]) > @P1;',N'@P1 real',@P1=1
 ```
 {% /code-example %}

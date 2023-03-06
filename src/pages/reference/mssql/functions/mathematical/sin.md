@@ -46,9 +46,9 @@ float? result = db.SelectOne(
 ```
 ```sql
 SELECT TOP(1)
-	SIN([dbo].[Product].[Weight])
+	SIN([t0].[Weight])
 FROM
-	[dbo].[Product];
+	[dbo].[Product] AS [t0];
 ```
 {% /code-example %}
 
@@ -56,7 +56,7 @@ FROM
 Select the sine of a product's depth (which is nullable in the database) where the depth is greater than 0 and less than 1.
 {% code-example %}
 ```csharp
-IEnumerable<float> result = db.SelectMany(
+IEnumerable<float?> result = db.SelectMany(
         db.fx.Sin(dbo.Product.Depth)
     )
     .From(dbo.Product)
@@ -65,13 +65,13 @@ IEnumerable<float> result = db.SelectMany(
 ```
 ```sql
 exec sp_executesql N'SELECT
-	SIN([dbo].[Product].[Depth])
+	SIN([t0].[Depth])
 FROM
-	[dbo].[Product]
+	[dbo].[Product] AS [t0]
 WHERE
-	[dbo].[Product].[Depth] > @P1
+	[t0].[Depth] > @P1
 	AND
-	[dbo].[Product].[Depth] < @P2;',N'@P1 decimal(4,1),@P2 decimal(4,1)',@P1=0.0,@P2=1.0
+	[t0].[Depth] < @P2;',N'@P1 decimal(4,1),@P2 decimal(4,1)',@P1=0.0,@P2=1.0
 ```
 {% /code-example %}
 
@@ -86,27 +86,27 @@ IEnumerable<Product> result = db.SelectMany<Product>()
 ```
 ```sql
 SELECT
-	[dbo].[Product].[Id],
-	[dbo].[Product].[ProductCategoryType],
-	[dbo].[Product].[Name],
-	[dbo].[Product].[Description],
-	[dbo].[Product].[ListPrice],
-	[dbo].[Product].[Price],
-	[dbo].[Product].[Quantity],
-	[dbo].[Product].[Image],
-	[dbo].[Product].[Height],
-	[dbo].[Product].[Width],
-	[dbo].[Product].[Depth],
-	[dbo].[Product].[Weight],
-	[dbo].[Product].[ShippingWeight],
-	[dbo].[Product].[ValidStartTimeOfDayForPurchase],
-	[dbo].[Product].[ValidEndTimeOfDayForPurchase],
-	[dbo].[Product].[DateCreated],
-	[dbo].[Product].[DateUpdated]
+	[t0].[Id],
+	[t0].[ProductCategoryType],
+	[t0].[Name],
+	[t0].[Description],
+	[t0].[ListPrice],
+	[t0].[Price],
+	[t0].[Quantity],
+	[t0].[Image],
+	[t0].[Height],
+	[t0].[Width],
+	[t0].[Depth],
+	[t0].[Weight],
+	[t0].[ShippingWeight],
+	[t0].[ValidStartTimeOfDayForPurchase],
+	[t0].[ValidEndTimeOfDayForPurchase],
+	[t0].[DateCreated],
+	[t0].[DateUpdated]
 FROM
-	[dbo].[Product]
+	[dbo].[Product] AS [t0]
 ORDER BY
-	SIN([dbo].[Product].[Depth]) DESC;
+	SIN([t0].[Depth]) DESC;
 ```
 {% /code-example %}
 
@@ -128,17 +128,13 @@ IEnumerable<dynamic> results = db.SelectMany(
 ```
 ```sql
 SELECT
-	[dbo].[Product].[ProductCategoryType],
-	SIN([dbo].[Product].[Depth]) AS [calculated_value]
+	[t0].[ProductCategoryType],
+	SIN([t0].[Depth]) AS [calculated_value]
 FROM
-	[dbo].[Product]
-WHERE
-	[dbo].[Product].[Depth] > @P1
-	AND
-	[dbo].[Product].[Depth] < @P2
+	[dbo].[Product] AS [t0]
 GROUP BY
-	[dbo].[Product].[ProductCategoryType],
-	SIN([dbo].[Product].[Depth]);
+	[t0].[ProductCategoryType],
+	SIN([t0].[Depth]);
 ```
 {% /code-example %}
 
@@ -163,17 +159,17 @@ IEnumerable<ProductCategoryType?> results = db.SelectMany(
 ```
 ```sql
 exec sp_executesql N'SELECT
-	[dbo].[Product].[ProductCategoryType]
+	[t0].[ProductCategoryType]
 FROM
-	[dbo].[Product]
+	[dbo].[Product] AS [t0]
 WHERE
-	[dbo].[Product].[Height] > @P1
+	[t0].[Height] > @P1
 	AND
-	[dbo].[Product].[Height] < @P2
+	[t0].[Height] < @P2
 GROUP BY
-	[dbo].[Product].[ProductCategoryType],
-	SIN([dbo].[Product].[Height])
+	[t0].[ProductCategoryType],
+	SIN([t0].[Height])
 HAVING
-	SIN([dbo].[Product].[Height]) < @P3;',N'@P1 decimal(4,1),@P2 decimal(4,1),@P3 real',@P1=0.0,@P2=1.0,@P3=0.5
+	SIN([t0].[Height]) < @P3;',N'@P1 decimal(4,1),@P2 decimal(4,1),@P3 real',@P1=0.0,@P2=1.0,@P3=0.5
 ```
 {% /code-example %}

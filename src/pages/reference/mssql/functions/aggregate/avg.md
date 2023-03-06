@@ -87,17 +87,17 @@ Use the `Avg` function to return the average of a set of values, ignoring null v
 Select the average of total purchase amount for all purchases (ignoring null values).
 {% code-example %}
 ```csharp
-double avgSales = db.SelectMany(
+double avgSales = db.SelectOne(
         db.fx.Avg(dbo.Purchase.TotalPurchaseAmount)
     )
     .From(dbo.Purchase)
     .Execute();
 ```
 ```sql
-SELECT
-	AVG([dbo].[Purchase].[TotalPurchaseAmount])
+SELECT TOP(1)
+    AVG([t0].[TotalPurchaseAmount])
 FROM
-	[dbo].[Purchase];
+    [dbo].[Purchase] AS [t0];
 ```
 {% /code-example %}
 
@@ -105,17 +105,17 @@ FROM
 Select the average of distinct total purchase amount for all purchases (ignoring null values).
 {% code-example %}
 ```csharp
-double avgSales = db.SelectMany(
+double avgSales = db.SelectOne(
         db.fx.Avg(dbo.Purchase.TotalPurchaseAmount).Distinct()
     )
     .From(dbo.Purchase)
     .Execute();
 ```
 ```sql
-SELECT
-	DISTINCT AVG([dbo].[Purchase].[TotalPurchaseAmount])
+SELECT TOP(1)
+    AVG(DISTINCT [t0].[TotalPurchaseAmount])
 FROM
-	[dbo].[Purchase];
+    [dbo].[Purchase] AS [t0];
 ```
 {% /code-example %}
 
@@ -133,11 +133,11 @@ IEnumerable<double> avgSales = db.SelectMany(
 ```
 ```sql
 SELECT
-	AVG([dbo].[Purchase].[TotalPurchaseAmount])
+    AVG([t0].[TotalPurchaseAmount])
 FROM
-	[dbo].[Purchase]
+    [dbo].[Purchase] AS [t0]
 ORDER BY
-	AVG([dbo].[Purchase].[TotalPurchaseAmount]) DESC;
+    AVG([t0].[TotalPurchaseAmount]) DESC;
 ```
 {% /code-example %}
 
@@ -156,12 +156,12 @@ IEnumerable<double> avgSales = db.SelectMany(
 ```
 ```sql
 exec sp_executesql N'SELECT
-	AVG([dbo].[Purchase].[TotalPurchaseAmount])
+    AVG([t0].[TotalPurchaseAmount])
 FROM
-	[dbo].[Purchase]
+    [dbo].[Purchase] AS [t0]
 GROUP BY
-	[dbo].[Purchase].[PaymentMethodType]
+    [t0].[PaymentMethodType]
 HAVING
-	AVG([dbo].[Purchase].[TotalPurchaseAmount]) > @P1;',N'@P1 float',@P1=10
+    AVG([t0].[TotalPurchaseAmount]) > @P1;',N'@P1 float',@P1=10
 ```
 {% /code-example %}

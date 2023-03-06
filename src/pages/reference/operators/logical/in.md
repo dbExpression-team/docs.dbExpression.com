@@ -82,21 +82,21 @@ IEnumerable<Person> persons = db.SelectMany<Person>()
 ```
 ```sql
 exec sp_executesql N'SELECT
-	[dbo].[Person].[Id],
-	[dbo].[Person].[FirstName],
-	[dbo].[Person].[LastName],
-	[dbo].[Person].[BirthDate],
-	[dbo].[Person].[GenderType],
-	[dbo].[Person].[CreditLimit],
-	[dbo].[Person].[YearOfLastCreditLimitReview],
-	[dbo].[Person].[RegistrationDate],
-	[dbo].[Person].[LastLoginDate],
-	[dbo].[Person].[DateCreated],
-	[dbo].[Person].[DateUpdated]
+    [t0].[Id],
+    [t0].[FirstName],
+    [t0].[LastName],
+    [t0].[BirthDate],
+    [t0].[GenderType],
+    [t0].[CreditLimit],
+    [t0].[YearOfLastCreditLimitReview],
+    [t0].[RegistrationDate],
+    [t0].[LastLoginDate],
+    [t0].[DateCreated],
+    [t0].[DateUpdated]
 FROM
-	[dbo].[Person]
+    [dbo].[Person] AS [t0]
 WHERE
-	[dbo].[Person].[FirstName] IN (@P1,@P2,@P3,@P4);',N'@P1 varchar(20),@P2 varchar(20),@P3 varchar(20),@P4 varchar(20)',@P1='Jane',@P2='John',@P3='Mary',@P4='Joe'
+    [t0].[FirstName] IN (@P1,@P2,@P3,@P4);',N'@P1 varchar(20),@P2 varchar(20),@P3 varchar(20),@P4 varchar(20)',@P1='Jane',@P2='John',@P3='Mary',@P4='Joe'
 ```
 {% /code-example %}
 
@@ -110,21 +110,21 @@ IEnumerable<Person> persons = db.SelectMany<Person>()
 ```
 ```sql
 exec sp_executesql N'SELECT
-	[dbo].[Person].[Id],
-	[dbo].[Person].[FirstName],
-	[dbo].[Person].[LastName],
-	[dbo].[Person].[BirthDate],
-	[dbo].[Person].[GenderType],
-	[dbo].[Person].[CreditLimit],
-	[dbo].[Person].[YearOfLastCreditLimitReview],
-	[dbo].[Person].[RegistrationDate],
-	[dbo].[Person].[LastLoginDate],
-	[dbo].[Person].[DateCreated],
-	[dbo].[Person].[DateUpdated]
+    [t0].[Id],
+    [t0].[FirstName],
+    [t0].[LastName],
+    [t0].[BirthDate],
+    [t0].[GenderType],
+    [t0].[CreditLimit],
+    [t0].[YearOfLastCreditLimitReview],
+    [t0].[RegistrationDate],
+    [t0].[LastLoginDate],
+    [t0].[DateCreated],
+    [t0].[DateUpdated]
 FROM
-	[dbo].[Person]
+    [dbo].[Person] AS [t0]
 WHERE
-	NOT ([dbo].[Person].[FirstName] IN (@P1,@P2,@P3,@P4));',N'@P1 varchar(20),@P2 varchar(20),@P3 varchar(20),@P4 varchar(20)',@P1='Jane',@P2='John',@P3='Mary',@P4='Joe'
+    NOT ([t0].[FirstName] IN (@P1,@P2,@P3,@P4));',N'@P1 varchar(20),@P2 varchar(20),@P3 varchar(20),@P4 varchar(20)',@P1='Jane',@P2='John',@P3='Mary',@P4='Joe'
 ```
 {% /code-example %}
 
@@ -149,14 +149,14 @@ IEnumerable<dynamic> product_counts = db.SelectMany(
 ```
 ```sql
 exec sp_executesql N'SELECT
-	[dbo].[Product].[ProductCategoryType],
-	COUNT(@P1) AS [CategoryCount]
-FROM
-	[dbo].[Product]
-GROUP BY
-	[dbo].[Product].[ProductCategoryType]
-HAVING
-	[dbo].[Product].[ProductCategoryType] IN (@P2,@P3,@P4);',N'@P1 nchar(1),@P2 int,@P3 int,@P4 int',@P1=N'*',@P2=3,@P3=1,@P4=2
+        [t0].[ProductCategoryType],
+        COUNT(*) AS [CategoryCount]
+      FROM
+        [dbo].[Product] AS [t0]
+      GROUP BY
+        [t0].[ProductCategoryType]
+      HAVING
+        [t0].[ProductCategoryType] IN (@P1,@P2,@P3);',N'@P1 int,@P2 int,@P3 int',@P1=3,@P2=1,@P3=2
 ```
 {% /code-example %}
 
@@ -174,22 +174,22 @@ IEnumerable<Person> persons = db.SelectMany<Person>()
 ```
 ```sql
 exec sp_executesql N'SELECT
-	[dbo].[Person].[Id],
-	[dbo].[Person].[FirstName],
-	[dbo].[Person].[LastName],
-	[dbo].[Person].[BirthDate],
-	[dbo].[Person].[GenderType],
-	[dbo].[Person].[CreditLimit],
-	[dbo].[Person].[YearOfLastCreditLimitReview],
-	[dbo].[Person].[RegistrationDate],
-	[dbo].[Person].[LastLoginDate],
-	[dbo].[Person].[DateCreated],
-	[dbo].[Person].[DateUpdated]
+    [t0].[Id],
+    [t0].[FirstName],
+    [t0].[LastName],
+    [t0].[BirthDate],
+    [t0].[GenderType],
+    [t0].[CreditLimit],
+    [t0].[YearOfLastCreditLimitReview],
+    [t0].[RegistrationDate],
+    [t0].[LastLoginDate],
+    [t0].[DateCreated],
+    [t0].[DateUpdated]
 FROM
-	[dbo].[Person]
-	INNER JOIN [dbo].[Person_Address] ON [dbo].[Person_Address].[PersonId] IN (@P1,@P2,@P3)
-	AND
-	[dbo].[Person_Address].[PersonId] = [dbo].[Person].[Id];',N'@P1 int,@P2 int,@P3 int',@P1=1,@P2=12,@P3=14
+    [dbo].[Person] AS [t0]
+    INNER JOIN [dbo].[Person_Address] AS [t1] ON [t1].[PersonId] IN (@P1,@P2,@P3)
+    AND
+    [t1].[PersonId] = [t0].[Id];',N'@P1 int,@P2 int,@P3 int',@P1=1,@P2=12,@P3=14
 ```
 {% /code-example %}
 

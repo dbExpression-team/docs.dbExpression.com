@@ -36,8 +36,8 @@ Guid id = db.SelectOne(
 ```
 ```sql
 SELECT TOP(1)
-	NEWID()
+    NEWID()
 FROM
-	[dbo].[Purchase];
+    [dbo].[Purchase] AS [t0];
 ```
 {% /code-example %}

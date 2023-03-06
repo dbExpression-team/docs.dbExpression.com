@@ -12,7 +12,7 @@ then re-working the original query to use the new view.
 Given the following query which selects aggregated data for a person:
 {% code-example %}
 ```csharp
-IEnumerable<dynamic> aggregates = db.SelectOne(
+IEnumerable<dynamic> aggregates = db.SelectMany(
     dbo.Person.Id,
     db.fx.Sum(dbo.Purchase.TotalPurchaseAmount).As("TotalAmount"),
     db.fx.Count(dbo.Purchase.Id).As("TotalCount")
@@ -22,17 +22,18 @@ IEnumerable<dynamic> aggregates = db.SelectOne(
 .GroupBy(
     dbo.Person.Id
 )
+.Execute();
 ```
 ```sql
-SELECT        
-	[dbo].[Person].[Id], 
-	SUM([dbo].[Purchase].[TotalPurchaseAmount]) AS [TotalAmount],
-	COUNT([dbo].[Purchase].[Id]) AS [TotalCount]
-FROM            
-	[dbo].[Person] 
-	INNER JOIN [dbo].[Purchase] ON [dbo].[Purchase].[PersonId] = [dbo].[Person].[Id]
-GROUP BY 
-	[dbo].[Person].[Id]
+SELECT
+	[t0].[Id],
+	SUM([t1].[TotalPurchaseAmount]) AS [TotalAmount],
+	COUNT([t1].[Id]) AS [TotalCount]
+FROM
+	[dbo].[Person] AS [t0]
+	INNER JOIN [dbo].[Purchase] AS [t1] ON [t1].[PersonId] = [t0].[Id]
+GROUP BY
+	[t0].[Id];
 ```
 {% /code-example %}
 
@@ -59,20 +60,20 @@ Re-writing the original query using the view and adding a where clause:
 {% code-example %}
 ```csharp
 //return a PersonTotalPurchasesView, where the person's id is 1.
-PersonTotalPurchasesView person_total = db.SelectOne<PersonTotalPurchasesView>()
+PersonTotalPurchasesView? person_total = db.SelectOne<PersonTotalPurchasesView>()
     .From(dbo.PersonTotalPurchasesView)
     .Where(dbo.PersonTotalPurchasesView.Id == 1)
     .Execute();
 ```
 ```sql
 exec sp_executesql N'SELECT TOP(1)
-	[dbo].[PersonTotalPurchasesView].[Id],
-	[dbo].[PersonTotalPurchasesView].[TotalAmount],
-	[dbo].[PersonTotalPurchasesView].[TotalCount]
+	[t0].[Id],
+	[t0].[TotalAmount],
+	[t0].[TotalCount]
 FROM
-	[dbo].[PersonTotalPurchasesView]
+	[dbo].[PersonTotalPurchasesView] AS [t0]
 WHERE
-	[dbo].[PersonTotalPurchasesView].[Id] = @P1;',N'@P1 int',@P1=1
+	[t0].[Id] = @P1;',N'@P1 int',@P1=1
 ```
 {% /code-example %}
 
@@ -91,13 +92,13 @@ IEnumerable<PersonTotalPurchasesView> people_totals = db.SelectMany<PersonTotalP
 ```
 ```sql
 exec sp_executesql N'SELECT
-	[dbo].[PersonTotalPurchasesView].[Id],
-	[dbo].[PersonTotalPurchasesView].[TotalAmount],
-	[dbo].[PersonTotalPurchasesView].[TotalCount]
+	[t0].[Id],
+	[t0].[TotalAmount],
+	[t0].[TotalCount]
 FROM
-	[dbo].[PersonTotalPurchasesView]
+	[dbo].[PersonTotalPurchasesView] AS [t0]
 WHERE
-	[dbo].[PersonTotalPurchasesView].[TotalAmount] > @P1;',N'@P1 money',@P1=$2500.0000
+	[t0].[TotalAmount] > @P1;',N'@P1 money',@P1=$2500.0000
 ```
 {% /code-example %}
 
@@ -116,14 +117,14 @@ int affectedCount = db.Update(
 ```
 ```sql
 exec sp_executesql N'UPDATE
-	[dbo].[Person]
+	[t0]
 SET
-	[CreditLimit] = CAST(FLOOR(([CreditLimit] * @P1)) AS Int)
+	[t0].[CreditLimit] = CAST(FLOOR(([t0].[CreditLimit] * @P1)) AS Int)
 FROM
-	[dbo].[Person]
-	INNER JOIN [dbo].[PersonTotalPurchasesView] ON [dbo].[Person].[Id] = [dbo].[PersonTotalPurchasesView].[Id]
+	[dbo].[Person] AS [t0]
+	INNER JOIN [dbo].[PersonTotalPurchasesView] AS [t1] ON [t0].[Id] = [t1].[Id]
 WHERE
-	[dbo].[PersonTotalPurchasesView].[TotalAmount] > @P2;
+	[t1].[TotalAmount] > @P2;
 SELECT @@ROWCOUNT;',N'@P1 float,@P2 money',@P1=1.1000000000000001,@P2=$2500.0000
 ```
 {% /code-example %}
@@ -132,21 +133,23 @@ SELECT @@ROWCOUNT;',N'@P1 float,@P2 money',@P1=1.1000000000000001,@P2=$2500.0000
 
 {% code-example %}
 ```csharp
-//delete persons who haven't made any purchases
+//delete all addresses for any person that hasn't made any purchases
 int affectedCount = db.Delete()
-    .From(dbo.Person)
-    .LeftJoin(dbo.PersonTotalPurchasesView).On(dbo.Person.Id == dbo.PersonTotalPurchasesView.Id)
-    .Where(dbo.PersonTotalPurchasesView.Id == dbex.Null)
-    .Execute();
+	.From(dbo.PersonAddress)
+	.InnerJoin(dbo.Person).On(dbo.PersonAddress.PersonId == dbo.Person.Id)
+	.LeftJoin(dbo.PersonTotalPurchasesView).On(dbo.Person.Id == dbo.PersonTotalPurchasesView.Id)
+	.Where(dbo.PersonTotalPurchasesView.Id == dbex.Null)
+	.Execute();
 ```
 ```sql
 DELETE
-	[dbo].[Person]
+	[t0]
 FROM
-	[dbo].[Person]
-	LEFT JOIN [dbo].[PersonTotalPurchasesView] ON [dbo].[Person].[Id] = [dbo].[PersonTotalPurchasesView].[Id]
+	[dbo].[Person_Address] AS [t0]
+	INNER JOIN [dbo].[Person] AS [t1] ON [t0].[PersonId] = [t1].[Id]
+	LEFT JOIN [dbo].[PersonTotalPurchasesView] AS [t2] ON [t1].[Id] = [t2].[Id]
 WHERE
-	[dbo].[PersonTotalPurchasesView].[Id] IS NULL;
+	[t2].[Id] IS NULL;
 SELECT @@ROWCOUNT;
 ```
 {% /code-example %}

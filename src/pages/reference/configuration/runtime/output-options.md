@@ -60,11 +60,11 @@ db => db.SqlStatements.Assembly.ConfigureOutputSettings(
 Would render commas *at the beginning of each line*:
 ```sql
 SELECT
-    [dbo].[Person].[Id]
-    ,[dbo].[Person].[FirstName]
-    ,[dbo].[Person].[LastName]
+    [Person].[Id]
+    ,[Person].[FirstName]
+    ,[Person].[LastName]
 FROM
-    [dbo].[Person];
+    [dbo].[Person] AS [Person];
 ```
 And
 ```csharp
@@ -75,11 +75,11 @@ db => db.SqlStatements.Assembly.ConfigureOutputSettings(
 Would render commas *at the end of each line*:
 ```sql
 SELECT
-    [dbo].[Person].[Id],
-    [dbo].[Person].[FirstName],
-    [dbo].[Person].[LastName]
+    [Person].[Id],
+    [Person].[FirstName],
+    [Person].[LastName]
 FROM
-    [dbo].[Person];
+    [dbo].[Person] AS [Person];
 ```
 {% /accordian %}
 
@@ -142,11 +142,11 @@ db => db.SqlStatements.Assembly.ConfigureOutputSettings(
 Would render:
 ```sql
 SELECT
-    'dbo'.'Person'.'Id',
-    'dbo'.'Person'.'FirstName',
-    'dbo'.'Person'.'LastName'
+    'Person'.'Id',
+    'Person'.'FirstName',
+    'Person'.'LastName'
 FROM
-    'dbo'.'Person';
+    'dbo'.'Person' AS 'Person';
 ```
 {% /accordian %}
 
@@ -175,19 +175,76 @@ FROM
 ```
 {% /method-descriptor %}
 
-{% accordian caption="examples" %}
+{% accordian caption="syntax examples" %}
 ```csharp
 db => db.SqlStatements.Assembly.ConfigureOutputSettings(
-    s => s.StatementTerminator = '!'
+    s => s.StatementTerminator = '$'
 )
 ```
 Would render:
 ```sql
 SELECT
-    [dbo].[Person].[Id],
-    [dbo].[Person].[FirstName],
-    [dbo].[Person].[LastName]
+    [Person].[Id],
+    [Person].[FirstName],
+    [Person].[LastName]
 FROM
-    [dbo].[Person]!
+    [dbo].[Person] AS [Person]$
+```
+{% /accordian %}
+
+## UseSyntheticAliases Option
+
+{% method-descriptor %}
+```json
+{
+    "syntax" : "UseSyntheticAliases = {value}",
+    "arguments" : [
+        {
+            "argumentName" : "value",
+            "required" : true, 
+            "description" : "A value indicating whether dbExpression should create and manage aliases in generated SQL statements.  In general, a value of 'true' will be more performant as there will likely be less characters required to generate a SQL statement.",
+            "defaultValue" : "true",
+            "types": [
+                { 
+                    "typeName" : "bool" 
+                }
+            ]
+        }
+    ]
+}
+```
+{% /method-descriptor %}
+
+{% accordian caption="syntax examples" %}
+```csharp
+db => db.SqlStatements.Assembly.ConfigureOutputSettings(
+    s => s.UseSyntheticAliases = false
+)
+```
+Would render:
+```sql
+SELECT
+    [Person].[Id],
+    [Person].[FirstName],
+    [Person].[LastName]
+FROM
+    [dbo].[Person] AS [Person];
+```
+
+And setting the value to true (the default):
+
+```csharp
+db => db.SqlStatements.Assembly.ConfigureOutputSettings(
+    s => s.UseSyntheticAliases = true
+)
+```
+Would render:
+```sql
+SELECT
+    [t0].[Id],
+    [t0].[FirstName],
+    [t0].[LastName]
+FROM
+    [dbo].[Person] AS [t0];
 ```
 {% /accordian %}
