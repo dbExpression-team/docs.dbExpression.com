@@ -16,7 +16,7 @@ dbExpression a little about your enums:
 * The fully qualified type name of your enum
 * Where you plan to use them
 
-To scaffold enums, the *dbex.config.json* configuration file must list the fully qualified type names of each enum.  Given the enums in the sample [console application](https://github.com/HatTrickLabs/dbExpression/blob/master/samples/mssql/NetCoreConsoleApp/Data/_TypeCode.cs), we'll list 
+To scaffold enums, the *dbex.config.json* configuration file must list the fully qualified type names of each enum.  Given the enums in the sample [console application](https://github.com/dbexpression-team/dbexpression/blob/master/samples/mssql/NetCoreConsoleApp/Data/_TypeCode.cs), we'll list 
 those in the ```enums``` array of the configuration file:
 ```json
 {

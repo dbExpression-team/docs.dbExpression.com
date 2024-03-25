@@ -59,5 +59,5 @@ The following is an example *dbex.config.json* file (there may be more here than
 and how to use them.
 
 See other sample `dbex.config.json` files in the sample projects included in the dbExpression repository:
-* [console application](https://github.com/HatTrickLabs/dbExpression/tree/master/samples/mssql/NetCoreConsoleApp/dbex.config.json)
-* [server side blazor application](https://github.com/HatTrickLabs/dbExpression/tree/master/samples/mssql/ServerSideBlazorApp/dbex.config.json)
+* [console application](https://github.com/dbexpression-team/dbexpression/tree/master/samples/mssql/NetCoreConsoleApp/dbex.config.json)
+* [server side blazor application](https://github.com/dbexpression-team/dbexpression/tree/master/samples/mssql/ServerSideBlazorApp/dbex.config.json)
