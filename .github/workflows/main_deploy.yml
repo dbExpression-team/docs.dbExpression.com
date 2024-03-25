@@ -1,7 +1,7 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy Node.js app to Azure Web App - dbexpression-docs
+name: Build and deploy Node.js app to GitHub pages - dbexpression-docs
 
 on:
   push:
@@ -27,8 +27,8 @@ env:
   BASE_PATH: /docs
 
 jobs:
-  build-and-deploy:
-    name: Build and Deploy
+  build:
+    name: Build NextJS app
     runs-on: ubuntu-latest
 
     steps:    
