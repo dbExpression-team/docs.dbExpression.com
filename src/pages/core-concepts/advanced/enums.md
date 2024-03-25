@@ -5,7 +5,7 @@ description: How to use enums in query expressions.
 
 Enums are fully supported in dbExpression with the appropriate scaffold and runtime configuration (see [Runtime Configuration](../../core-concepts/configuration/runtime)).
 
-Using enums in QueryExpressions is like using any other data type.  In the sample [console application](https://github.com/HatTrickLabs/dbExpression/blob/master/samples/mssql/NetCoreConsoleApp/Data/_TypeCode.cs), we have a few enums defined.  Let's look at the definition of the `AddressType` enum:
+Using enums in QueryExpressions is like using any other data type.  In the sample [console application](https://github.com/dbexpression-team/dbexpression/blob/master/samples/mssql/NetCoreConsoleApp/Data/_TypeCode.cs), we have a few enums defined.  Let's look at the definition of the `AddressType` enum:
 ```csharp
 public enum AddressType : int
 {
@@ -135,7 +135,7 @@ SELECT @@ROWCOUNT;',N'@P1 int',@P1=1
 ```
 {% /code-example %}
 
-Let's look at another enum from the sample [console application](https://github.com/HatTrickLabs/dbExpression/blob/master/samples/mssql/NetCoreConsoleApp/Data/_TypeCode.cs), `PaymentMethodType`:
+Let's look at another enum from the sample [console application](https://github.com/dbexpression-team/dbexpression/blob/master/samples/mssql/NetCoreConsoleApp/Data/_TypeCode.cs), `PaymentMethodType`:
 ```csharp
 public enum PaymentMethodType : int
 {

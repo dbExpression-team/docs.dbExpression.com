@@ -8,7 +8,7 @@ export function Footer() {
 			<p className="prose pl-2 text-sm dark:text-slate-400">&copy; {new Date().getFullYear()} HatTrick Labs, LLC. All rights reserved.</p>
 		</div>
 		<div>        
-			<Link href="https://github.com/HatTrickLabs/dbExpression" className="group" aria-label="GitHub">
+			<Link href="https://github.com/dbexpression-team/dbexpression" className="group" aria-label="GitHub">
           		<GitHubIcon className="h-6 w-6 fill-slate-400 group-hover:fill-slate-500 dark:group-hover:fill-slate-300" />
         	</Link>
 		</div>

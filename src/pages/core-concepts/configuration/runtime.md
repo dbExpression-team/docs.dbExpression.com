@@ -265,4 +265,4 @@ public class CustomerService
 ...
 ```
 
-For another example on configuring dbExpression for use statically in a console application, see the [sample console application](https://github.com/HatTrickLabs/dbExpression/blob/master/samples/mssql/NetCoreConsoleApp/Program.cs).
+For another example on configuring dbExpression for use statically in a console application, see the [sample console application](https://github.com/dbexpression-team/dbexpression/blob/master/samples/mssql/NetCoreConsoleApp/Program.cs).
