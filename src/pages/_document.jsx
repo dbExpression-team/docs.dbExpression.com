@@ -1,8 +1,6 @@
 import { Head, Html, Main, NextScript } from 'next/document'
 import { useEffect, useState } from "react";
 
-const { BASE_PATH } = process.env
-
 const themeScript = `
   let mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
 
@@ -55,11 +53,11 @@ const themeScript = `
 `
 
 const getFaviconPath = (isDarkMode = false) => {
-  return `${BASE_PATH}/logos/${isDarkMode ? "dark" : "light"}/`;
+  return `/logos/${isDarkMode ? "dark" : "light"}/`;
 };
 
 export default function Document() {
-  const [faviconHref, setFaviconHref] = useState(`${BASE_PATH}/logos/light/`);
+  const [faviconHref, setFaviconHref] = useState(`/logos/light/`);
 
   useEffect(() => {
     // Get current color scheme.

@@ -1,4 +1,4 @@
-import Image from 'next/future/image'
+import Image from 'next/image'
 import clsx from 'clsx'
 import dbexIconLight from '../../public/logos/light/dbex-and-icon.png'
 import dbexIconDark from '../../public/logos/dark/dbex-and-icon.png'
