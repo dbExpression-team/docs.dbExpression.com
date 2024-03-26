@@ -68,7 +68,7 @@ export default function App({ Component, pageProps }) {
         {description && <meta name="description" content={description} />}
         <meta name='keywords'  content='dbexpression db expression microsoft sql server sqlserver' />
       </Head>
-      <Script key="ga-script" strategy='afterInteractive' src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}`} />
+      {/* <Script key="ga-script" strategy='afterInteractive' src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}`} />
       <Script id="ga-script-local" strategy='afterInteractive'>
         {`
           window.dataLayer = window.dataLayer || [];
@@ -77,7 +77,7 @@ export default function App({ Component, pageProps }) {
         
           gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}');
         `}
-      </Script>
+      </Script> */}
       <Layout title={title} description={description} tableOfContents={tableOfContents} >
         <Component {...pageProps} />
       </Layout>
