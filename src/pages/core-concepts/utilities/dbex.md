@@ -239,7 +239,7 @@ IEnumerable<dynamic> person_purchases = db.SelectMany(
 ```
 
 Execution of this would cause the following runtime exception during mapping to a dynamic object:
-`HatTrick.DbEx.Sql.DbExpressionException : An element with the same key 'Id' already exists in the ExpandoObject.`
+`DbExpression.Sql.DbExpressionException : An element with the same key 'Id' already exists in the ExpandoObject.`
 
 This can be corrected by using an alias (see [Aliasing](../../core-concepts/aliasing/column)) on the field accessor `dbo.Purchase.Id`:
 {% code-example %}

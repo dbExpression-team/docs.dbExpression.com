@@ -18,7 +18,7 @@ Use the `DatePart` function to return the specified part of a date.
         {
             "argumentName" : "DATEPART",
             "required" : true,
-            "description" : "The part of `expression` to extract.  `DATEPART` is an enumeration (in the `HatTrick.DbEx.MsSql.Expression` namespace).",
+            "description" : "The part of `expression` to extract.  `DATEPART` is an enumeration (in the `DbExpression.MsSql.Expression` namespace).",
             "types": [
                 { 
                     "typeName" : "Year"

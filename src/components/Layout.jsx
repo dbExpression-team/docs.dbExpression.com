@@ -168,7 +168,7 @@ const navigation = [
                   { 'title': 'Connection Strings', 'href': '/reference/configuration/runtime/connection-strings' },
                   { 'title': 'Statement Executor', 'href': '/reference/configuration/runtime/statement-executor' },
                   { 'title': 'Database Connections', 'href': '/reference/configuration/runtime/database-connections' },
-                  { 'title': 'Exection Pipelines', 'href': '/reference/configuration/runtime/execution-pipelines' },
+                  { 'title': 'Execution Pipelines', 'href': '/reference/configuration/runtime/execution-pipelines' },
                   { 'title': 'Select Pipeline Events', 'href': '/reference/configuration/runtime/select-pipeline-events' },
                   { 'title': 'Insert Pipeline Events', 'href': '/reference/configuration/runtime/insert-pipeline-events' },
                   { 'title': 'Update Pipeline Events', 'href': '/reference/configuration/runtime/update-pipeline-events' },

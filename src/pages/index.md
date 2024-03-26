@@ -59,5 +59,5 @@ dbExpression was designed to work statically or with dependency injection.  The 
 the team environment, and just what works best for you - it's your choice!
 
 dbExpression is quick and easy to get up and running using two packages available on NuGet:
-1) [dbExpression Microsoft SQL Server package](https://www.nuget.org/packages/HatTrick.DbEx.MsSql/)
-2) [dbExpression dotnet CLI tool](https://www.nuget.org/packages/HatTrick.DbEx.Tools/)
+1) [dbExpression Microsoft SQL Server package](https://www.nuget.org/packages/DbExpression.MsSql/)
+2) [dbExpression dotnet CLI tool](https://www.nuget.org/packages/DbExpression.Tools/)

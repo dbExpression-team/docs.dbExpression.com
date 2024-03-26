@@ -168,4 +168,4 @@ ORDER BY
 ```
 {% /code-example %}
 
-Note the use of tuples to define the alias in the outer select clause's *Sum* function.  This requires an additional namespace in a using statement `HatTrick.DbEx.Sql.Builder.Alias`, see [Aliasing](../aliasing/column) for more details.
+Note the use of tuples to define the alias in the outer select clause's *Sum* function.  This requires an additional namespace in a using statement `DbExpression.Sql.Builder.Alias`, see [Aliasing](../aliasing/column) for more details.

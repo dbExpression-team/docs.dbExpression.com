@@ -78,8 +78,8 @@ export default function Document() {
           href="https://fonts.gstatic.com"
           crossOrigin="anonymous"
         />
-        <meta property="og:image" content="https://dbexpressionpublic.blob.core.windows.net/web/dbex-og.png" />
-        <meta property="twitter:image" content="https://dbexpressionpublic.blob.core.windows.net/web/dbex-twitter.png" />
+        <meta property="og:image" content="/dbex-og.png" />
+        <meta property="twitter:image" content="/dbex-twitter.png" />
         {/* <link rel="icon" type="image/png" sizes="16x16" href="/logos/light/favicon-16x16.png" /> */}
         <link rel="icon" type="image/png" sizes="16x16" href={faviconHref.concat("favicon-16x16.png")} />
         <link rel="icon" type="image/png" sizes="32x32" href={faviconHref.concat("favicon-32x32.png")} />

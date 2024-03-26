@@ -12,7 +12,7 @@ export function CoreConcepts({ caption, children }) {
         <div className='w-full border content-center border-slate-200 border-1 dark:border-sky-700 rounded-md bg-slate-50 dark:bg-slate-900'>      
           <Disclosure>
             {({ open }) => (
-              <div className='w-full overflow-scroll'>
+              <div className='w-full overflow-auto'>
                 <div className='w-full flex items-center'>
                   <Disclosure.Button className='bg-slate-50 dark:bg-slate-900 my-2 mx-2' >
                     { open ? 

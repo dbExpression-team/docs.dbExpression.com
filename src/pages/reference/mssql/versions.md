@@ -1,7 +1,7 @@
 ---
 title: Supported Versions
 
-remarks: DO NOT MOVE OR RENAME THIS PAGE.  It is used as a permalink from .AddDatabase in HatTrick.DbEx.MsSql
+remarks: DO NOT MOVE OR RENAME THIS PAGE.  It is used as a permalink from .AddDatabase in DbExpression.MsSql
 ---
 
 dbExpression supports the following versions of Microsoft SQL Server:

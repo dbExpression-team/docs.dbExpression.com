@@ -42,10 +42,10 @@ Ensure the *Copy to Output Directory* property of *appsettings.json* file is set
 
 ### Install dotnet tool
 
-Install the [dbExpression CLI tool](https://www.nuget.org/packages/HatTrick.DbEx.Tools) into the *global* space:
+Install the [dbExpression CLI tool](https://www.nuget.org/packages/DbExpression.Tools) into the *global* space:
  
 ```bash
-PM> dotnet tool install HatTrick.DbEx.Tools --global
+PM> dotnet tool install DbExpression.Tools --global
 ```
 
 ### Install NuGet Packages
@@ -56,10 +56,10 @@ PM> dotnet tool install HatTrick.DbEx.Tools --global
 	PM> Install-Package Microsoft.Extensions.Configuration.Json
 	```
 
-2. Install the [dbExpression Microsoft SQL Server](https://www.nuget.org/packages/HatTrick.DbEx.MsSql) package into your project:
+2. Install the [dbExpression Microsoft SQL Server](https://www.nuget.org/packages/DbExpression.MsSql) package into your project:
  
 	```bash
-	PM> Install-Package HatTrick.DbEx.MsSql
+	PM> Install-Package DbExpression.MsSql
 	```
  
 
@@ -122,8 +122,8 @@ dbExpression requires minimal application startup configuration to operate.  Con
 
 Replace the code in your `Program.cs` file in the *SimpleConsole* application with the following:
 ```csharp
-using HatTrick.DbEx.MsSql.Configuration;
-using HatTrick.DbEx.Sql;
+using DbExpression.MsSql.Configuration;
+using DbExpression.Sql;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SimpleConsole.DataService;
@@ -150,13 +150,13 @@ With this, startup creates a `ServiceCollection` to register required `dbExpress
 Typically for dbExpression startup configuration, you'll need these using statements:
 * `Microsoft.Extensions.Configuration` - to read configuration files.
 * `Microsoft.Extensions.DependencyInjection` - namepace containing the `AddDbExpression()` extension method to register database services.
-* `HatTrick.DbEx.MsSql.Configuration` - enables fluent configuration of dbExpression for use with one or more Microsoft SQL Server databases.
+* `DbExpression.MsSql.Configuration` - enables fluent configuration of dbExpression for use with one or more Microsoft SQL Server databases.
 * `SimpleConsole.DataService` - the namespace (created through scaffolding) that contains the *database accessor* to fluently build queries for the *SimpleConsoleDb* database.
 * `SimpleConsole.dboData` - the namespace (created through scaffolding) containing the entities representing the tables and views in the *dbo* schema in the database (your scaffolded code in this namespace should contain a single entity - *Person*).
 * `SimpleConsole.dboDataService` - the namespace (created through scaffolding) that contains all *schema accessor* classes to fluently build queries for entities in the *dbo* schema.
 
 And to use use a static database accessor (we're using it for this walk-thru):
-* `HatTrick.DbEx.Sql` - namespace containing the `UseStaticRuntimeFor<T>()` extension method, which opts-in to using `dbExpression` statically.
+* `DbExpression.Sql` - namespace containing the `UseStaticRuntimeFor<T>()` extension method, which opts-in to using `dbExpression` statically.
 
 See the [Runtime Configuration](/configuration/runtime) section for instructions and usage examples of all runtime configuration options.
 
@@ -164,8 +164,8 @@ See the [Runtime Configuration](/configuration/runtime) section for instructions
 
 Let's provide some additional code after the existing configuration code to insert and select from the *Person* table:
 ```csharp
-using HatTrick.DbEx.MsSql.Configuration;
-using HatTrick.DbEx.Sql;
+using DbExpression.MsSql.Configuration;
+using DbExpression.Sql;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SimpleConsole.DataService;
@@ -235,9 +235,9 @@ You have successfully written and executed a couple of queries using dbExpressio
 
 We'll cover a few other high-level features of dbExpression, and then move to the Core Concepts section of the docs to dive deeper into the main concepts 
 of dbExpression (with full examples).  To follow along and run the query examples on your own, you'll need to create a local copy of the database:
-* Create an empty database named *MsSqlDbExTest* (you can call it anything you like, just change script file references and connections strings) and build schema with the [script file to create database objects](https://github.com/dbexpression-team/dbexpression/blob/master/test/HatTrick.DbEx.MsSql.Test.Integration/schema.sql).
-* Load the database with data using the [script with sample data](https://github.com/dbexpression-team/dbexpression/blob/master/test/HatTrick.DbEx.MsSql.Test.Integration/data.sql). 
-* Add some images (binary data) to the database using the [script with sample images](https://github.com/dbexpression-team/dbexpression/blob/master/test/HatTrick.DbEx.MsSql.Test.Integration/images.sql).
+* Create an empty database named *MsSqlDbExTest* (you can call it anything you like, just change script file references and connections strings) and build schema with the [script file to create database objects](https://github.com/dbexpression-team/dbexpression/blob/master/test/DbExpression.MsSql.Test.Integration/schema.sql).
+* Load the database with data using the [script with sample data](https://github.com/dbexpression-team/dbexpression/blob/master/test/DbExpression.MsSql.Test.Integration/data.sql). 
+* Add some images (binary data) to the database using the [script with sample images](https://github.com/dbexpression-team/dbexpression/blob/master/test/DbExpression.MsSql.Test.Integration/images.sql).
 
 And the example project with all of the samples in this documentation:
 * [Examples project](https://github.com/dbexpression-team/dbexpression/tree/master/docs/mssql/DocumentationExamples)

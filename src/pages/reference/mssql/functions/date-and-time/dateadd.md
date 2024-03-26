@@ -18,7 +18,7 @@ Use the `DateAdd` function to add a number to a part of a date.
         {
             "argumentName" : "DATEPART",
             "required" : true,
-            "description" : "The part of `expression` to add `number`.  `DATEPART` is an enumeration (in the `HatTrick.DbEx.MsSql.Expression` namespace).",
+            "description" : "The part of `expression` to add `number`.  `DATEPART` is an enumeration (in the `DbExpression.MsSql.Expression` namespace).",
             "types": [
                 { 
                     "typeName" : "Year"

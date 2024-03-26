@@ -9,7 +9,7 @@ Implementation as extension methods was chosen as it is not common to use derive
 > Database functions accepting tuples representing derived tables have been implemented as extension 
 methods in a different namespace.
 
-Use the namespaces `HatTrick.DbEx.Sql.Builder.Alias` and `HatTrick.DbEx.MsSql.Builder.Alias` 
+Use the namespaces `DbExpression.Sql.Builder.Alias` and `DbExpression.MsSql.Builder.Alias` 
 to access method signatures of database functions that accept tuples.
 
 The following example uses a tuple with the `IsNull` function.  The use of a tuple in the `IsNull` function is valid as the method can

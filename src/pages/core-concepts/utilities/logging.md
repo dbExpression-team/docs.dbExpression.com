@@ -54,7 +54,7 @@ services.AddLogging(builder =>
         builder.ClearProviders();
         builder.AddConsole();
         builder.SetMinimumLevel(LogLevel.Debug);
-        builder.AddFilter("HatTrick.DbEx.*", level => false);
+        builder.AddFilter("DbExpression.*", level => false);
     });
 ```
 dbExpression will still emit the `Info` messsages at application startup.

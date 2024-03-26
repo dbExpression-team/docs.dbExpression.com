@@ -18,7 +18,7 @@ Use the `DateDiff` function to "generally" return the difference between two dat
         {
             "argumentName" : "DATEPART",
             "required" : true,
-            "description" : "The part of `start_date_expression` and `end_date_expression` to use in determining the difference.  `DATEPART` is an enumeration (in the `HatTrick.DbEx.MsSql.Expression` namespace).",
+            "description" : "The part of `start_date_expression` and `end_date_expression` to use in determining the difference.  `DATEPART` is an enumeration (in the `DbExpression.MsSql.Expression` namespace).",
             "types": [
                 { 
                     "typeName" : "Year"
