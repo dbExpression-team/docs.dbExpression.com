@@ -1,9 +1,11 @@
 const withMarkdoc = require('@markdoc/next.js')
+const { BASE_PATH } = process.env
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
   pageExtensions: ['js', 'jsx', 'md'],
+  basePath: BASE_PATH,
   async redirects() {
     return [
       {
