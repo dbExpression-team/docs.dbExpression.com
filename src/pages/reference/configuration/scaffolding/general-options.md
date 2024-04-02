@@ -14,7 +14,11 @@ The following pseudo-json shows the various general properties available in the 
    },
    "rootNamespace": "{rootNamespace}",
    "outputDirectory": "{outputDirectory}",
-   "workingDirectory": "{workingDirectory}"
+   "workingDirectory": "{workingDirectory}",
+   "runtime": {
+      "strategy": "{strategy}",
+      "databaseAccessor": "{databaseAccessor}"
+   }
 }
 ```
 
@@ -103,10 +107,32 @@ Given a database named *Sales* that is used in an application that manages sales
 ```
 {% /accordian %}
 
-## databaseAccessor
-> This option is only relevant when using dbExpression in static mode.  
+## runtime
+> Optional, and is only required when you intend to use dbExpression statically.  This option effects the scaffolded code that is generated using `dbex gen`.
 
-The `databaseAccessor` option specifies the typename of the scaffolded database.  When providing a value for `databaseAccessor`, provide a value that means something in your domain.
+The `runtime` section specifies how you intend to use dbExpression at runtime, either statically or with instance based services via dependency injection.
+If this section is omitted, you are specifying to use dbExpression with dependency injection.
+> Omit this section if you intend to use dbExpression with dependency injection
+
+## runtime.strategy
+Specifies whether you intend to use dbExpression with a static database accessor (`static`) or with dependency
+injection (`instance`).
+{% table %}
+---
+* Data type
+* `string`
+---
+* Default value
+* `instance`
+---
+* Valid values
+* `static`, `instance`
+{% /table %}
+
+## runtime.databaseAccessor
+> This option is only relevant when using dbExpression with a `static` strategy.  
+
+The `databaseAccessor` option specifies the typename of the scaffolded static database.  When providing a value for `databaseAccessor`, provide a value that means something in your domain.
 
 {% table %}
 ---
@@ -120,7 +146,10 @@ The `databaseAccessor` option specifies the typename of the scaffolded database.
 given a database named *Sales* that is used in an application that manages sales data, "sales" would be a viable option for `databaseAccessor`:
 ```json
 {
-   "databaseAccessor": "sales"
+   "runtime": {
+      "strategy": "static",
+      "databaseAccessor": "sales"
+   }
 }
 ```
 The `databaseAccessor` would expose `sales` for fluently building queries:

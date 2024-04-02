@@ -13,7 +13,7 @@ Provided a simple json config file, the `dbex gen` command of the CLI tool does 
 * Generates code files (the static model of the target database) into your project
 
 ## Example Configuration File
-The following is an example *dbex.config.json* file (there may be more here than you will ever need):
+The following is an example *dbexpression.config.json* file (there may be more here than you will ever need):
 ```json
 {
     "source": {
@@ -28,9 +28,12 @@ The following is an example *dbex.config.json* file (there may be more here than
     "workingDirectory": "./",
     "outputDirectory": "./Generated",
     "rootNamespace": "Sample",
-    "databaseAccessor": "db",
     "languageFeatures" : {
         "nullable": "disable"
+    },
+    "runtime": {
+        "strategy": "static",
+        "databaseAccessor": "db"
     },
     "enums": [
         "Sample.Data.AddressType"
@@ -55,9 +58,12 @@ The following is an example *dbex.config.json* file (there may be more here than
     ]
 }
 ```
+
+> Use the `dbex makeconfig` command to have dbExpression create the file for you.
+
 > The [Reference section on scaffold configuration](../../reference/configuration/scaffolding/object-overrides) details the properties of the configuration file 
 and how to use them.
 
-See other sample `dbex.config.json` files in the sample projects included in the dbExpression repository:
-* [console application](https://github.com/dbexpression-team/dbexpression/tree/master/samples/mssql/NetCoreConsoleApp/dbex.config.json)
-* [server side blazor application](https://github.com/dbexpression-team/dbexpression/tree/master/samples/mssql/ServerSideBlazorApp/dbex.config.json)
+See other sample `dbexpression.config.json` files in the sample projects included in the dbExpression repository:
+* [console application](https://github.com/dbexpression-team/dbexpression/tree/master/samples/mssql/NetCoreConsoleApp/dbexpression.config.json)
+* [server side blazor application](https://github.com/dbexpression-team/dbexpression/tree/master/samples/mssql/ServerSideBlazorApp/dbexpression.config.json)
