@@ -69,7 +69,7 @@ The dbExpression CLI tool is used to generate code providing the foundation or '
 
 ### Preparing for Scaffold Generation
 
-You will need a code generation configuration file (*dbex.config.json*) containing a valid connection string.  To get a basic *dbex.config.json* file, you can run the following dbExpression CLI command from your terminal:
+You will need a code generation configuration file (*dbexpression.config.json*) containing a valid connection string.  To get a basic *dbexpression.config.json* file, you can run the following dbExpression CLI command from your terminal:
 
 ```bash
 PM> dbex makeconfig
@@ -78,10 +78,11 @@ PM> dbex makeconfig
 > The `?` option provides usage instructions: `dbex makeconfig -?`
 
 In the config file, change:
-- the version (`source.platform.version`) to the version of your database, we're using 2019
-- the `connectionString` value to the same value used in the *appsettings.json* file
-- the `nullable` value to enable, disable, or simply remove the property
-- the `rootNamespace` property to a value of *SimpleConsole*
+- The version (`source.platform.version`) to the version of your database, we're using 2019.
+- The `connectionString` value to the same value used in the *appsettings.json* file.
+- The `nullable` value to enable, disable, or simply remove the property.  This proptery is *optional* (defaults to `disable`) which indicates the scaffolded code should support the `nullable` language feature.
+- The `rootNamespace` property to a value of *SimpleConsole*.
+- Add the `runtime` section with a value of `static` for `strategy` (only required when using dbExpression statically, this section can be omitted if using dbExpression with dependency injection).  We'll discuss this in greater detail later.
 
 Your configuration file should now resemble the following:
 
@@ -99,21 +100,25 @@ Your configuration file should now resemble the following:
             "value": "Data Source=(LocalDB)\\MSSQLLocalDB;Initial Catalog=SimpleConsoleDb;Integrated Security=true"
         }
     },
-    "rootNamespace": "SimpleConsole"
+    "rootNamespace": "SimpleConsole",
+    "runtime": {
+        "strategy": "static"
+    }
 }
 ```
 
-We'll use the default values for all other properties in the file to generate the scaffolding code.  Defaults can be overridden in the configuration file, see the [Scaffold Configuration](./core-concepts/configuration/scaffolding) topic to learn how to change default values and for other scaffolding topics.  Note the *optional* additional property named `nullable` (defaults to "disable") which indicates the scaffolded code should support the `nullable` language feature.
+We'll use the default values for all other properties in the file to generate the scaffolding code.  See the [Scaffold Configuration](./core-concepts/configuration/scaffolding) topic to learn 
+more about the options available for customizing the generation of your scaffold code.
 
 ### Generate the Scaffold Code
 
-Once you have the *dbex.config.json* file complete, run the dbExpression CLI `gen` command to generate the scaffolding.  By default, the generated scaffold code is placed within a directory named 'DbEx' directly within your current working directory.
+Once you have the *dbexpression.config.json* file complete, run the dbExpression CLI `gen` command to generate the scaffolding.  By default, the generated scaffold code is placed within a directory named 'dbExpression' directly within your current working directory.
 
 ```bash
 PM> dbex gen
 ```
 
-> The `-p` option can be used if your *dbex.config.json* file resides in a directory different from your current working directory: `dbex gen -p {path to dbex.config.json}`
+> The `-p` option can be used if your *dbexpression.config.json* file resides in a different directory from your current working directory: `dbex gen -p {path to dbexpression.config.json}`
 
 ## 4. Configure your application
 dbExpression requires minimal application startup configuration to operate.  Configuration of a database for use in your application only requires a connection string so it can connect to your target database to execute SQL statements.
@@ -145,7 +150,7 @@ services.AddDbExpression(
 var provider = services.BuildServiceProvider();
 provider.UseStaticRuntimeFor<SimpleConsoleDb>();
 ```
-With this, startup creates a `ServiceCollection` to register required `dbExpression` services for the  *SimpleConsoleDb* database.  dbExpression is configured to execute SQL statements against Microsoft SQL Server version 2019 (the values from *source.platform* in the dbex.config.json file) and will use the connection string named 'Default' from the *appsettings.json* file.
+With this, startup creates a `ServiceCollection` to register required `dbExpression` services for the  *SimpleConsoleDb* database.  dbExpression is configured to execute SQL statements against Microsoft SQL Server version 2019 (the values from *source.platform* in the dbexpression.config.json file) and will use the connection string named 'Default' from the *appsettings.json* file.
 
 Typically for dbExpression startup configuration, you'll need these using statements:
 * `Microsoft.Extensions.Configuration` - to read configuration files.
@@ -158,7 +163,7 @@ Typically for dbExpression startup configuration, you'll need these using statem
 And to use use a static database accessor (we're using it for this walk-thru):
 * `DbExpression.Sql` - namespace containing the `UseStaticRuntimeFor<T>()` extension method, which opts-in to using `dbExpression` statically.
 
-See the [Runtime Configuration](/configuration/runtime) section for instructions and usage examples of all runtime configuration options.
+See the [Configuration](/core-concepts/configuration) section for instructions and usage examples of all configuration options.
 
 ## 5. Execute a Query
 

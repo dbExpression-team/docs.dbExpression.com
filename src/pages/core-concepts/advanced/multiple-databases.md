@@ -56,7 +56,7 @@ namespace ACME.CRM
 
 ## Using Scaffolding Overrides
 
-Continuing the "ACME" example from above, to disambiguate the `db` accessor from two different databases in a single code file, an alternative is to change the code through scaffolding.  In the configuration file used for scaffolding the *Customer* database (i.e. `dbex.config.json`), ensure the following configuration:
+Continuing the "ACME" example from above, to disambiguate the `db` accessor from two different databases in a single code file, an alternative is to change the code through scaffolding.  In the configuration file used for scaffolding the *Customer* database (i.e. `dbexpression.config.json`), ensure the following configuration:
 ```json
 {
     ...
@@ -67,7 +67,7 @@ Continuing the "ACME" example from above, to disambiguate the `db` accessor from
 ```
 Scaffold the code using the dbExpression CLI tool (`dbex gen`).
 
-In the configuration file used for scaffolding the *Sales* database (i.e. `dbex.config.json`), ensure the following configuration:
+In the configuration file used for scaffolding the *Sales* database (i.e. `dbexpression.config.json`), ensure the following configuration:
 ```json
 {
     ...

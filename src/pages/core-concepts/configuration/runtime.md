@@ -208,14 +208,18 @@ public class CustomerService
 
 ## Static use of dbExpression
 
-> By default, a database does not work statically with dbExpression.  Additional runtime configuration is *required* to use the database statically.
+> By default, a database does not work statically with dbExpression.  Additional scaffold and runtime configuration is *required* to use the database statically.
 
-By default, dbExpression uses dependency injection to resolve an instance of a database.  To use dbExpression statically, additional configuration is required.  
+By default, dbExpression uses dependency injection to resolve an instance of a database.  To use dbExpression statically, additional configuration is required.
+
 Using the `MyDatabase` example from above, let's configure it to work statically.  For ASP.NET, use the `UseStaticRuntimeFor<T>()` extension method on `IApplicationBuilder` 
 (available in the [DbExpression.MsSql.Extensions.DependencyInjection](https://www.nuget.org/packages/DbExpression.MsSql.Extensions.DependencyInjection) NuGet package), 
-and for other project types, use the `UseStaticRuntimeFor<T>()` extension method on `IServiceProvider`.
+and for other project types, use the `UseStaticRuntimeFor<T>()` extension method on `IServiceProvider`.  
 
-An example in a `Startup.cs` class for an ASP.NET project;
+Also, ensure the `dbexpression.config.json` file has `"runtime": { "strategy": "static" }` section when the scaffold code is generated, or the static database 
+accessor `db` will not be included in the scaffold code.
+
+Example runtime configuration in a `Startup.cs` class for an ASP.NET project;
 
 ```csharp
 

@@ -16,7 +16,7 @@ dbExpression a little about your enums:
 * The fully qualified type name of your enum
 * Where you plan to use them
 
-To scaffold enums, the *dbex.config.json* configuration file must list the fully qualified type names of each enum.  Given the enums in the sample [console application](https://github.com/dbexpression-team/dbexpression/blob/master/samples/mssql/NetCoreConsoleApp/Data/_TypeCode.cs), we'll list 
+To scaffold enums, the *dbexpression.config.json* configuration file must list the fully qualified type names of each enum.  Given the enums in the sample [console application](https://github.com/dbexpression-team/dbexpression/blob/master/samples/mssql/NetCoreConsoleApp/Data/_TypeCode.cs), we'll list 
 those in the ```enums``` array of the configuration file:
 ```json
 {
@@ -37,7 +37,7 @@ The scaffolding process needs to know where you would like to use the enum types
 
 For example, if the *AddressType* column in the *Address* table has a *DbType* of *int* and allows null, the scaffolded property `AddressType` 
 in the `Address` entity would have a CLR type of `int?`.  To change this property type from the CLR type `int?` to `AddressType?`, an override must 
-be provided in the *dbex.config.json* configuration file:
+be provided in the *dbexpression.config.json* configuration file:
 ```json
 {
     ...
